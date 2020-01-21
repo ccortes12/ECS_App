@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="333dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,15 +18,17 @@
 
         <LinearLayout
             android:layout_width="330dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="53dp"
-                android:layout_height="wrap_content"
+                android:layout_height="38dp"
                 android:layout_weight="1"
                 android:text="CONT:"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="18dp" />
 
             <EditText
@@ -35,13 +37,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
@@ -63,12 +64,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="330dp"
-        android:layout_height="202dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="327dp"
+        android:layout_height="151dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -83,6 +84,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Destino:"
+                android:textAlignment="center"
                 android:textSize="18dp" />
 
             <TextView
@@ -90,14 +92,14 @@
                 android:layout_width="77dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="--------------------------" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="------------" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,6 +113,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="OPE :"
+                android:textAlignment="center"
                 android:textSize="18dp" />
 
             <TextView
@@ -118,14 +121,14 @@
                 android:layout_width="82dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="---------------------------" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="-------------" />
         </LinearLayout>
 
         <LinearLayout
@@ -139,6 +142,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="SHI :"
+                android:textAlignment="center"
                 android:textSize="18dp" />
 
             <TextView
@@ -146,22 +150,105 @@
                 android:layout_width="89dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="---------------------------" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="-------------" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="TextView"
+            android:layout_height="32dp"
             android:textAlignment="textEnd" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="328dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="8dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="ISO :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="63dp"
+                android:layout_height="match_parent"
+                android:text="TARA :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="CSG :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editText13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="TextView" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,19 +257,127 @@
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="CSG :"
+                android:text="MAR:"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/textView15"
+            <EditText
+                android:id="@+id/editText14"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:ems="10"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="326dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GROSS :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ZUN :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal" />
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="LOTES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.121" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="SELLOS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.121" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="300dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="635dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
