@@ -1,14 +1,21 @@
 package com.example.ecs_app;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.ksoap2.SoapEnvelope;
@@ -18,13 +25,15 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private TextView resultado;
+    private EditText usernameEditText,passwordEditText;
+    private TextView resultado,fecha;
     private Button ingresoButton;
+    private ImageButton pickDate;
+    private boolean pass = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,19 @@ public class MainActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.userId);
         passwordEditText = findViewById(R.id.password);
         resultado = findViewById(R.id.resultado);
+        fecha = findViewById(R.id.textView_Fecha);
         ingresoButton = findViewById(R.id.button_ingreso);
+        pickDate = findViewById(R.id.imageButton);
+
+        Calendar c = Calendar.getInstance();
+        final DatePickerDialog datePickerDialog;
+
+        final int dia = c.get(Calendar.DAY_OF_MONTH);
+        final int mes = c.get(Calendar.MONTH);
+        final int anno = c.get(Calendar.YEAR);
+
+        final String fechaString = Integer.toString(dia) + " / " + Integer.toString(mes+1)  + " / " + Integer.toString(anno);
+        fecha.setText(fechaString);
 
         ingresoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,15 +66,30 @@ public class MainActivity extends AppCompatActivity {
                 validarCredencial validacion = new validarCredencial();
                 validacion.execute();
 
-                if(resultado.getText().toString().equalsIgnoreCase("OK")){
+                if(pass){
                     startActivity(next);
                 }
-                /**String welcome = "BOYON" ;
-                // TODO : initiate successful logged in experience
-                Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();*/
-
 
             }
+        });
+
+        pickDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        fecha.setText(Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year));
+                    }
+                },dia, mes , anno);
+                datePickerDialog.updateDate(anno,mes,dia);
+                datePickerDialog.show();
+            }
+            // datePickerDialog.show();  Por que chucha no?
+
         });
 
     }
@@ -106,10 +142,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                resultado.setText("OK");
-            } else {
-                resultado.setText("ERROR");
-            }
+                pass = true;
+            } else {pass = false;}
         }
     }
 

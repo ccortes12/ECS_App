@@ -10,9 +10,10 @@
         android:id="@+id/imageView_ati"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ati" />
@@ -27,19 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_ingreso" />
 
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="date"
-        android:text="Fecha"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mensajeBienvenida" />
-
     <TextView
         android:id="@+id/mensajeBienvenida"
         android:layout_width="wrap_content"
@@ -53,11 +41,11 @@
     <EditText
         android:id="@+id/userId"
         android:layout_width="290dp"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="text|textPersonName"
-        android:text="Usuario"
+        android:hint="Usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +54,7 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="290dp"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
@@ -100,13 +88,14 @@
         app:layout_constraintGuide_begin="389dp" />
 
     <LinearLayout
-        android:layout_width="247dp"
-        android:layout_height="33dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="245dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="65dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/userId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView2"
@@ -114,8 +103,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Turno:"
-            android:textSize="18dp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -124,7 +113,33 @@
             android:layout_weight="1"
             android:drawSelectorOnTop="true"
             android:entries="@array/spinner"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="248dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/textView_Fecha"
+            android:layout_width="161dp"
+            android:layout_height="match_parent"
+            android:text="DD / MM / YYYY"
+            android:textAlignment="center" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="81dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_today" />
+
     </LinearLayout>
 
 
