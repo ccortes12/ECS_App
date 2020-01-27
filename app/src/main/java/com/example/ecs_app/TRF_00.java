@@ -25,8 +25,8 @@ public class TRF_00 extends AppCompatActivity {
         button_sello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent go_sello = new Intent(v.getContext(),TRF_01_sellos.class);
-                startActivity(go_sello);
+                Intent to_sello = new Intent(v.getContext(),TRF_01_sellos.class);
+                startActivity(to_sello);
             }
         });
 
