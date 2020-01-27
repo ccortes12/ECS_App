@@ -2,6 +2,7 @@
     <string name="app_name">ECS App</string>
     <string name="mensaje_Login">Ingreso ECS</string>
     <string name="title_activity_trf_00">TRF_00</string>
+    <string name="title_activity_trf_01_sellos">CFS Sello</string>
     <string-array name="spinner">
         <item>-</item>
         <item>1</item>

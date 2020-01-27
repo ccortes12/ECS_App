@@ -345,7 +345,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_lotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -358,7 +358,7 @@
         app:layout_constraintVertical_bias="0.104" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_sello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
