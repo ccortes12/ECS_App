@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -66,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 validarCredencial validacion = new validarCredencial();
                 validacion.execute();
 
+
+
                 if(pass){
                     startActivity(next);
+                }else{
+                    Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
+                    passwordEditText.getText().clear(); usernameEditText.getText().clear();
                 }
 
             }

@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TRF_02_lotes"></activity>
+        <activity android:name=".TRF_02_lotes_ingresoCodigoBarra"></activity>
+        <activity android:name=".TRF_02_lotes" />
         <activity
             android:name=".TRF_01_sellos"
             android:label="@string/title_activity_trf_01_sellos"
