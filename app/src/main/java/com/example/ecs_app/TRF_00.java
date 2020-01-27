@@ -30,5 +30,12 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
+        button_lotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_lotes = new Intent(v.getContext(),TRF_02_lotes.class);
+                startActivity(to_lotes);
+            }
+        });
     }
 }

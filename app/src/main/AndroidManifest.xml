@@ -7,17 +7,17 @@
 
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ati"
         android:label="@string/app_name"
         android:orientation="vertical"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:icon="@drawable/ati">
+        android:theme="@style/AppTheme">
+        <activity android:name=".TRF_02_lotes"></activity>
         <activity
             android:name=".TRF_01_sellos"
             android:label="@string/title_activity_trf_01_sellos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TRF_00" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
