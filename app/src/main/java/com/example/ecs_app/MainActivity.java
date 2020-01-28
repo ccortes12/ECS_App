@@ -65,17 +65,20 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent next = new Intent(v.getContext(),TRF_00.class);
 
-                validarCredencial validacion = new validarCredencial();
-                validacion.execute();
+                try{
+                    pass = new validarCredencial().execute().get();
 
+                    if(pass){
+                        startActivity(next);
+                    }else{
+                        Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
+                        passwordEditText.getText().clear(); usernameEditText.getText().clear();
+                    }
 
-
-                if(pass){
-                    startActivity(next);
-                }else{
-                    Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
-                    passwordEditText.getText().clear(); usernameEditText.getText().clear();
+                }catch(Exception e){
+                    e.getCause();
                 }
+
 
             }
         });
