@@ -7,14 +7,76 @@
     tools:context=".TRF_00">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="333dp"
-        android:layout_height="89dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/linearLayout10"
+        android:layout_width="335dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="36dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AÑO :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="86dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="COR :"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="335dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
 
         <LinearLayout
             android:layout_width="330dp"
@@ -23,9 +85,10 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="53dp"
+                android:layout_width="93dp"
                 android:layout_height="38dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="CONT:"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -37,9 +100,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="center"
                 android:inputType="textCapCharacters"
                 android:maxLength="4"
                 android:nextFocusDown="@+id/editText_codigo"
+
 
                 />
         </LinearLayout>
@@ -55,8 +120,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="center"
                 android:inputType="number"
-                android:nextFocusDown="@+id/editText_digit"/>
+                android:nextFocusDown="@+id/editText_digit" />
 
             <EditText
                 android:id="@+id/editText_digit"
@@ -64,19 +130,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
-                android:nextFocusDown="@+id/editText_csg"/>
+                android:nextFocusDown="@+id/editText_csg" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="327dp"
-        android:layout_height="151dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="490dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -87,7 +155,7 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="25dp"
+                android:layout_width="21dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Destino:"
@@ -99,43 +167,16 @@
                 android:layout_width="77dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="--------------------------" />
+                android:text="--------------------------"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="------------" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="26dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="OPE :"
-                android:textAlignment="center"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="82dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="---------------------------" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="-------------" />
+                android:text="------------"
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -157,14 +198,16 @@
                 android:layout_width="89dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="---------------------------" />
+                android:text="---------------------------"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="-------------" />
+                android:text="-------------"
+                android:gravity="center"/>
         </LinearLayout>
 
         <TextView
@@ -177,16 +220,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="328dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="325dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -205,7 +245,7 @@
 
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="wrap_content"
+                android:layout_width="46dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="TextView"
@@ -213,7 +253,7 @@
 
             <TextView
                 android:id="@+id/textView16"
-                android:layout_width="63dp"
+                android:layout_width="73dp"
                 android:layout_height="match_parent"
                 android:text="TARA :"
                 android:textAlignment="center"
@@ -236,7 +276,7 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:layout_width="54dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="CSG :"
@@ -250,13 +290,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:text="TextView"
             android:visibility="invisible" />
 
@@ -281,23 +322,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView19"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="37dp"
             android:text="TextView"
             android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="326dp"
         android:layout_height="81dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -323,7 +365,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -347,22 +390,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_lotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="LOTES"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.104" />
 
     <Button
         android:id="@+id/button_sello"
@@ -374,6 +405,19 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <Button
+        android:id="@+id/button_lotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="LOTES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:layout_constraintVertical_bias="0.104" />
 
@@ -389,7 +433,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="635dp" />
+        app:layout_constraintGuide_begin="712dp" />
 
     <Button
         android:id="@+id/button_clean"
@@ -398,7 +442,9 @@
         android:text="LIMPIAR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="0.549" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
