@@ -32,7 +32,7 @@
                 android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/editText_anno"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -58,7 +58,7 @@
                 android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/editText_cor"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
