@@ -29,7 +29,8 @@
                 android:text="AÑO :"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/editText_anno"
@@ -255,7 +256,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center"/>
 
         </LinearLayout>
 

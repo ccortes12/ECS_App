@@ -3,26 +3,38 @@ package com.example.ecs_app.Entidades;
 public class Contenedor {
 
     private String descEstado;
+
     private int annoOperacion;
     private int corOperacion;
     private String sigla;
     private int numero;
     private String digito;
+
     private String codShipper;
     private String descShipper;
     private String codPuerto;
     private String descPuerto;
 
-    private int pesoNeto;
-    private double zuncho;
+
+    private int isoCode;
+    private int tara;
+
+    private String codCliente;
+    private String descCliente;
     private String codMarca;
     private String descMarca;
-    private String codCliente;
+
+    private double zuncho;
+    private int gross;
+    private int pesoNeto;
 
     private String chrConsolidado;
 
+    public Contenedor(){
 
-    public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto) {
+    }
+
+    public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto, int isoCode, int tara, String codCliente, String descCliente, String codMarca, String descMarca, double zuncho, int gross, int pesoNeto, String chrConsolidado) {
         this.descEstado = descEstado;
         this.annoOperacion = annoOperacion;
         this.corOperacion = corOperacion;
@@ -33,10 +45,16 @@ public class Contenedor {
         this.descShipper = descShipper;
         this.codPuerto = codPuerto;
         this.descPuerto = descPuerto;
-    }
-
-    public Contenedor(){
-
+        this.isoCode = isoCode;
+        this.tara = tara;
+        this.codCliente = codCliente;
+        this.descCliente = descCliente;
+        this.codMarca = codMarca;
+        this.descMarca = descMarca;
+        this.zuncho = zuncho;
+        this.gross = gross;
+        this.pesoNeto = pesoNeto;
+        this.chrConsolidado = chrConsolidado;
     }
 
     public void setDescEstado(String descEstado) {
@@ -165,5 +183,37 @@ public class Contenedor {
 
     public void setChrConsolidado(String chrConsolidado) {
         this.chrConsolidado = chrConsolidado;
+    }
+
+    public int getIsoCode() {
+        return isoCode;
+    }
+
+    public void setIsoCode(int isoCode) {
+        this.isoCode = isoCode;
+    }
+
+    public int getTara() {
+        return tara;
+    }
+
+    public void setTara(int tara) {
+        this.tara = tara;
+    }
+
+    public String getDescCliente() {
+        return descCliente;
+    }
+
+    public void setDescCliente(String descCliente) {
+        this.descCliente = descCliente;
+    }
+
+    public int getGross() {
+        return gross;
+    }
+
+    public void setGross(int gross) {
+        this.gross = gross;
     }
 }

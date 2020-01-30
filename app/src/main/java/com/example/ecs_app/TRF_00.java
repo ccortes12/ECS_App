@@ -29,7 +29,7 @@ import java.io.IOException;
 public class TRF_00 extends AppCompatActivity {
 
     private Button button_sello,button_lotes,button_limpiar, button_buscar;
-    private EditText anno,cor,cont,codigo,digit,csg,mar,gross,zun;
+    private EditText anno,cor,cont,codigo,digit,iso,tara,csg,mar,gross,zun;
     private TextView codShipper,descShipper,codPuerto,descPuerto, descCsg, descMar;
     private Contenedor c;
 
@@ -48,6 +48,8 @@ public class TRF_00 extends AppCompatActivity {
         cont = (EditText) findViewById(R.id.editText_cont);
         codigo = (EditText) findViewById(R.id.editText_codigo);
         digit = (EditText) findViewById(R.id.editText_digit);
+        iso = (EditText) findViewById(R.id.inputISO);
+        tara = (EditText) findViewById(R.id.inputTara);
         csg = (EditText) findViewById(R.id.editText_csg);
         mar = (EditText) findViewById(R.id.editText_mar);
         gross = (EditText) findViewById(R.id.editText_gross);
@@ -122,11 +124,17 @@ public class TRF_00 extends AppCompatActivity {
                         descPuerto.setText(c.getDescPuerto());
 
                         if(c.getChrConsolidado().equalsIgnoreCase("S")){
+
                             csg.setText(c.getCodCliente());
-                            //descCsg.setText(c.getdesCsg); falta!!!
+                            descCsg.setText(c.getDescCliente());
                             mar.setText(c.getCodMarca());
                             descMar.setText(c.getDescMarca());
 
+                            iso.setText(Integer.toString(c.getIsoCode()));
+                            tara.setText(Integer.toString(c.getTara()));
+
+                            gross.setText(Integer.toString(c.getGross()));
+                            zun.setText(Double.toString(c.getZuncho()));
                         }
                     }else{
                         Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
@@ -168,6 +176,8 @@ public class TRF_00 extends AppCompatActivity {
     }
 
     private void limpiarInfo2(){
+        iso.setText("");
+        tara.setText("");
         descCsg.setText("");
         descMar.setText("");
     }
@@ -236,10 +246,13 @@ public class TRF_00 extends AppCompatActivity {
                             contenedor.setCodMarca(resultado_xml.getProperty("strCodMarca").toString());
                             contenedor.setDescMarca(resultado_xml.getProperty("strDescMarca").toString());
                             contenedor.setCodCliente(resultado_xml.getProperty("strCodCliente").toString());
+                            contenedor.setDescCliente(resultado_xml.getProperty("strDescCliente").toString());
+                            contenedor.setIsoCode(Integer.parseInt(resultado_xml.getProperty("intISOCode").toString()));
+                            contenedor.setTara(Integer.parseInt(resultado_xml.getProperty("intTara").toString()));
+                            contenedor.setGross(Integer.parseInt(resultado_xml.getProperty("intGross").toString()));
 
                         }
                     }
-
                     return contenedor;
                 }
 
