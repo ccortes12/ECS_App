@@ -13,14 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TRF_02_lotes_ingresoCodigoBarra"></activity>
-        <activity android:name=".TRF_02_lotes" />
+        <activity android:name=".TRF_02_lotes"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TRF_01_sellos"
             android:label="@string/title_activity_trf_01_sellos"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TRF_00" />
-
-
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TRF_00"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

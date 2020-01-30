@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TRF_00">
+    tools:context=".TRF_00"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout10"
@@ -226,7 +227,7 @@
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="24dp"
                 android:layout_weight="1"
                 android:text="ISO :"
                 android:textAlignment="center"
@@ -239,12 +240,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="73dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="TARA :"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -268,7 +270,7 @@
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="54dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="CSG :"
                 android:textAlignment="center"

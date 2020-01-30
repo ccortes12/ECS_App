@@ -32,6 +32,7 @@ public class TRF_00 extends AppCompatActivity {
     private EditText anno,cor,cont,codigo,digit,iso,tara,csg,mar,gross,zun;
     private TextView codShipper,descShipper,codPuerto,descPuerto, descCsg, descMar;
     private Contenedor c;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,9 @@ public class TRF_00 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                buscarContenedor();
+                if(!digit.getText().toString().equalsIgnoreCase("")){
+                    buscarContenedor();
+                }
             }
         });
 
@@ -123,6 +126,7 @@ public class TRF_00 extends AppCompatActivity {
                         codPuerto.setText(c.getCodPuerto());
                         descPuerto.setText(c.getDescPuerto());
 
+                        //Container consolidado
                         if(c.getChrConsolidado().equalsIgnoreCase("S")){
 
                             csg.setText(c.getCodCliente());
@@ -135,10 +139,13 @@ public class TRF_00 extends AppCompatActivity {
 
                             gross.setText(Integer.toString(c.getGross()));
                             zun.setText(Double.toString(c.getZuncho()));
+
                         }
                     }else{
                         Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
                         limpiarInfoCont();
+                        limpiarInfo2();
+
                     }
                 }
             }catch(Exception e){
@@ -178,8 +185,12 @@ public class TRF_00 extends AppCompatActivity {
     private void limpiarInfo2(){
         iso.setText("");
         tara.setText("");
+        csg.setText("");
+        mar.setText("");
         descCsg.setText("");
         descMar.setText("");
+        gross.setText("");
+        zun.setText("");
     }
 
     private class cfs_BuscaContenedor extends AsyncTask<String, Void, Contenedor>{
