@@ -1,6 +1,8 @@
 package com.example.ecs_app.Entidades;
 
-public class Contenedor {
+import java.io.Serializable;
+
+public class Contenedor  implements Serializable {
 
     private String descEstado;
 
@@ -30,11 +32,14 @@ public class Contenedor {
 
     private String chrConsolidado;
 
+    private String sello;
+
+
     public Contenedor(){
 
     }
 
-    public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto, int isoCode, int tara, String codCliente, String descCliente, String codMarca, String descMarca, double zuncho, int gross, int pesoNeto, String chrConsolidado) {
+    public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto, int isoCode, int tara, String codCliente, String descCliente, String codMarca, String descMarca, double zuncho, int gross, int pesoNeto, String chrConsolidado, String sello) {
         this.descEstado = descEstado;
         this.annoOperacion = annoOperacion;
         this.corOperacion = corOperacion;
@@ -55,6 +60,7 @@ public class Contenedor {
         this.gross = gross;
         this.pesoNeto = pesoNeto;
         this.chrConsolidado = chrConsolidado;
+        this.sello = sello;
     }
 
     public void setDescEstado(String descEstado) {
@@ -215,5 +221,13 @@ public class Contenedor {
 
     public void setGross(int gross) {
         this.gross = gross;
+    }
+
+    public String getSello() {
+        return sello;
+    }
+
+    public void setSello(String sello) {
+        this.sello = sello;
     }
 }

@@ -135,7 +135,7 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="1"
-                android:nextFocusDown="@+id/editText_csg" />
+                android:nextFocusDown="@+id/inputISO" />
         </LinearLayout>
     </LinearLayout>
 
@@ -241,7 +241,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:nextFocusDown="@+id/inputTara"/>
 
             <TextView
                 android:id="@+id/textView16"
@@ -259,7 +260,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:nextFocusDown="@+id/editText_csg"/>
 
         </LinearLayout>
 
@@ -388,59 +390,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_sello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="SELLOS"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.104" />
-
-    <Button
-        android:id="@+id/button_lotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="LOTES"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.104" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="756dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="724dp"
+        app:layout_constraintGuide_begin="719dp"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_clean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LIMPIAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.554" />
 
     <Button
         android:id="@+id/button_buscar"
@@ -451,5 +408,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button_clean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="LIMPIAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="266dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
+
+        <Button
+            android:id="@+id/button_sello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELLOS"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/button_grabar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GRABAR"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/button_lotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOTES"
+            android:visibility="invisible"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
