@@ -25,7 +25,7 @@
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="51dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="OPERACION :" />
@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
         </LinearLayout>
@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/textView25"
                 android:layout_width="54dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="CONTENEDOR :" />
@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/textView26"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
         </LinearLayout>

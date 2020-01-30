@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -195,7 +194,10 @@ public class TRF_00 extends AppCompatActivity {
         button_lotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //COMPROBAR EL METODO SI ES MANUAL O POR CODIGO DE BARRA
                 Intent to_lotes = new Intent(v.getContext(),TRF_02_lotes.class);
+                to_lotes.putExtra("objContenedor",(Serializable) c);
                 startActivity(to_lotes);
             }
         });
