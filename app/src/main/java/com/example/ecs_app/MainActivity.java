@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView resultado,fecha;
     private Button ingresoButton;
     private ImageButton pickDate;
+    private Spinner turno;
     private boolean pass = false;
 
     @Override
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         fecha = findViewById(R.id.textView_Fecha);
         ingresoButton = findViewById(R.id.button_ingreso);
         pickDate = findViewById(R.id.imageButton);
+        turno = findViewById(R.id.spinner);
 
         Calendar c = Calendar.getInstance();
         final DatePickerDialog datePickerDialog;
@@ -64,22 +67,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent next = new Intent(v.getContext(),TRF_00.class);
+                String hola = turno.getSelectedItem().toString();
+                if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
+                    try {
+                        pass = new validarCredencial().execute().get();
 
-                try{
-                    pass = new validarCredencial().execute().get();
+                        if (pass) {
+                            startActivity(next);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
+                            passwordEditText.getText().clear();
+                            usernameEditText.getText().clear();
+                        }
 
-                    if(pass){
-                        startActivity(next);
-                    }else{
-                        Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
-                        passwordEditText.getText().clear(); usernameEditText.getText().clear();
+                    } catch (Exception e) {
+                        e.getCause();
                     }
-
-                }catch(Exception e){
-                    e.getCause();
+                }else{
+                    Toast.makeText(MainActivity.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 

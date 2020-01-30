@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,19 +25,13 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 public class TRF_00 extends AppCompatActivity {
 
-    private Button button_sello;
-    private Button button_lotes;
-    private Button button_limpiar;
-
+    private Button button_sello,button_lotes,button_limpiar, button_buscar;
     private EditText anno,cor,cont,codigo,digit,csg,mar,gross,zun;
-
-    private TextView codShipper,descShipper,codPuerto,descPuerto;
-
-
+    private TextView codShipper,descShipper,codPuerto,descPuerto, descCsg, descMar;
+    private Contenedor c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,47 +41,53 @@ public class TRF_00 extends AppCompatActivity {
         button_sello = (Button) findViewById(R.id.button_sello);
         button_lotes = (Button) findViewById(R.id.button_lotes);
         button_limpiar = (Button) findViewById(R.id.button_clean);
+        button_buscar = (Button) findViewById(R.id.button_buscar);
 
         anno = (EditText) findViewById(R.id.editText_anno);
         cor = (EditText)  findViewById(R.id.editText_cor);
         cont = (EditText) findViewById(R.id.editText_cont);
         codigo = (EditText) findViewById(R.id.editText_codigo);
         digit = (EditText) findViewById(R.id.editText_digit);
-
         csg = (EditText) findViewById(R.id.editText_csg);
         mar = (EditText) findViewById(R.id.editText_mar);
         gross = (EditText) findViewById(R.id.editText_gross);
         zun = (EditText) findViewById(R.id.editText_zun);
 
-        codShipper = (TextView) findViewById(R.id.textView4);
-        descShipper = (TextView) findViewById(R.id.textView5);
-        codPuerto = (TextView) findViewById(R.id.textView10);
-        descPuerto = (TextView) findViewById(R.id.textView11);
+        codShipper = (TextView) findViewById(R.id.codShipper);
+        descShipper = (TextView) findViewById(R.id.descShipper);
+        codPuerto = (TextView) findViewById(R.id.codPuerto);
+        descPuerto = (TextView) findViewById(R.id.descPuerto);
+        descCsg = (TextView) findViewById(R.id.textView20);
+        descMar = (TextView) findViewById(R.id.textView19);
+
+        digit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                buscarContenedor();
+            }
+        });
+
+        button_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarContenedor();
+            }
+        });
 
         button_sello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent to_sello = new Intent(v.getContext(),TRF_01_sellos.class);
-                startActivity(to_sello);*/
-
-                try{
-
-                    Contenedor c = new cfs_BuscaContenedor().execute().get();
-
-                    if (c != null){
-                        if(c.getDescEstado().equalsIgnoreCase("OK")){
-                            codShipper.setText(c.getCodShipper());
-                            descShipper.setText(c.getDescShipper());
-                            codPuerto.setText(c.getCodPuerto());
-                            descPuerto.setText(c.getDescPuerto());
-                        }else{
-                            Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
-                            limpiarInfoCont();
-                        }
-                    }
-                }catch(Exception e){
-                    Toast.makeText(TRF_00.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
-                }
+                Intent to_sello = new Intent(v.getContext(), TRF_01_sellos.class);
+                startActivity(to_sello);
             }
         });
 
@@ -103,6 +105,45 @@ public class TRF_00 extends AppCompatActivity {
                 limpiarText();
             }
         });
+
+    }
+
+    private void buscarContenedor(){
+
+        if(!camposVacios()){
+            try{
+                c = new cfs_BuscaContenedor().execute().get();
+
+                if (c != null){
+                    if(c.getDescEstado().equalsIgnoreCase("OK")){
+                        codShipper.setText(c.getCodShipper());
+                        descShipper.setText(c.getDescShipper());
+                        codPuerto.setText(c.getCodPuerto());
+                        descPuerto.setText(c.getDescPuerto());
+
+                        if(c.getChrConsolidado().equalsIgnoreCase("S")){
+                            csg.setText(c.getCodCliente());
+                            //descCsg.setText(c.getdesCsg); falta!!!
+                            mar.setText(c.getCodMarca());
+                            descMar.setText(c.getDescMarca());
+
+                        }
+                    }else{
+                        Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
+                        limpiarInfoCont();
+                    }
+                }
+            }catch(Exception e){
+                Toast.makeText(TRF_00.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(TRF_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private boolean camposVacios(){
+        return anno.getText().toString().equalsIgnoreCase("") || cor.getText().toString().equalsIgnoreCase("") || cont.getText().toString().equalsIgnoreCase("") || codigo.getText().toString().equalsIgnoreCase("") || digit.getText().toString().equalsIgnoreCase("");
     }
 
     private void limpiarText(){
@@ -115,6 +156,8 @@ public class TRF_00 extends AppCompatActivity {
         zun.getText().clear();
 
         limpiarInfoCont();
+
+        limpiarInfo2();
     }
 
     private void limpiarInfoCont(){
@@ -122,6 +165,11 @@ public class TRF_00 extends AppCompatActivity {
         descPuerto.setText("");
         descShipper.setText("");
         codPuerto.setText("");
+    }
+
+    private void limpiarInfo2(){
+        descCsg.setText("");
+        descMar.setText("");
     }
 
     private class cfs_BuscaContenedor extends AsyncTask<String, Void, Contenedor>{
@@ -178,6 +226,18 @@ public class TRF_00 extends AppCompatActivity {
                         contenedor.setDescShipper(resultado_xml.getProperty(8).toString());
                         contenedor.setCodPuerto(resultado_xml.getProperty(9).toString());
                         contenedor.setDescPuerto(resultado_xml.getProperty(10).toString());
+
+                        if(resultado_xml.getProperty("chrConsolidado").toString().equalsIgnoreCase("S")){
+                            //Agregar demas propiedades
+
+                            contenedor.setChrConsolidado(resultado_xml.getProperty("chrConsolidado").toString());
+                            contenedor.setPesoNeto(Integer.parseInt(resultado_xml.getProperty("intPesoNeto").toString()));
+                            contenedor.setZuncho(Double.parseDouble(resultado_xml.getProperty("intPesoZuncho").toString()));
+                            contenedor.setCodMarca(resultado_xml.getProperty("strCodMarca").toString());
+                            contenedor.setDescMarca(resultado_xml.getProperty("strDescMarca").toString());
+                            contenedor.setCodCliente(resultado_xml.getProperty("strCodCliente").toString());
+
+                        }
                     }
 
                     return contenedor;

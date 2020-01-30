@@ -13,6 +13,15 @@ public class Contenedor {
     private String codPuerto;
     private String descPuerto;
 
+    private int pesoNeto;
+    private double zuncho;
+    private String codMarca;
+    private String descMarca;
+    private String codCliente;
+
+    private String chrConsolidado;
+
+
     public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto) {
         this.descEstado = descEstado;
         this.annoOperacion = annoOperacion;
@@ -108,5 +117,53 @@ public class Contenedor {
 
     public String getDescPuerto() {
         return descPuerto;
+    }
+
+    public int getPesoNeto() {
+        return pesoNeto;
+    }
+
+    public void setPesoNeto(int pesoNeto) {
+        this.pesoNeto = pesoNeto;
+    }
+
+    public double getZuncho() {
+        return zuncho;
+    }
+
+    public void setZuncho(double zuncho) {
+        this.zuncho = zuncho;
+    }
+
+    public String getCodMarca() {
+        return codMarca;
+    }
+
+    public void setCodMarca(String codMarca) {
+        this.codMarca = codMarca;
+    }
+
+    public String getDescMarca() {
+        return descMarca;
+    }
+
+    public void setDescMarca(String descMarca) {
+        this.descMarca = descMarca;
+    }
+
+    public String getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(String codCliente) {
+        this.codCliente = codCliente;
+    }
+
+    public String getChrConsolidado() {
+        return chrConsolidado;
+    }
+
+    public void setChrConsolidado(String chrConsolidado) {
+        this.chrConsolidado = chrConsolidado;
     }
 }
