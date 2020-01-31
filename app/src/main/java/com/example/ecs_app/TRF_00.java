@@ -3,11 +3,14 @@ package com.example.ecs_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +72,7 @@ public class TRF_00 extends AppCompatActivity {
         descCsg = (TextView) findViewById(R.id.textView20);
         descMar = (TextView) findViewById(R.id.textView19);
 
-
+        estadoIngresosConsolidado(false);
 
         digit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -138,7 +141,7 @@ public class TRF_00 extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                descMar.setText("");
             }
 
             @Override
@@ -150,7 +153,6 @@ public class TRF_00 extends AppCompatActivity {
 
                         ma = new cfs_BuscaMarca().execute().get();
                         if(ma != null){
-
                             if(ma.getEstado() == 0){
                                 descMar.setText(ma.getDescMarca());
                             }else if(ma.getEstado() == 1){
@@ -209,12 +211,64 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
+
+
+
         button_grabar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Grabar nuevo contenedor en el sistema
+
+                //Validar todos los campos no vacios
+                if(!allCamposVacios()){
+
+                    // VALIDAR CAMPOS MARCA & CSG
+                    if(!(descPuerto.getText().toString().equalsIgnoreCase("") || descMar.getText().toString().equalsIgnoreCase(""))){
+
+                        //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
+                        mostrarDialogo();
+                        //BLOQUEAR INGRESOS
+
+                        //VISUALIZAR BOTON SELLOS Y LOTES
+
+                        // TRANSACCION AL WEB SERVICE
+                    }else{
+                        Toast.makeText(TRF_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(TRF_00.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+    }
+
+    private void mostrarDialogo(){
+        new AlertDialog.Builder(TRF_00.this)
+                .setMessage("¿Confirma registro container?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //BLOQUEAR INGRESOS
+                        estadoIngresosConsolidado(false);
+
+                        //VISUALIZAR BOTON SELLOS Y LOTES
+                        button_grabar.setVisibility(View.INVISIBLE);
+                        button_lotes.setVisibility(View.VISIBLE);
+                        button_sello.setVisibility(View.VISIBLE);
+                        // TRANSACCION AL WEB SERVICE
+
+                        //Agregar campos al objeto
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Mensaje" , "se cancelo accion");
+                    }
+                })
+                .show();
 
     }
 
@@ -234,6 +288,7 @@ public class TRF_00 extends AppCompatActivity {
                         descPuerto.setText(c.getDescPuerto());
 
                         button_grabar.setVisibility(View.VISIBLE);
+                        estadoIngresosConsolidado(true);
 
                         //Container consolidado
                         if(c.getChrConsolidado().equalsIgnoreCase("S")) {
@@ -253,10 +308,12 @@ public class TRF_00 extends AppCompatActivity {
                             button_grabar.setVisibility(View.INVISIBLE);
                             button_lotes.setVisibility(View.VISIBLE);
                             button_sello.setVisibility(View.VISIBLE);
+                            estadoIngresosConsolidado(false);
 
                         }
                     }else{
                         Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
+                        estadoIngresosConsolidado(false);
                         limpiarInfoCont();
                         limpiarInfo2();
                         button_lotes.setVisibility(View.INVISIBLE);
@@ -276,6 +333,12 @@ public class TRF_00 extends AppCompatActivity {
         return anno.getText().toString().equalsIgnoreCase("") || cor.getText().toString().equalsIgnoreCase("") || cont.getText().toString().equalsIgnoreCase("") || codigo.getText().toString().equalsIgnoreCase("") || digit.getText().toString().equalsIgnoreCase("");
     }
 
+    private boolean allCamposVacios(){
+
+        return iso.getText().toString().equalsIgnoreCase("") || tara.getText().toString().equalsIgnoreCase("") || csg.getText().toString().equalsIgnoreCase("")
+                || mar.getText().toString().equalsIgnoreCase("") || gross.getText().toString().equalsIgnoreCase("") || zun.getText().toString().equalsIgnoreCase("") || camposVaciosCONT();
+    }
+
     private void limpiarText(){
         cont.getText().clear();
         codigo.getText().clear();
@@ -292,6 +355,7 @@ public class TRF_00 extends AppCompatActivity {
         button_grabar.setVisibility(View.INVISIBLE);
         button_sello.setVisibility(View.INVISIBLE);
         button_lotes.setVisibility(View.INVISIBLE);
+        estadoIngresosConsolidado(false);
 
     }
 
@@ -332,6 +396,15 @@ public class TRF_00 extends AppCompatActivity {
 
         zun.setFocusable(estado);
         zun.setCursorVisible(estado);
+
+        if(estado){
+            iso.setFocusableInTouchMode(true);
+            tara.setFocusableInTouchMode(true);
+            csg.setFocusableInTouchMode(true);
+            mar.setFocusableInTouchMode(true);
+            gross.setFocusableInTouchMode(true);
+            zun.setFocusableInTouchMode(true);
+        }
 
     }
 

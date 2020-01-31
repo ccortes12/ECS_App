@@ -106,8 +106,6 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="4"
                 android:nextFocusDown="@+id/editText_codigo"
-
-
                 />
         </LinearLayout>
 

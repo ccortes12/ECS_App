@@ -29,6 +29,9 @@ public class TRF_02_lotes extends AppCompatActivity {
         textOperacion.setText(cadenaOperacion);
         textContenedor.setText(cadenaContenedor);
 
+
+
+
     }
 
 }
