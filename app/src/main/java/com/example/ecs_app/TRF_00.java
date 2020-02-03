@@ -211,9 +211,6 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
-
-
-
         button_grabar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,9 +224,6 @@ public class TRF_00 extends AppCompatActivity {
 
                         //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
                         mostrarDialogo();
-                        //BLOQUEAR INGRESOS
-
-                        //VISUALIZAR BOTON SELLOS Y LOTES
 
                         // TRANSACCION AL WEB SERVICE
                     }else{
@@ -244,6 +238,7 @@ public class TRF_00 extends AppCompatActivity {
     }
 
     private void mostrarDialogo(){
+
         new AlertDialog.Builder(TRF_00.this)
                 .setMessage("¿Confirma registro container?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -258,6 +253,8 @@ public class TRF_00 extends AppCompatActivity {
                         button_lotes.setVisibility(View.VISIBLE);
                         button_sello.setVisibility(View.VISIBLE);
                         // TRANSACCION AL WEB SERVICE
+
+
 
                         //Agregar campos al objeto
                     }
@@ -606,6 +603,32 @@ public class TRF_00 extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    private class cfs_RegistraConsolidad extends  AsyncTask<String, Void, Boolean>{
+
+        @SuppressLint("WrongThread")
+        @Override
+        protected Boolean doInBackground(String... strings) {
+
+            boolean resultado = false;
+
+            String NAMESPACE = "http://www.atiport.cl/";
+            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+            String METHOD_NAME = "CFS_RegistraConsolidado";
+            String SOAP_ACTION = "http://www.atiport.cl/CFS_RegistraConsolidado";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            int anno_operacion = Integer.parseInt(anno.getText().toString());
+            int cor_operacion = Integer.parseInt(cor.getText().toString());
+            int cor_numero = Integer.parseInt(codigo.getText().toString());
+            int isocode = Integer.parseInt(iso.getText().toString());
+
+
+            return false;
+
         }
     }
 }

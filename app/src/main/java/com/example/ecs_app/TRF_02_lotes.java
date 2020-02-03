@@ -32,9 +32,11 @@ public class TRF_02_lotes extends AppCompatActivity {
     private Contenedor contenedor;
     private ArrayList<Paquete> listaPaquetes;
     private TableLayout tblLayout;
-    private EditText editText;
+    private TextView text_saldo;
 
-    private String[][] matriz = new String[25][4];
+    private double saldo;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +45,13 @@ public class TRF_02_lotes extends AppCompatActivity {
 
         textOperacion = (TextView) findViewById(R.id.textView24);
         textContenedor = (TextView) findViewById(R.id.textView26);
-        editText = (EditText) findViewById(R.id.editText);
+        text_saldo = (TextView) findViewById(R.id.textView_saldo);
         TableLayout tblLayout = (TableLayout)findViewById(R.id.tableLayout);
 
         Intent intent = getIntent();
         contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
+
+        saldo = contenedor.getGross() - contenedor.getTara();
 
         cargarDatos(tblLayout);
 
@@ -142,6 +146,8 @@ public class TRF_02_lotes extends AppCompatActivity {
                     celdaActual = (EditText) row.getChildAt(2);celdaActual.setText(p.getIdPaquete());
                     celdaActual = (EditText) row.getChildAt(3);celdaActual.setText(Double.toString(p.getPeso()));
 
+                    //Actualizar saldo
+                    saldo -= p.getPeso();
                 }
             }
         } catch (ExecutionException e) {
@@ -149,6 +155,8 @@ public class TRF_02_lotes extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        text_saldo.setText(Double.toString(saldo));
     }
 
 }
