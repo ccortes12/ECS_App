@@ -1,34 +1,34 @@
 package com.example.ecs_app;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.annotation.RequiresApi;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.annotation.SuppressLint;
+        import android.app.Activity;
+        import android.app.DatePickerDialog;
+        import android.app.DatePickerDialog.OnDateSetListener;
+        import android.content.Intent;
+        import android.os.AsyncTask;
+        import android.os.Build;
+        import android.os.Bundle;
+        import android.view.Gravity;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.DatePicker;
+        import android.widget.EditText;
+        import android.widget.ImageButton;
+        import android.widget.Spinner;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
+        import org.ksoap2.SoapEnvelope;
+        import org.ksoap2.serialization.SoapObject;
+        import org.ksoap2.serialization.SoapSerializationEnvelope;
+        import org.ksoap2.transport.HttpTransportSE;
+        import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.IOException;
-import java.util.Calendar;
+        import java.io.IOException;
+        import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent next = new Intent(v.getContext(),TRF_00.class);
-                String hola = turno.getSelectedItem().toString();
                 if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
                     try {
                         pass = new validarCredencial().execute().get();
 
                         if (pass) {
+                            passwordEditText.getText().clear();
+                            usernameEditText.getText().clear();
                             startActivity(next);
                         } else {
                             Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
@@ -122,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
             String METHOD_NAME = "ValidarCredencial";
             String SOAP_ACTION = "http://tempuri.org/ValidarCredencial";
 
+            /*String NAMESPACE = "http://www.atiport.cl/";
+            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+            String METHOD_NAME = "CFS_ValidaCredencial";
+            String SOAP_ACTION = "http://www.atiport.cl/CFS_ValidaCredencial";*/
+
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             //Añadir aqui parametros si fueran necesarios
@@ -140,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 transport.call(SOAP_ACTION, envelope);
                 SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-                String estado = resultado_xml.getProperty(0).toString();
+                String estado = resultado_xml.getProperty("Estado").toString();
 
                 if (estado.equalsIgnoreCase("Exito")) {
                     resultado = true;
