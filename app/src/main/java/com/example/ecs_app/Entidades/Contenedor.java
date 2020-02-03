@@ -1,6 +1,7 @@
 package com.example.ecs_app.Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Contenedor  implements Serializable {
 
@@ -34,33 +35,11 @@ public class Contenedor  implements Serializable {
 
     private String sello;
 
+    private ArrayList<Paquete> listPaquetes;
+
 
     public Contenedor(){
 
-    }
-
-    public Contenedor(String descEstado, int annoOperacion, int corOperacion, String sigla, int numero, String digito, String codShipper, String descShipper, String codPuerto, String descPuerto, int isoCode, int tara, String codCliente, String descCliente, String codMarca, String descMarca, double zuncho, int gross, int pesoNeto, String chrConsolidado, String sello) {
-        this.descEstado = descEstado;
-        this.annoOperacion = annoOperacion;
-        this.corOperacion = corOperacion;
-        this.sigla = sigla;
-        this.numero = numero;
-        this.digito = digito;
-        this.codShipper = codShipper;
-        this.descShipper = descShipper;
-        this.codPuerto = codPuerto;
-        this.descPuerto = descPuerto;
-        this.isoCode = isoCode;
-        this.tara = tara;
-        this.codCliente = codCliente;
-        this.descCliente = descCliente;
-        this.codMarca = codMarca;
-        this.descMarca = descMarca;
-        this.zuncho = zuncho;
-        this.gross = gross;
-        this.pesoNeto = pesoNeto;
-        this.chrConsolidado = chrConsolidado;
-        this.sello = sello;
     }
 
     public void setDescEstado(String descEstado) {
@@ -229,5 +208,13 @@ public class Contenedor  implements Serializable {
 
     public void setSello(String sello) {
         this.sello = sello;
+    }
+
+    public ArrayList<Paquete> getListPaquetes() {
+        return listPaquetes;
+    }
+
+    public void setListPaquetes(ArrayList<Paquete> listPaquetes) {
+        this.listPaquetes = listPaquetes;
     }
 }
