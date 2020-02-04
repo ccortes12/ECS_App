@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,12 +36,15 @@ import java.util.concurrent.ExecutionException;
 
 public class TRF_00 extends AppCompatActivity {
 
+
+    private Contenedor c = new Contenedor();
+
     private Button button_sello,button_lotes,button_limpiar, button_buscar, button_grabar;
     private EditText anno,cor,cont,codigo,digit,iso,tara,csg,mar,gross,zun;
     private TextView codShipper,descShipper,codPuerto,descPuerto, descCsg, descMar;
-    private Contenedor c;
     private Consignatario cs;
     private Marca ma;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class TRF_00 extends AppCompatActivity {
         button_grabar = (Button) findViewById(R.id.button_grabar);
 
         anno = (EditText) findViewById(R.id.editText_anno);
-        cor = (EditText)  findViewById(R.id.editText_cor);
+        cor = (EditText) findViewById(R.id.editText_cor);
         cont = (EditText) findViewById(R.id.editText_cont);
         codigo = (EditText) findViewById(R.id.editText_codigo);
         digit = (EditText) findViewById(R.id.editText_digit);
@@ -71,6 +75,9 @@ public class TRF_00 extends AppCompatActivity {
         descPuerto = (TextView) findViewById(R.id.descPuerto);
         descCsg = (TextView) findViewById(R.id.textView20);
         descMar = (TextView) findViewById(R.id.textView19);
+
+
+        user = getIntent().getStringExtra("user");
 
         estadoIngresosConsolidado(false);
 
@@ -223,7 +230,7 @@ public class TRF_00 extends AppCompatActivity {
                     if(!(descPuerto.getText().toString().equalsIgnoreCase("") || descMar.getText().toString().equalsIgnoreCase(""))){
 
                         //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
-                        mostrarDialogo();
+                        confimarIngresoContainer();
 
                         // TRANSACCION AL WEB SERVICE
                     }else{
@@ -237,32 +244,37 @@ public class TRF_00 extends AppCompatActivity {
 
     }
 
-    private void mostrarDialogo(){
+    private void confimarIngresoContainer(){
 
         new AlertDialog.Builder(TRF_00.this)
-                .setMessage("¿Confirma registro container?")
+                .setMessage("¿Confirma registro Container?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //BLOQUEAR INGRESOS
-                        estadoIngresosConsolidado(false);
-
-                        //VISUALIZAR BOTON SELLOS Y LOTES
-                        button_grabar.setVisibility(View.INVISIBLE);
-                        button_lotes.setVisibility(View.VISIBLE);
-                        button_sello.setVisibility(View.VISIBLE);
                         // TRANSACCION AL WEB SERVICE
+                        try {
+                            String respuestaTransaccion = new cfs_RegistraConsolidado().execute().get();
 
+                            if(isNumeric(respuestaTransaccion)){
 
+                                buscarContenedor();
 
-                        //Agregar campos al objeto
+                            }else{
+                                Toast.makeText(TRF_00.this,"Error, ingreso Container",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Mensaje" , "se cancelo accion");
+                        Log.d("Mensaje" , "Se cancelo acción");
                     }
                 })
                 .show();
@@ -295,16 +307,17 @@ public class TRF_00 extends AppCompatActivity {
                             mar.setText(c.getCodMarca());
                             descMar.setText(c.getDescMarca());
 
-                            iso.setText(Integer.toString(c.getIsoCode()));
-                            tara.setText(Integer.toString(c.getTara()));
+                            iso.setText(Double.toString(c.getIsoCode()));
+                            tara.setText(Double.toString(c.getTara()));
 
-                            gross.setText(Integer.toString(c.getGross()));
+                            gross.setText(Double.toString(c.getGross()));
                             zun.setText(Double.toString(c.getZuncho()));
 
                             //mostrar los botones en caso de container consolidado
                             button_grabar.setVisibility(View.INVISIBLE);
                             button_lotes.setVisibility(View.VISIBLE);
                             button_sello.setVisibility(View.VISIBLE);
+
                             estadoIngresosConsolidado(false);
 
                         }
@@ -324,6 +337,19 @@ public class TRF_00 extends AppCompatActivity {
             Toast.makeText(TRF_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private boolean isNumeric(String s){
+
+        if (s == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(s);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     private boolean camposVaciosCONT(){
@@ -352,7 +378,10 @@ public class TRF_00 extends AppCompatActivity {
         button_grabar.setVisibility(View.INVISIBLE);
         button_sello.setVisibility(View.INVISIBLE);
         button_lotes.setVisibility(View.INVISIBLE);
+
         estadoIngresosConsolidado(false);
+
+        c = new Contenedor();
 
     }
 
@@ -442,21 +471,21 @@ public class TRF_00 extends AppCompatActivity {
                 transport.call(SOAP_ACTION, envelope);
                 SoapObject resultado_xml = (SoapObject) envelope.getResponse();
 
-                if(Integer.parseInt(resultado_xml.getProperty(0).toString()) != -1){
+                if(Integer.parseInt(resultado_xml.getProperty("intEstado").toString()) != -1){
 
                     Contenedor contenedor = new Contenedor();
-                    contenedor.setDescEstado(resultado_xml.getProperty(1).toString());
+                    contenedor.setDescEstado(resultado_xml.getProperty("strDescEstado").toString());
 
-                    if(Integer.parseInt(resultado_xml.getProperty(0).toString()) == 0){
-                        contenedor.setAnnoOperacion(Integer.parseInt(resultado_xml.getProperty(2).toString()));
-                        contenedor.setCorOperacion(Integer.parseInt(resultado_xml.getProperty(3).toString()));
-                        contenedor.setSigla(resultado_xml.getProperty(4).toString());
-                        contenedor.setNumero(Integer.parseInt(resultado_xml.getProperty(5).toString()));
-                        contenedor.setDigito(resultado_xml.getProperty(6).toString());
-                        contenedor.setCodShipper(resultado_xml.getProperty(7).toString());
-                        contenedor.setDescShipper(resultado_xml.getProperty(8).toString());
-                        contenedor.setCodPuerto(resultado_xml.getProperty(9).toString());
-                        contenedor.setDescPuerto(resultado_xml.getProperty(10).toString());
+                    if(Integer.parseInt(resultado_xml.getProperty("intEstado").toString()) == 0){
+                        contenedor.setAnnoOperacion(Integer.parseInt(resultado_xml.getProperty("intAnoOperacion").toString()));
+                        contenedor.setCorOperacion(Integer.parseInt(resultado_xml.getProperty("intCorOperacion").toString()));
+                        contenedor.setSigla(resultado_xml.getProperty("strSigla_cnt").toString());
+                        contenedor.setNumero(Integer.parseInt(resultado_xml.getProperty("strNumero_cnt").toString()));
+                        contenedor.setDigito(resultado_xml.getProperty("strDigito_cnt").toString());
+                        contenedor.setCodShipper(resultado_xml.getProperty("strCodShipper").toString());
+                        contenedor.setDescShipper(resultado_xml.getProperty("strDescShipper").toString());
+                        contenedor.setCodPuerto(resultado_xml.getProperty("strCodPuerto").toString());
+                        contenedor.setDescPuerto(resultado_xml.getProperty("strDescPuerto").toString());
 
                         contenedor.setChrConsolidado(resultado_xml.getProperty("chrConsolidado").toString());
 
@@ -464,7 +493,7 @@ public class TRF_00 extends AppCompatActivity {
                             //Agregar demas propiedades
 
                             contenedor.setPesoNeto(Integer.parseInt(resultado_xml.getProperty("intPesoNeto").toString()));
-                            contenedor.setZuncho(Double.parseDouble(resultado_xml.getProperty("intPesoZuncho").toString()));
+                            contenedor.setZuncho(Integer.parseInt(resultado_xml.getProperty("intPesoZuncho").toString()));
                             contenedor.setCodMarca(resultado_xml.getProperty("strCodMarca").toString());
                             contenedor.setDescMarca(resultado_xml.getProperty("strDescMarca").toString());
                             contenedor.setCodCliente(resultado_xml.getProperty("strCodCliente").toString());
@@ -472,8 +501,11 @@ public class TRF_00 extends AppCompatActivity {
                             contenedor.setIsoCode(Integer.parseInt(resultado_xml.getProperty("intISOCode").toString()));
                             contenedor.setTara(Integer.parseInt(resultado_xml.getProperty("intTara").toString()));
                             contenedor.setGross(Integer.parseInt(resultado_xml.getProperty("intGross").toString()));
-                            contenedor.setSello(resultado_xml.getProperty("strSello").toString());
 
+                            contenedor.setCorCFSEntrega(Integer.parseInt(resultado_xml.getProperty("intCorCFS").toString()));
+
+                            //Si no existe la informacion retorna cero
+                            contenedor.setSello(resultado_xml.getProperty("strSello").toString());
                         }
                     }
                     return contenedor;
@@ -487,7 +519,6 @@ public class TRF_00 extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
     }
@@ -606,11 +637,11 @@ public class TRF_00 extends AppCompatActivity {
         }
     }
 
-    private class cfs_RegistraConsolidad extends  AsyncTask<String, Void, Boolean>{
+    private class cfs_RegistraConsolidado extends  AsyncTask<String, Void, String>{
 
         @SuppressLint("WrongThread")
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
 
             boolean resultado = false;
 
@@ -625,10 +656,54 @@ public class TRF_00 extends AppCompatActivity {
             int cor_operacion = Integer.parseInt(cor.getText().toString());
             int cor_numero = Integer.parseInt(codigo.getText().toString());
             int isocode = Integer.parseInt(iso.getText().toString());
+            int tara2 = Integer.parseInt(tara.getText().toString());
+            int maxGross = Integer.parseInt(gross.getText().toString());
+            int zuncho = Integer.parseInt(zun.getText().toString());
 
+            request.addProperty("codLugar","ANF");
+            request.addProperty("ano_operacion",anno_operacion);
+            request.addProperty("cor_operacion",cor_operacion);
+            request.addProperty("cor_secuencia",1);
+            request.addProperty("cod_sigla",cont.getText().toString());
+            request.addProperty("cod_numero",cor_numero);
+            request.addProperty("cod_digito",digit.getText().toString());
+            request.addProperty("cod_shipper",codShipper.getText().toString());
+            request.addProperty("cod_cliente",csg.getText().toString());
+            request.addProperty("marca",mar.getText().toString());
+            request.addProperty("isocode",isocode);
+            request.addProperty("tara",tara2);
+            request.addProperty("gross",maxGross);
+            request.addProperty("zuncho",zuncho);
+            request.addProperty("login",user);
 
-            return false;
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE transport = new HttpTransportSE(URL);
+
+            try{
+
+                transport.call(SOAP_ACTION, envelope);
+                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+                return resultado_xml.getProperty("CFS_RegistraConsolidadoResult").toString();
+
+            } catch (HttpResponseException e) {
+                e.printStackTrace();
+            } catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return "N";
 
         }
     }
+
+
 }

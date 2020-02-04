@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Contenedor  implements Serializable {
 
+    //CONTAINER
     private String descEstado;
 
     private int annoOperacion;
@@ -17,29 +18,32 @@ public class Contenedor  implements Serializable {
     private String descShipper;
     private String codPuerto;
     private String descPuerto;
+    //CONTAINER Para consolidacion
+
 
 
     private int isoCode;
-    private int tara;
+    private double tara;
 
     private String codCliente;
     private String descCliente;
     private String codMarca;
     private String descMarca;
 
-    private double zuncho;
+    private int zuncho;
     private int gross;
     private int pesoNeto;
+    //CONTAINER consolidado
 
     private String chrConsolidado;
+    private int corCFS;
 
+    //Deben ser añadidos en las ventanas TRF01 & TRF02
     private String sello;
-
     private ArrayList<Paquete> listPaquetes;
 
 
     public Contenedor(){
-
     }
 
     public void setDescEstado(String descEstado) {
@@ -122,7 +126,7 @@ public class Contenedor  implements Serializable {
         return descPuerto;
     }
 
-    public int getPesoNeto() {
+    public double getPesoNeto() {
         return pesoNeto;
     }
 
@@ -130,13 +134,6 @@ public class Contenedor  implements Serializable {
         this.pesoNeto = pesoNeto;
     }
 
-    public double getZuncho() {
-        return zuncho;
-    }
-
-    public void setZuncho(double zuncho) {
-        this.zuncho = zuncho;
-    }
 
     public String getCodMarca() {
         return codMarca;
@@ -178,28 +175,12 @@ public class Contenedor  implements Serializable {
         this.isoCode = isoCode;
     }
 
-    public int getTara() {
-        return tara;
-    }
-
-    public void setTara(int tara) {
-        this.tara = tara;
-    }
-
     public String getDescCliente() {
         return descCliente;
     }
 
     public void setDescCliente(String descCliente) {
         this.descCliente = descCliente;
-    }
-
-    public int getGross() {
-        return gross;
-    }
-
-    public void setGross(int gross) {
-        this.gross = gross;
     }
 
     public String getSello() {
@@ -217,4 +198,37 @@ public class Contenedor  implements Serializable {
     public void setListPaquetes(ArrayList<Paquete> listPaquetes) {
         this.listPaquetes = listPaquetes;
     }
+
+    public int getCorCFSEntrega() {
+        return corCFS;
+    }
+
+    public void setCorCFSEntrega(int corEntrega) {
+        this.corCFS = corEntrega;
+    }
+
+    public double getTara() {
+        return tara;
+    }
+
+    public void setTara(double tara) {
+        this.tara = tara;
+    }
+
+    public int getZuncho() {
+        return zuncho;
+    }
+
+    public void setZuncho(int zuncho) {
+        this.zuncho = zuncho;
+    }
+
+    public int getGross() {
+        return gross;
+    }
+
+    public void setGross(int gross) {
+        this.gross = gross;
+    }
+
 }

@@ -457,7 +457,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:nextFocusDown="@id/editText29"/>
             </TableRow>
 
             <TableRow
@@ -886,7 +887,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText63"/>
+                    android:nextFocusDown="@id/editText62"/>
             </TableRow>
 
             <TableRow

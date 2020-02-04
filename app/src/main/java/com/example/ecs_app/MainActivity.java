@@ -72,9 +72,13 @@ public class MainActivity extends AppCompatActivity {
                         pass = new validarCredencial().execute().get();
 
                         if (pass) {
+
+                            next.putExtra("user",usernameEditText.getText().toString());
+                            startActivity(next);
+
                             passwordEditText.getText().clear();
                             usernameEditText.getText().clear();
-                            startActivity(next);
+
                         } else {
                             Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
                             passwordEditText.getText().clear();
@@ -111,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private class validarCredencial extends AsyncTask<String,Void,Boolean> {
         @SuppressLint("WrongThread")
         @Override
@@ -125,15 +127,7 @@ public class MainActivity extends AppCompatActivity {
             String METHOD_NAME = "ValidarCredencial";
             String SOAP_ACTION = "http://tempuri.org/ValidarCredencial";
 
-            /*String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "CFS_ValidaCredencial";
-            String SOAP_ACTION = "http://www.atiport.cl/CFS_ValidaCredencial";*/
-
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            //Añadir aqui parametros si fueran necesarios
-            //request.addProperty(nombre,valor);
 
             request.addProperty("usuario", usernameEditText.getText().toString());
             request.addProperty("contrasena", passwordEditText.getText().toString());

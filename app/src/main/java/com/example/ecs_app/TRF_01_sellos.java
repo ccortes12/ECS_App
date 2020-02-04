@@ -32,8 +32,6 @@ public class TRF_01_sellos extends AppCompatActivity {
         ingresarSello = (Button) findViewById(R.id.button_grabarSello);
         sello = (EditText) findViewById(R.id.editText_sello);
 
-
-
         Intent intent = getIntent();
         Contenedor contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
 
@@ -44,7 +42,13 @@ public class TRF_01_sellos extends AppCompatActivity {
         textViewOperacion.setText(cadenaOperacion);
 
 
-        if(!contenedor.getSello().equalsIgnoreCase("")){
+        if(contenedor.getSello().equalsIgnoreCase("0")){
+            sello.setText("");
+            sello.setCursorVisible(true);
+            sello.setFocusable(true);
+            sello.setFocusableInTouchMode(true);
+
+        }else{
             sello.setText(contenedor.getSello());
             sello.setCursorVisible(false);
             sello.setFocusable(false);
