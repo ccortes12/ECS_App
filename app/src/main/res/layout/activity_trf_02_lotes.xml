@@ -89,24 +89,27 @@
 
                 <TextView
                     android:id="@+id/textView5"
-                    android:layout_width="176dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Lote." />
+                    android:text="Lote."
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
+                    android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="ID." />
+                    android:text="ID."
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="218dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Peso [ kg ]" />
+                    android:text="Peso [ kg ]"
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -125,8 +128,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@+id/editText2"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@+id/editText2" />
 
                 <EditText
                     android:id="@+id/editText2"
@@ -134,18 +139,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@+id/editText3"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@+id/editText3"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText4"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText4" />
             </TableRow>
 
             <TableRow
@@ -164,28 +170,30 @@
                     android:layout_width="138dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText5"
-                    />
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText5" />
 
                 <EditText
                     android:id="@+id/editText5"
                     android:layout_width="58dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText6"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText6"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText7"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText7" />
             </TableRow>
 
             <TableRow
@@ -204,8 +212,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText8"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText8" />
 
                 <EditText
                     android:id="@+id/editText8"
@@ -213,18 +223,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText9"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText9"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText9"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText10"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText10" />
             </TableRow>
 
             <TableRow
@@ -243,8 +254,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText11"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText11" />
 
                 <EditText
                     android:id="@+id/editText11"
@@ -252,18 +265,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText12"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText12"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText12"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText13"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText13" />
             </TableRow>
 
             <TableRow
@@ -282,8 +296,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText14"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText14" />
 
                 <EditText
                     android:id="@+id/editText14"
@@ -291,18 +307,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText15"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText15"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText15"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText16"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText16" />
             </TableRow>
 
             <TableRow
@@ -321,8 +338,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText17"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText17" />
 
                 <EditText
                     android:id="@+id/editText17"
@@ -330,18 +349,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText18"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText18"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText18"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText19"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText19" />
             </TableRow>
 
             <TableRow
@@ -360,8 +380,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@+id/editText21"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@+id/editText21" />
 
                 <EditText
                     android:id="@+id/editText21"
@@ -369,18 +391,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText22"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText22"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText22"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText23"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText23" />
             </TableRow>
 
             <TableRow
@@ -399,8 +422,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText24"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText24" />
 
                 <EditText
                     android:id="@+id/editText24"
@@ -408,18 +433,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText25"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText25"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText25"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText26"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText26" />
             </TableRow>
 
             <TableRow
@@ -438,8 +464,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText27"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText27" />
 
                 <EditText
                     android:id="@+id/editText27"
@@ -447,18 +475,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText28"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText28"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText28"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText29"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText29" />
             </TableRow>
 
             <TableRow
@@ -477,8 +506,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText30"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText30" />
 
                 <EditText
                     android:id="@+id/editText30"
@@ -486,18 +517,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText31"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText31"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText31"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText32"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText32" />
             </TableRow>
 
             <TableRow
@@ -516,8 +548,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText33"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText33" />
 
                 <EditText
                     android:id="@+id/editText33"
@@ -525,18 +559,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText34"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText34"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText34"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText35"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText35" />
             </TableRow>
 
             <TableRow
@@ -555,8 +590,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText36"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText36" />
 
                 <EditText
                     android:id="@+id/editText36"
@@ -564,18 +601,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText37"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText37"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText37"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:gravity="center"
                     android:inputType="number"
-                    android:nextFocusDown="@id/editText38"
-                    android:gravity="center"/>
+                    android:nextFocusDown="@id/editText38" />
             </TableRow>
 
             <TableRow
@@ -594,8 +632,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText39"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText39" />
 
                 <EditText
                     android:id="@+id/editText39"
@@ -603,18 +643,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText40"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText40"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText40"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText41"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText41" />
             </TableRow>
 
             <TableRow
@@ -633,8 +674,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText42"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText42" />
 
                 <EditText
                     android:id="@+id/editText42"
@@ -642,18 +685,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText43"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText43"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText43"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText44"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText44" />
             </TableRow>
 
             <TableRow
@@ -672,8 +716,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText45"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText45" />
 
                 <EditText
                     android:id="@+id/editText45"
@@ -681,18 +727,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText46"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText46"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText46"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText47"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText47" />
             </TableRow>
 
             <TableRow
@@ -711,8 +758,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText48"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText48" />
 
                 <EditText
                     android:id="@+id/editText48"
@@ -720,18 +769,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText49"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText49"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText49"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText50"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText50" />
             </TableRow>
 
             <TableRow
@@ -750,8 +800,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText51"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText51" />
 
                 <EditText
                     android:id="@+id/editText51"
@@ -759,18 +811,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText52"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText52"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText52"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText53"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText53" />
             </TableRow>
 
             <TableRow
@@ -789,8 +842,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText54"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText54" />
 
                 <EditText
                     android:id="@+id/editText54"
@@ -798,18 +853,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText55"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText55"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText55"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText56"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText56" />
             </TableRow>
 
             <TableRow
@@ -828,8 +884,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText57"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText57" />
 
                 <EditText
                     android:id="@+id/editText57"
@@ -837,18 +895,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText58"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText58"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText58"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText59"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText59" />
             </TableRow>
 
             <TableRow
@@ -867,8 +926,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText60"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText60" />
 
                 <EditText
                     android:id="@+id/editText60"
@@ -876,18 +937,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText61"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText61"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText61"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText62"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText62" />
             </TableRow>
 
             <TableRow
@@ -906,8 +968,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText63"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText63" />
 
                 <EditText
                     android:id="@+id/editText63"
@@ -915,18 +979,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText64"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText64"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText64"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText67"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText67" />
             </TableRow>
 
             <TableRow
@@ -945,8 +1010,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText68"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText68" />
 
                 <EditText
                     android:id="@+id/editText68"
@@ -954,18 +1021,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText69"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText69"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText69"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText70"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText70" />
             </TableRow>
 
             <TableRow
@@ -984,8 +1052,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText71"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText71" />
 
                 <EditText
                     android:id="@+id/editText71"
@@ -993,19 +1063,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText72"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText72"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText72"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText73"
-                />
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText73" />
             </TableRow>
 
             <TableRow
@@ -1024,8 +1094,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText74"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText74" />
 
                 <EditText
                     android:id="@+id/editText74"
@@ -1033,18 +1105,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText75"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText75"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText75"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/editText76"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/editText76" />
             </TableRow>
 
             <TableRow
@@ -1063,8 +1136,10 @@
                     android:layout_width="134dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
-                    android:nextFocusDown="@id/editText77"/>
+                    android:gravity="center"
+                    android:inputType="text|textCapCharacters"
+                    android:maxLength="10"
+                    android:nextFocusDown="@id/editText77" />
 
                 <EditText
                     android:id="@+id/editText77"
@@ -1072,18 +1147,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:nextFocusDown="@id/editText78"/>
+                    android:inputType="text|textCapCharacters"
+                    android:nextFocusDown="@id/editText78"
+                    android:textAlignment="center"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/editText78"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:nextFocusDown="@id/button_grabarLote"/>
+                    android:inputType="number"
+                    android:nextFocusDown="@id/button_grabarLote" />
             </TableRow>
 
 
