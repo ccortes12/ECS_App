@@ -25,6 +25,7 @@ import com.example.ecs_app.Entidades.Marca;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
@@ -686,9 +687,9 @@ public class TRF_00 extends AppCompatActivity {
             try{
 
                 transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+                SoapPrimitive resultado_xml = (SoapPrimitive) envelope.getResponse();
 
-                return resultado_xml.getProperty("CFS_RegistraConsolidadoResult").toString();
+                return resultado_xml.toString();
 
             } catch (HttpResponseException e) {
                 e.printStackTrace();
@@ -704,6 +705,5 @@ public class TRF_00 extends AppCompatActivity {
 
         }
     }
-
 
 }

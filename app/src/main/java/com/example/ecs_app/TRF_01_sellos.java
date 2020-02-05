@@ -62,20 +62,20 @@ public class TRF_01_sellos extends AppCompatActivity {
             sello.setCursorVisible(true);
             sello.setFocusable(true);
             sello.setFocusableInTouchMode(true);
+            ingresarSello.setVisibility(View.VISIBLE);
 
         }else{
             sello.setText(contenedor.getSello());
             sello.setCursorVisible(false);
             sello.setFocusable(false);
+            ingresarSello.setVisibility(View.INVISIBLE);
         }
 
         ingresarSello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Insertar el sello en el sistema
-
                 //Validar que el campo no este vacio
-
                 if(!sello.getText().toString().equalsIgnoreCase("")){
 
                     try {
@@ -87,6 +87,7 @@ public class TRF_01_sellos extends AppCompatActivity {
                             Toast.makeText(TRF_01_sellos.this,"EXITO",Toast.LENGTH_SHORT).show();
                             sello.setCursorVisible(false);
                             sello.setFocusable(false);
+                            ingresarSello.setVisibility(View.INVISIBLE);
                         }
                     } catch (ExecutionException e) {
                         e.printStackTrace();

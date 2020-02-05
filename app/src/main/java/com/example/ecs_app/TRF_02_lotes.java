@@ -60,6 +60,8 @@ public class TRF_02_lotes extends AppCompatActivity {
 
         saldo = contenedor.getGross() - contenedor.getTara();
 
+
+        //INICIAL Cargar datos y calcular nuevo indice para no sobrescribir
         cargarDatos(tblLayout);
 
         button_grabarLotes.setOnClickListener(new View.OnClickListener(){
@@ -72,8 +74,12 @@ public class TRF_02_lotes extends AppCompatActivity {
                     Toast.makeText(TRF_02_lotes.this,"ERROR, Id no corresponde",Toast.LENGTH_SHORT).show();
                 }else if(validarCargaLotes(tblLayout).equalsIgnoreCase("Existe un paquete duplicado")){
                     Toast.makeText(TRF_02_lotes.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
+                }else if (validarCargaLotes(tblLayout).equalsIgnoreCase("Peso total excede Max gross")) {
+                    Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+
+                    saldo = contenedor.getGross() - contenedor.getTara();
                     agregarListaPaquetes(tblLayout);
                     cargarDatos(tblLayout);
                 }
@@ -172,7 +178,7 @@ public class TRF_02_lotes extends AppCompatActivity {
                     celdaActual = (EditText) row.getChildAt(3);celdaActual.setText(Double.toString(p.getPeso()));
 
                     //Actualizar saldo
-                    saldo -= p.getPeso();
+                    saldo -= (p.getPeso() + contenedor.getZuncho());
                 }
             }
         } catch (ExecutionException e) {
@@ -182,11 +188,14 @@ public class TRF_02_lotes extends AppCompatActivity {
         }
 
         text_saldo.setText(Double.toString(saldo));
+
     }
 
     private String validarCargaLotes(TableLayout tblLayout) {
 
+        double tempSaldo = (double)contenedor.getGross() - contenedor.getTara();
         int cantNoNula = 0;
+
         ArrayList<String> lista = new ArrayList<>(25);
 
         for (int i = 1; i < tblLayout.getChildCount(); i++) {
@@ -199,7 +208,6 @@ public class TRF_02_lotes extends AppCompatActivity {
             EditText celdaPeso = (EditText) row.getChildAt(3);
 
             int camposVacios = 0;
-
             if (celdaLote.getText().toString().equalsIgnoreCase("")) {
                 camposVacios++;
             }
@@ -213,10 +221,9 @@ public class TRF_02_lotes extends AppCompatActivity {
             if (camposVacios > 0 && camposVacios < 3) {
                 return "Campos incompletos";
             }else if(camposVacios == 0){
-
                 //TODOS LOS CAMPOS COMPLETOS
-
                 cantNoNula++;
+
                 if(cantNoNula != i){
                     return "Id no corresponde";
                 }
@@ -224,6 +231,12 @@ public class TRF_02_lotes extends AppCompatActivity {
                 String concate = celdaLote.getText().toString() + "-" + celdaID.getText().toString();
                 if(!lista.contains(concate)){
                     lista.add(concate);
+                    //Verificar que el la sumatoria de los pesosPaquetes + tara sea menor que el max gross
+                    tempSaldo -= (Double.parseDouble(celdaPeso.getText().toString()) + contenedor.getZuncho()); //en validacion agregar el peso zuncho
+                    if(tempSaldo < 0){
+                        return "Peso total excede Max gross";
+                    }
+
                 }else{
                     return "Existe un paquete duplicado";
                 }
@@ -237,10 +250,10 @@ public class TRF_02_lotes extends AppCompatActivity {
 
     private void agregarListaPaquetes(TableLayout tblLayout){
 
+
         for(int i = 1; i < tblLayout.getChildCount(); i++){
 
             String respuesta;
-
             TableRow row = (TableRow) tblLayout.getChildAt(i);
 
             TextView cor = (TextView) row.getChildAt(0);
