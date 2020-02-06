@@ -205,10 +205,17 @@ public class TRF_00 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //COMPROBAR EL METODO SI ES MANUAL O POR CODIGO DE BARRA
-                Intent to_lotes = new Intent(v.getContext(),TRF_02_lotes.class);
-                to_lotes.putExtra("objContenedor",(Serializable) c);
-                startActivity(to_lotes);
+
+                if(c.getCodBarra().equalsIgnoreCase("S")){
+                    Intent to_lotes_codigoBarra = new Intent(v.getContext(),TRF_02_lotes_ingresoCodigoBarra.class);
+                    to_lotes_codigoBarra.putExtra("objContenedor",(Serializable) c);
+                    startActivity(to_lotes_codigoBarra);
+                }else if(c.getCodBarra().equalsIgnoreCase("N")){
+                    Intent to_lotes = new Intent(v.getContext(),TRF_02_lotes.class);
+                    to_lotes.putExtra("objContenedor",(Serializable) c);
+                    startActivity(to_lotes);
+                }
+
             }
         });
 

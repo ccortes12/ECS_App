@@ -58,8 +58,6 @@ public class TRF_02_lotes extends AppCompatActivity {
         Intent intent = getIntent();
         contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
 
-        saldo = contenedor.getGross() - contenedor.getTara();
-
 
         //INICIAL Cargar datos y calcular nuevo indice para no sobrescribir
         cargarDatos(tblLayout);
@@ -79,7 +77,6 @@ public class TRF_02_lotes extends AppCompatActivity {
                 }else{
                     Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
 
-                    saldo = contenedor.getGross() - contenedor.getTara();
                     agregarListaPaquetes(tblLayout);
                     cargarDatos(tblLayout);
                 }
@@ -161,6 +158,8 @@ public class TRF_02_lotes extends AppCompatActivity {
 
         textOperacion.setText(cadenaOperacion);
         textContenedor.setText(cadenaContenedor);
+
+        saldo = contenedor.getGross() - (int)contenedor.getTara();
 
         try {
 
@@ -269,8 +268,11 @@ public class TRF_02_lotes extends AppCompatActivity {
                 peso = (int)Double.parseDouble(celdaPeso.getText().toString());
 
                 try {
-                    respuesta = new cfs_RegistraPaquete().execute().get();
 
+                    respuesta = new cfs_RegistraPaquete().execute().get();
+                    if(!respuesta.equalsIgnoreCase("0")){
+                        Toast.makeText(TRF_02_lotes.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
+                    }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
