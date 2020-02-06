@@ -40,7 +40,7 @@ public class Contenedor  implements Serializable {
 
     //Deben ser añadidos en las ventanas TRF01 & TRF02
     private String sello;
-    private ArrayList<Paquete> listPaquetes;
+    private String codBarra;
 
 
     public Contenedor(){
@@ -191,14 +191,6 @@ public class Contenedor  implements Serializable {
         this.sello = sello;
     }
 
-    public ArrayList<Paquete> getListPaquetes() {
-        return listPaquetes;
-    }
-
-    public void setListPaquetes(ArrayList<Paquete> listPaquetes) {
-        this.listPaquetes = listPaquetes;
-    }
-
     public int getCorCFSEntrega() {
         return corCFS;
     }
@@ -231,4 +223,19 @@ public class Contenedor  implements Serializable {
         this.gross = gross;
     }
 
+    public int getCorCFS() {
+        return corCFS;
+    }
+
+    public void setCorCFS(int corCFS) {
+        this.corCFS = corCFS;
+    }
+
+    public String getCodBarra() {
+        return codBarra;
+    }
+
+    public void setCodBarra(String codBarra) {
+        this.codBarra = codBarra;
+    }
 }

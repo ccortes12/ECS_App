@@ -226,14 +226,15 @@ public class TRF_00 extends AppCompatActivity {
 
                 //Validar todos los campos no vacios
                 if(!allCamposVacios()){
-
                     // VALIDAR CAMPOS MARCA & CSG
                     if(!(descPuerto.getText().toString().equalsIgnoreCase("") || descMar.getText().toString().equalsIgnoreCase(""))){
 
-                        //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
-                        confimarIngresoContainer();
-
-                        // TRANSACCION AL WEB SERVICE
+                        if((Integer.parseInt(gross.getText().toString())  - Integer.parseInt(tara.getText().toString()) - Integer.parseInt(zun.getText().toString())) >= 0){
+                            //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
+                            confimarIngresoContainer();
+                        }else{
+                            Toast.makeText(TRF_00.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
+                        }
                     }else{
                         Toast.makeText(TRF_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
                     }
@@ -248,7 +249,15 @@ public class TRF_00 extends AppCompatActivity {
     private void confimarIngresoContainer(){
 
         new AlertDialog.Builder(TRF_00.this)
-                .setMessage("¿Confirma registro Container?")
+                .setTitle("Confirmación consolidación container")
+                .setMessage("AÑO : " + anno.getText().toString() + "  OPE: " + cor.getText().toString() + "\n" +
+                        "CONT : " + cont.getText().toString().toUpperCase() + " " + codigo.getText().toString() + " - " + digit.getText().toString() + "\n" +
+                        "ISO : " + iso.getText().toString() + "\n" +
+                        "TARA : " + tara.getText().toString() + " kg\n" +
+                        "CSG : " + csg.getText().toString() + "   " + descCsg.getText().toString() + "\n" +
+                        "MAR : " + mar.getText().toString() + "   " + descMar.getText().toString() + "\n" +
+                        "MAX GROSS : " + gross.getText().toString() + " kg\n" +
+                        "ZUN : " + zun.getText().toString() + " kg.")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -313,6 +322,8 @@ public class TRF_00 extends AppCompatActivity {
 
                             gross.setText(Double.toString(c.getGross()));
                             zun.setText(Double.toString(c.getZuncho()));
+
+
 
                             //mostrar los botones en caso de container consolidado
                             button_grabar.setVisibility(View.INVISIBLE);
@@ -504,6 +515,7 @@ public class TRF_00 extends AppCompatActivity {
                             contenedor.setGross(Integer.parseInt(resultado_xml.getProperty("intGross").toString()));
 
                             contenedor.setCorCFSEntrega(Integer.parseInt(resultado_xml.getProperty("intCorCFS").toString()));
+                            contenedor.setCodBarra(resultado_xml.getProperty("strCodBarraShipper").toString());
 
                             //Si no existe la informacion retorna cero
                             contenedor.setSello(resultado_xml.getProperty("strSello").toString());
