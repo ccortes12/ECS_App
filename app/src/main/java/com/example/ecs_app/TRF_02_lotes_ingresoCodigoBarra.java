@@ -69,7 +69,7 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if((actionId == EditorInfo.IME_ACTION_DONE)){
+                if(actionId == EditorInfo.IME_ACTION_DONE){
 
                     try {
                         Paquete tempPaquete = new cfs_LeerCodigoBarra().execute().get();

@@ -12,7 +12,9 @@ package com.example.ecs_app;
         import android.os.Build;
         import android.os.Bundle;
         import android.view.Gravity;
+        import android.view.KeyEvent;
         import android.view.View;
+        import android.view.inputmethod.EditorInfo;
         import android.widget.Button;
         import android.widget.DatePicker;
         import android.widget.EditText;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.userId);
         passwordEditText = findViewById(R.id.password);
-        resultado = findViewById(R.id.resultado);
         fecha = findViewById(R.id.textView_Fecha);
         ingresoButton = findViewById(R.id.button_ingreso);
         pickDate = findViewById(R.id.imageButton);
@@ -62,6 +63,47 @@ public class MainActivity extends AppCompatActivity {
         final String fechaString = Integer.toString(dia) + " / " + Integer.toString(mes+1)  + " / " + Integer.toString(anno);
         fecha.setText(fechaString);
 
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+
+                    Intent next = new Intent(v.getContext(),TRF_00.class);
+                    if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
+                        try {
+                            String pass = new validarCredencial().execute().get();
+
+                            String[] partes = pass.split("-");
+
+                            if (partes[0].equalsIgnoreCase("Exito")) {
+
+                                next.putExtra("user",usernameEditText.getText().toString());
+                                startActivity(next);
+
+                            } else {
+                                if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
+                                    Toast.makeText(MainActivity.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(MainActivity.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
+                                }
+                                passwordEditText.getText().clear();
+                            }
+
+                        } catch (Exception e) {
+                            e.getCause();
+                        }
+                    }else{
+                        Toast.makeText(MainActivity.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                return false;
+            }
+        });
+
         ingresoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         String pass = new validarCredencial().execute().get();
 
                         String[] partes = pass.split("-");
-
-
 
                         if (partes[0].equalsIgnoreCase("Exito")) {
 
