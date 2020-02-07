@@ -69,20 +69,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent next = new Intent(v.getContext(),TRF_00.class);
                 if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
                     try {
-                        pass = new validarCredencial().execute().get();
+                        String pass = new validarCredencial().execute().get();
 
-                        if (pass) {
+                        String[] partes = pass.split("-");
+
+
+
+                        if (partes[0].equalsIgnoreCase("Exito")) {
 
                             next.putExtra("user",usernameEditText.getText().toString());
                             startActivity(next);
 
-                            passwordEditText.getText().clear();
-                            usernameEditText.getText().clear();
-
                         } else {
-                            Toast.makeText(MainActivity.this, "Error, Ingrese nuevamente", Toast.LENGTH_SHORT).show();
+                            if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
+                                Toast.makeText(MainActivity.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(MainActivity.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
+                            }
                             passwordEditText.getText().clear();
-                            usernameEditText.getText().clear();
                         }
 
                     } catch (Exception e) {
@@ -109,16 +113,23 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.updateDate(anno,mes,dia);
                 datePickerDialog.show();
             }
-            // datePickerDialog.show();  Por que chucha no?
 
         });
 
     }
 
-    private class validarCredencial extends AsyncTask<String,Void,Boolean> {
+    protected void onResume(){
+        super.onResume();
+
+        usernameEditText.setText("");
+        passwordEditText.setText("");
+
+    }
+
+    private class validarCredencial extends AsyncTask<String,Void,String> {
         @SuppressLint("WrongThread")
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
 
             boolean resultado = false;
 
@@ -143,10 +154,9 @@ public class MainActivity extends AppCompatActivity {
                 transport.call(SOAP_ACTION, envelope);
                 SoapObject resultado_xml = (SoapObject) envelope.getResponse();
                 String estado = resultado_xml.getProperty("Estado").toString();
+                String mensaje = resultado_xml.getProperty("Mensaje").toString();
 
-                if (estado.equalsIgnoreCase("Exito")) {
-                    resultado = true;
-                }
+                return estado + "-" + mensaje;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -154,15 +164,9 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return resultado;
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (result) {
-                pass = true;
-            } else {pass = false;}
-        }
     }
 
 }

@@ -65,7 +65,6 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
 
         cargarDatos(tblLayout);
 
-
         ingresoCodigo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -82,28 +81,32 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                             peso = (int)tempPaquete.getPeso();
 
                             try{
-                                String respuesta = new cfs_RegistraPaquete().execute().get();
 
-                                if(respuesta.equalsIgnoreCase("0")){ //Valida registro
+                                if(!listaPaquetes.contains(tempPaquete)){
 
-                                    if(!listaPaquetes.contains(tempPaquete)){
+                                    if((saldo - peso) >= 0){
 
-                                        if((saldo - peso) >= 0){
+                                        //Paso todas las validaciones
+                                        String respuesta = new cfs_RegistraPaquete().execute().get();
+
+                                        if(respuesta.equalsIgnoreCase("0")){ //Registro Exitoso
+
                                             listaPaquetes.add(tempPaquete);
                                             cargarDatos(tblLayout);
                                             ingresoCodigo.setText("");
 
                                             return true;
+
                                         }else{
-                                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete excede el maximo peso" ,Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,respuesta,Toast.LENGTH_SHORT).show();
                                         }
 
                                     }else{
-                                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete ya ingresado" ,Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete excede el maximo peso" ,Toast.LENGTH_SHORT).show();
                                     }
 
                                 }else{
-                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete ya ingresado" ,Toast.LENGTH_SHORT).show();
                                 }
 
                             }catch (ExecutionException e) {
@@ -113,6 +116,8 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                             }
                         }else if (tempPaquete.getEstado() == 1){
                             Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, " + tempPaquete.getMensaje(),Toast.LENGTH_LONG).show();
+                        }else {
+                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, En la base de datos" ,Toast.LENGTH_LONG).show();
                         }
 
                     } catch (ExecutionException e) {
