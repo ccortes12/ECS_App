@@ -42,7 +42,7 @@ public class TRF_00 extends AppCompatActivity {
 
     private Button button_sello,button_lotes,button_limpiar, button_buscar, button_grabar;
     private EditText anno,cor,cont,codigo,digit,iso,tara,csg,mar,gross,zun;
-    private TextView codShipper,descShipper,codPuerto,descPuerto, descCsg, descMar;
+    private TextView descShipper,descPuerto, descCsg, descMar;
     private Consignatario cs;
     private Marca ma;
     private String user;
@@ -70,9 +70,7 @@ public class TRF_00 extends AppCompatActivity {
         gross = (EditText) findViewById(R.id.editText_gross);
         zun = (EditText) findViewById(R.id.editText_zun);
 
-        codShipper = (TextView) findViewById(R.id.codShipper);
         descShipper = (TextView) findViewById(R.id.descShipper);
-        codPuerto = (TextView) findViewById(R.id.codPuerto);
         descPuerto = (TextView) findViewById(R.id.descPuerto);
         descCsg = (TextView) findViewById(R.id.textView20);
         descMar = (TextView) findViewById(R.id.textView19);
@@ -308,10 +306,9 @@ public class TRF_00 extends AppCompatActivity {
                 if (c != null){
 
                     if(c.getDescEstado().equalsIgnoreCase("OK")){
-                        codShipper.setText(c.getCodShipper());
-                        descShipper.setText(c.getDescShipper());
-                        codPuerto.setText(c.getCodPuerto());
-                        descPuerto.setText(c.getDescPuerto());
+
+                        descShipper.setText(c.getCodShipper().trim() + " - " + c.getDescShipper().trim());
+                        descPuerto.setText(c.getCodPuerto().trim() + " - " + c.getDescPuerto().trim());
 
                         button_grabar.setVisibility(View.VISIBLE);
                         estadoIngresosConsolidado(true);
@@ -405,10 +402,8 @@ public class TRF_00 extends AppCompatActivity {
     }
 
     private void limpiarInfoCont(){
-        codShipper.setText("");
         descPuerto.setText("");
         descShipper.setText("");
-        codPuerto.setText("");
     }
 
     private void limpiarInfo2(){
@@ -616,7 +611,7 @@ public class TRF_00 extends AppCompatActivity {
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("codigoMarca",mar.getText().toString());
-            request.addProperty("codigoShipper",codShipper.getText().toString());
+            request.addProperty("codigoShipper",c.getCodShipper());
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -687,7 +682,7 @@ public class TRF_00 extends AppCompatActivity {
             request.addProperty("cod_sigla",cont.getText().toString());
             request.addProperty("cod_numero",cor_numero);
             request.addProperty("cod_digito",digit.getText().toString());
-            request.addProperty("cod_shipper",codShipper.getText().toString());
+            request.addProperty("cod_shipper",c.getCodShipper());
             request.addProperty("cod_cliente",csg.getText().toString());
             request.addProperty("marca",mar.getText().toString());
             request.addProperty("isocode",isocode);

@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="379dp"
-        android:layout_height="80dp"
+        android:layout_width="447dp"
+        android:layout_height="87dp"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,14 +29,18 @@
                 android:layout_width="15dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="OPERACION :" />
+                android:gravity="center"
+                android:text="OPERACION :"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Operacion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,21 +53,25 @@
                 android:layout_width="16dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="CONTENEDOR :" />
+                android:gravity="center"
+                android:text="CONTENEDOR :"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Contenedor"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
     <EditText
         android:id="@+id/editText_sello"
-        android:layout_width="285dp"
-        android:layout_height="44dp"
+        android:layout_width="304dp"
+        android:layout_height="52dp"
         android:layout_marginTop="85dp"
         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         android:ems="10"
@@ -78,9 +86,9 @@
 
     <Button
         android:id="@+id/button_grabarSello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
         android:text="GRABAR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
