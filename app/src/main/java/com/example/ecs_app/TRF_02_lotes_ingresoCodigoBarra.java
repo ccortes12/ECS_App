@@ -74,50 +74,56 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                     try {
                         Paquete tempPaquete = new cfs_LeerCodigoBarra().execute().get();
 
-                        if(tempPaquete.getEstado() == 0){ //Valida lectura
+                        if(tempPaquete != null) {
 
-                            id_lote = tempPaquete.getLote();
-                            id_paquete = tempPaquete.getIdPaquete();
-                            peso = (int)tempPaquete.getPeso();
+                            if (tempPaquete.getEstado() == 0) { //Valida lectura
 
-                            try{
+                                id_lote = tempPaquete.getLote();
+                                id_paquete = tempPaquete.getIdPaquete();
+                                peso = (int) tempPaquete.getPeso();
 
-                                if(!listaPaquetes.contains(tempPaquete)){
+                                try {
 
-                                    if((saldo - peso) >= 0){
+                                    if (!listaPaquetes.contains(tempPaquete)) {
 
-                                        //Paso todas las validaciones
-                                        String respuesta = new cfs_RegistraPaquete().execute().get();
+                                        if ((saldo - peso) >= 0) {
 
-                                        if(respuesta.equalsIgnoreCase("0")){ //Registro Exitoso
+                                            //Paso todas las validaciones
+                                            String respuesta = new cfs_RegistraPaquete().execute().get();
 
-                                            listaPaquetes.add(tempPaquete);
-                                            cargarDatos(tblLayout);
-                                            ingresoCodigo.setText("");
+                                            if (respuesta.equalsIgnoreCase("0")) { //Registro Exitoso
 
-                                            return true;
+                                                listaPaquetes.add(tempPaquete);
+                                                cargarDatos(tblLayout);
+                                                ingresoCodigo.setText("");
 
-                                        }else{
-                                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,respuesta,Toast.LENGTH_SHORT).show();
+                                                return true;
+
+                                            } else {
+                                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        } else {
+                                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
                                         }
 
-                                    }else{
-                                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete excede el maximo peso" ,Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
                                     }
 
-                                }else{
-                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, Paquete ya ingresado" ,Toast.LENGTH_SHORT).show();
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                } catch (Exception e) {
+                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + e.getCause().toString(), Toast.LENGTH_SHORT).show();
                                 }
-
-                            }catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            } else if (tempPaquete.getEstado() == 1) {
+                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
                             }
-                        }else if (tempPaquete.getEstado() == 1){
-                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, " + tempPaquete.getMensaje(),Toast.LENGTH_LONG).show();
+
                         }else {
-                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, En la base de datos" ,Toast.LENGTH_LONG).show();
+                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
                         }
 
                     } catch (ExecutionException e) {
@@ -166,7 +172,7 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        textSaldo.setText(Double.toString(saldo));
+        textSaldo.setText(Double.toString(saldo) + " [kg]");
 
     }
 
@@ -313,6 +319,8 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
+            }catch (Exception e){
                 e.printStackTrace();
             }
 

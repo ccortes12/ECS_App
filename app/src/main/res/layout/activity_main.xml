@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Usuario"
-            android:inputType="text|textPersonName"
+            android:inputType="number"
             android:textSize="24dp"
             tools:layout_editor_absoluteX="-133dp"
             tools:layout_editor_absoluteY="454dp" />

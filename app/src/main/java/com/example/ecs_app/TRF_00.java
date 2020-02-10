@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,7 +15,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +51,7 @@ public class TRF_00 extends AppCompatActivity {
     private Consignatario cs;
     private Marca ma;
     private String user;
+    private InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,8 @@ public class TRF_00 extends AppCompatActivity {
         descCsg = (TextView) findViewById(R.id.textView20);
         descMar = (TextView) findViewById(R.id.textView19);
 
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
 
         user = getIntent().getStringExtra("user");
 
@@ -86,7 +92,18 @@ public class TRF_00 extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if(actionId == EditorInfo.IME_ACTION_NEXT && !digit.getText().toString().equalsIgnoreCase("")){ buscarContenedor(); }
+                if(actionId == EditorInfo.IME_ACTION_GO  && !digit.getText().toString().equalsIgnoreCase("")){
+
+                    String r = buscarContenedor(); //True si esta consolidado
+
+                    if(!r.equalsIgnoreCase("N")){
+
+                        if(r.equalsIgnoreCase("S")){
+                            iso.requestFocusFromTouch();
+                        }
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    }
+                }
                 return false;
             }
         });
@@ -172,7 +189,15 @@ public class TRF_00 extends AppCompatActivity {
                 limpiarInfo2();
                 button_lotes.setVisibility(View.INVISIBLE);
                 button_sello.setVisibility(View.INVISIBLE);
-                buscarContenedor();
+                String r = buscarContenedor();
+
+                if(!r.equalsIgnoreCase("N")){
+
+                    if(r.equalsIgnoreCase("S")){
+                        iso.requestFocusFromTouch();
+                    }
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                }
             }
         });
 
@@ -207,8 +232,8 @@ public class TRF_00 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 limpiarText();
-
-                cont.requestFocus();
+                cont.requestFocusFromTouch();
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);  //Forzar la muestra del teclado
 
             }
         });
@@ -285,7 +310,9 @@ public class TRF_00 extends AppCompatActivity {
 
     }
 
-    private void buscarContenedor(){
+
+    //Retorna true si el contenedor esta consolidado
+    private String buscarContenedor(){
 
         if(!camposVaciosCONT()){
 
@@ -317,7 +344,6 @@ public class TRF_00 extends AppCompatActivity {
                             zun.setText(Double.toString(c.getZuncho()));
 
 
-
                             //mostrar los botones en caso de container consolidado
                             button_grabar.setVisibility(View.INVISIBLE);
                             button_lotes.setVisibility(View.VISIBLE);
@@ -325,7 +351,12 @@ public class TRF_00 extends AppCompatActivity {
 
                             estadoIngresosConsolidado(false);
 
+                            return "C";
+
+
                         }
+
+                        return "S";
                     }else{
                         Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
                         estadoIngresosConsolidado(false);
@@ -333,15 +364,18 @@ public class TRF_00 extends AppCompatActivity {
                         limpiarInfo2();
                         button_lotes.setVisibility(View.INVISIBLE);
                         button_sello.setVisibility(View.INVISIBLE);
+                        return "N";
                     }
                 }
             }catch(Exception e){
                 Toast.makeText(TRF_00.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                return "N";
             }
         }else{
             Toast.makeText(TRF_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
+            return "N";
         }
-
+        return "N";
     }
 
     private boolean isNumeric(String s){
@@ -710,5 +744,7 @@ public class TRF_00 extends AppCompatActivity {
 
         }
     }
+
+
 
 }

@@ -206,7 +206,7 @@ public class TRF_02_lotes extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        text_saldo.setText(Double.toString(saldo));
+        text_saldo.setText(Double.toString(saldo) + " [kg]");
 
     }
 

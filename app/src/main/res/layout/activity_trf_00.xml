@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/infoContenedor"
-        android:layout_width="512dp"
+        android:layout_width="531dp"
         android:layout_height="87dp"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="80dp"
+                android:layout_width="125dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="190dp"
+                android:layout_width="95dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -90,7 +90,7 @@
 
             <EditText
                 android:id="@+id/editText_cont"
-                android:layout_width="290dp"
+                android:layout_width="164dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
@@ -103,7 +103,7 @@
 
             <EditText
                 android:id="@+id/editText_codigo"
-                android:layout_width="283dp"
+                android:layout_width="148dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
@@ -115,7 +115,7 @@
 
             <TextView
                 android:id="@+id/textView28"
-                android:layout_width="123dp"
+                android:layout_width="31dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -125,16 +125,15 @@
 
             <EditText
                 android:id="@+id/editText_digit"
-                android:layout_width="wrap_content"
+                android:layout_width="62dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="0"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionGo"
                 android:inputType="number"
                 android:maxLength="1"
-                android:nextFocusDown="@+id/inputISO"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -205,8 +204,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="512dp"
-        android:layout_height="215dp"
+        android:layout_width="531dp"
+        android:layout_height="217dp"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +219,7 @@
 
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="64dp"
+                android:layout_width="94dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -267,7 +266,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text=".kg"
+                android:text=" [kg]"
                 android:textSize="20sp" />
 
 
@@ -279,7 +278,7 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="110dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -290,7 +289,7 @@
 
             <EditText
                 android:id="@+id/editText_csg"
-                android:layout_width="366dp"
+                android:layout_width="412dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
@@ -313,7 +312,7 @@
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="102dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -324,20 +323,19 @@
 
             <EditText
                 android:id="@+id/editText_mar"
-                android:layout_width="359dp"
+                android:layout_width="358dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="center"
+                android:imeOptions="actionNext"
                 android:inputType="number"
-                android:textSize="20sp"
-                android:imeOptions="actionNext"/>
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                ></LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -390,7 +388,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text=".kg"
+                android:text=" [kg]"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -426,7 +424,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text=".kg"
+                android:text=" [kg]"
                 android:textSize="20sp" />
 
         </LinearLayout>
