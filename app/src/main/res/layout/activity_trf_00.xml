@@ -131,6 +131,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="0"
+                android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLength="1"
                 android:nextFocusDown="@+id/inputISO"
@@ -329,12 +330,14 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:imeOptions="actionNext"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                ></LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -456,6 +459,7 @@
         android:text="LIMPIAR"
         android:background="@color/colorPrimaryDark"
         android:textColor="@android:color/white"
+        android:nextFocusDown="@+id/editText_cont"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -480,10 +484,10 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4">
 
         <Button
-            android:id="@+id/button_sello"
+            android:id="@+id/button_lotes"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="SELLOS"
+            android:text="LOTES"
             android:visibility="invisible" />
 
         <Button
@@ -494,10 +498,10 @@
             android:visibility="invisible" />
 
         <Button
-            android:id="@+id/button_lotes"
+            android:id="@+id/button_sellos"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="LOTES"
+            android:text="SELLOS"
             android:visibility="invisible" />
     </LinearLayout>
 

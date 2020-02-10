@@ -1,11 +1,14 @@
 package com.example.ecs_app;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,10 +78,27 @@ public class TRF_02_lotes extends AppCompatActivity {
                 }else if (validarCargaLotes(tblLayout).equalsIgnoreCase("Peso total excede Max gross")) {
                     Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
 
-                    agregarListaPaquetes(tblLayout);
-                    cargarDatos(tblLayout);
+
+                    new AlertDialog.Builder(TRF_02_lotes.this)
+                            .setTitle("Confirmación registro paquetes")
+                            .setMessage("Se ingresaran todos los paquetes al sistema... ")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+
+                                    agregarListaPaquetes(tblLayout);
+                                    cargarDatos(tblLayout);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d("Mensaje" , "Se cancelo acción");
+                                }
+                            }).show();
                 }
             }
         });

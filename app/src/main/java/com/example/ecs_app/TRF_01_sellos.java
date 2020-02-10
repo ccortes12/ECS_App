@@ -83,12 +83,11 @@ public class TRF_01_sellos extends AppCompatActivity {
                                     try {
                                         String salida = new cfs_RegistraSello().execute().get();
 
-                                        if (salida.equalsIgnoreCase("1")) {
-                                            Toast.makeText(TRF_01_sellos.this, "ERROR, No se pudo realizar la operacion", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                        if (salida.equalsIgnoreCase("0")) {
                                             Toast.makeText(TRF_01_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
-
                                             cargarSello();
+                                        } else {
+                                            Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (ExecutionException e) {
                                         e.printStackTrace();

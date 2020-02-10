@@ -12,7 +12,9 @@ import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,7 +54,7 @@ public class TRF_00 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_00);
 
-        button_sello = (Button) findViewById(R.id.button_sello);
+        button_sello = (Button) findViewById(R.id.button_sellos);
         button_lotes = (Button) findViewById(R.id.button_lotes);
         button_limpiar = (Button) findViewById(R.id.button_clean);
         button_buscar = (Button) findViewById(R.id.button_buscar);
@@ -80,21 +82,12 @@ public class TRF_00 extends AppCompatActivity {
 
         estadoIngresosConsolidado(false);
 
-        digit.addTextChangedListener(new TextWatcher() {
+        digit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!digit.getText().toString().equalsIgnoreCase("")){
-                    buscarContenedor();
-                }
+                if(actionId == EditorInfo.IME_ACTION_NEXT && !digit.getText().toString().equalsIgnoreCase("")){ buscarContenedor(); }
+                return false;
             }
         });
 
@@ -139,46 +132,39 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
-        mar.addTextChangedListener(new TextWatcher() {
+        mar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-            }
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                descMar.setText("");
-            }
+                    if(!mar.getText().toString().equalsIgnoreCase("")){
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                        try{
 
-                if(!mar.getText().toString().equalsIgnoreCase("")){
-
-                    try{
-
-                        ma = new cfs_BuscaMarca().execute().get();
-                        if(ma != null){
-                            if(ma.getEstado() == 0){
-                                descMar.setText(ma.getDescMarca());
-                            }else if(ma.getEstado() == 1){
-                                descMar.setText("");
+                            ma = new cfs_BuscaMarca().execute().get();
+                            if(ma != null){
+                                if(ma.getEstado() == 0){
+                                    descMar.setText(ma.getDescMarca());
+                                }else if(ma.getEstado() == 1){
+                                    descMar.setText("");
+                                }
+                            }else{
+                                Toast.makeText(TRF_00.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(TRF_00.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
-                        }
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        descMar.setText("");
                     }
-                }else{
-                    descMar.setText("");
                 }
+                return false;
             }
         });
-
 
         button_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +207,9 @@ public class TRF_00 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 limpiarText();
+
+                cont.requestFocus();
+
             }
         });
 
@@ -398,6 +387,8 @@ public class TRF_00 extends AppCompatActivity {
         estadoIngresosConsolidado(false);
 
         c = new Contenedor();
+
+        
 
     }
 
