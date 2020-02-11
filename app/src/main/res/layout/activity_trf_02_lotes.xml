@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@+id/editText2" />
 
@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@+id/editText3"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText5" />
 
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText6"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText8" />
 
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText9"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -264,7 +264,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText11" />
 
@@ -274,7 +274,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText12"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -306,7 +306,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText14" />
 
@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText15"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -348,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText17" />
 
@@ -358,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText18"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -390,7 +390,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@+id/editText21" />
 
@@ -400,7 +400,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText22"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -432,7 +432,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText24" />
 
@@ -442,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText25"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -474,7 +474,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText27" />
 
@@ -484,7 +484,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText28"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -516,7 +516,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText30" />
 
@@ -526,7 +526,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText31"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -558,7 +558,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText33" />
 
@@ -568,7 +568,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText34"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -600,7 +600,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText36" />
 
@@ -610,7 +610,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText37"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -642,7 +642,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText39" />
 
@@ -652,7 +652,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText40"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -684,7 +684,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText42" />
 
@@ -694,7 +694,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText43"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -726,7 +726,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText45" />
 
@@ -736,7 +736,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText46"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -768,7 +768,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText48" />
 
@@ -778,7 +778,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText49"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -810,7 +810,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText51" />
 
@@ -820,7 +820,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText52"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -852,7 +852,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText54" />
 
@@ -862,7 +862,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText55"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -894,7 +894,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText57" />
 
@@ -904,7 +904,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText58"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -936,7 +936,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText60" />
 
@@ -946,7 +946,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText61"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -978,7 +978,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText63" />
 
@@ -988,7 +988,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText64"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -1020,7 +1020,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText68" />
 
@@ -1030,7 +1030,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText69"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -1062,7 +1062,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText71" />
 
@@ -1072,7 +1072,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText72"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -1104,7 +1104,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText74" />
 
@@ -1114,7 +1114,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText75"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
@@ -1146,7 +1146,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:maxLength="10"
                     android:nextFocusDown="@id/editText77" />
 
@@ -1156,7 +1156,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="text|textCapCharacters"
+                    android:inputType="none|textVisiblePassword"
                     android:nextFocusDown="@id/editText78"
                     android:textAlignment="center"
                     android:textAllCaps="true" />
