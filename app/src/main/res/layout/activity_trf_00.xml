@@ -332,7 +332,8 @@
                 android:gravity="center"
                 android:imeOptions="actionNext"
                 android:inputType="number"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:maxLength="4"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

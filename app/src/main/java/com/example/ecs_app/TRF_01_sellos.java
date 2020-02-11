@@ -18,7 +18,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -67,42 +69,9 @@ public class TRF_01_sellos extends AppCompatActivity {
         ingresarSello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Insertar el sello en el sistema
-                //Validar que el campo no este vacio
 
                 if (!sello.getText().toString().equalsIgnoreCase("")) {
-                    new AlertDialog.Builder(TRF_01_sellos.this)
-                            .setTitle("Confirmación registro sello")
-                            .setMessage("OPERACIÓN : " + cadenaOperacion + "\n" +
-                                    "CONTENEDOR : " + cadenaContenedor + "\n" +
-                                    "SELLO : " + sello.getText().toString().toUpperCase())
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    try {
-                                        String salida = new cfs_RegistraSello().execute().get();
-
-                                        if (salida.equalsIgnoreCase("0")) {
-                                            Toast.makeText(TRF_01_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
-                                            cargarSello();
-                                        } else {
-                                            Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (ExecutionException e) {
-                                        e.printStackTrace();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Mensaje", "Acción cancelada ");
-                                }
-                            })
-                            .show();
+                    confirmarIngresoSello(cadenaOperacion,cadenaContenedor);
                 }else{
                     Toast.makeText(TRF_01_sellos.this,"ERROR, Ingrese un sello",Toast.LENGTH_SHORT).show();
                 }
@@ -131,6 +100,42 @@ public class TRF_01_sellos extends AppCompatActivity {
                 sello.setSelection(sello.getText().length());
             }
         });
+    }
+
+    private void confirmarIngresoSello(String cadenaOperacion, String cadenaContenedor){
+
+        new AlertDialog.Builder(TRF_01_sellos.this)
+                .setTitle("Confirmación registro sello")
+                .setMessage("OPERACIÓN : " + cadenaOperacion + "\n" +
+                        "CONTENEDOR : " + cadenaContenedor + "\n" +
+                        "SELLO : " + sello.getText().toString().toUpperCase())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        try {
+                            String salida = new cfs_RegistraSello().execute().get();
+
+                            if (salida.equalsIgnoreCase("0")) {
+                                Toast.makeText(TRF_01_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
+                                cargarSello();
+                            } else {
+                                Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Mensaje", "Acción cancelada ");
+                    }
+                })
+                .show();
     }
 
     private void cargarSello(){

@@ -91,20 +91,17 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if(actionId == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN ){
+                if(actionId == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN){
                     grabarPaqueteCodigo();
-
                     return true;
                 }
                 return false;
             }
         });
-
         /*
         ingresoCodigo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                ingresoCodigo.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(ingresoCodigo, InputMethodManager.SHOW_IMPLICIT);
             }
@@ -137,20 +134,21 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
 
                                     listaPaquetes.add(tempPaquete);
                                     cargarDatos(tblLayout);
-                                    ingresoCodigo.setText("");
-
 
                                 } else {
                                     Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
                                 }
+                                ingresoCodigo.setText("");
 
                             } else {
                                 Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
                             }
+                            ingresoCodigo.setText("");
 
                         } else {
                             Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
                         }
+                        ingresoCodigo.setText("");
 
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -161,15 +159,13 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                     }
                 } else if (tempPaquete.getEstado() == 1) {
                     Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
+                    ingresoCodigo.setText("");
                 }
 
             }else {
                 Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
                 ingresoCodigo.setText("");
-
             }
-
-            ingresoCodigo.requestFocus();
 
         } catch (ExecutionException e) {
             e.printStackTrace();

@@ -122,7 +122,8 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textVisiblePassword"
-            android:imeOptions="actionSend"/>
+            android:imeOptions="actionSend"
+            android:nextFocusDown="@id/editText20"/>
     </LinearLayout>
 
     <ScrollView
