@@ -134,7 +134,8 @@
                 android:imeOptions="actionGo"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:nextFocusDown="@id/inputISO"/>
 
         </LinearLayout>
 
@@ -295,7 +296,8 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:imeOptions="actionNext"/>
         </LinearLayout>
 
         <TextView

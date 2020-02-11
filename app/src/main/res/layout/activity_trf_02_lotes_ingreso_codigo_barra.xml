@@ -112,8 +112,7 @@
             android:text="CODIGO :"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:imeOptions="actionDone"
-            android:inputType="textVisiblePassword"/>
+            />
 
         <EditText
             android:id="@+id/editText20"
@@ -122,7 +121,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:inputType="textVisiblePassword"/>
+            android:inputType="textVisiblePassword"
+            android:imeOptions="actionSend"/>
     </LinearLayout>
 
     <ScrollView

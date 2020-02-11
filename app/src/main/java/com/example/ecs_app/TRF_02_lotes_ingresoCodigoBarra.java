@@ -3,6 +3,7 @@ package com.example.ecs_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -46,6 +48,8 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
     private String id_lote,id_paquete;
     private int peso;
 
+    private InputMethodManager imm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,82 +65,119 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
         tblLayout = (TableLayout) findViewById(R.id.tableLayout);
         textSaldo = (TextView) findViewById(R.id.textView32);
 
-        bloquearIngresos(tblLayout);
+        tblLayout.setFocusable(false);
 
+        bloquearIngresos(tblLayout);
         cargarDatos(tblLayout);
+
+        ingresoCodigo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         ingresoCodigo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if(actionId == EditorInfo.IME_ACTION_DONE){
+                if(actionId == EditorInfo.IME_ACTION_SEND || event.getAction() == KeyEvent.ACTION_DOWN ){
+                    grabarPaqueteCodigo();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        /*
+        ingresoCodigo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ingresoCodigo.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(ingresoCodigo, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });*/
+    }
+
+
+    private void grabarPaqueteCodigo(){
+        try {
+            Paquete tempPaquete = new cfs_LeerCodigoBarra().execute().get();
+
+            if(tempPaquete != null) {
+
+                if (tempPaquete.getEstado() == 0) { //Valida lectura
+
+                    id_lote = tempPaquete.getLote();
+                    id_paquete = tempPaquete.getIdPaquete();
+                    peso = (int) tempPaquete.getPeso();
 
                     try {
-                        Paquete tempPaquete = new cfs_LeerCodigoBarra().execute().get();
 
-                        if(tempPaquete != null) {
+                        if (!listaPaquetes.contains(tempPaquete)) {
 
-                            if (tempPaquete.getEstado() == 0) { //Valida lectura
+                            if ((saldo - peso) >= 0) {
 
-                                id_lote = tempPaquete.getLote();
-                                id_paquete = tempPaquete.getIdPaquete();
-                                peso = (int) tempPaquete.getPeso();
+                                //Paso todas las validaciones
+                                String respuesta = new cfs_RegistraPaquete().execute().get();
 
-                                try {
+                                if (respuesta.equalsIgnoreCase("0")) { //Registro Exitoso
 
-                                    if (!listaPaquetes.contains(tempPaquete)) {
+                                    listaPaquetes.add(tempPaquete);
+                                    cargarDatos(tblLayout);
+                                    ingresoCodigo.setText("");
 
-                                        if ((saldo - peso) >= 0) {
 
-                                            //Paso todas las validaciones
-                                            String respuesta = new cfs_RegistraPaquete().execute().get();
-
-                                            if (respuesta.equalsIgnoreCase("0")) { //Registro Exitoso
-
-                                                listaPaquetes.add(tempPaquete);
-                                                cargarDatos(tblLayout);
-                                                ingresoCodigo.setText("");
-
-                                                return true;
-
-                                            } else {
-                                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        } else {
-                                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
-                                        }
-
-                                    } else {
-                                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                } catch (Exception e) {
-                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
                                 }
-                            } else if (tempPaquete.getEstado() == 1) {
-                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
+
+                            } else {
+                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
                             }
 
-                        }else {
-                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    } catch (Exception e) {
+                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + e.getCause().toString(), Toast.LENGTH_SHORT).show();
                     }
+                } else if (tempPaquete.getEstado() == 1) {
+                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
                 }
-                return false;
-            }
-        });
 
+            }else {
+                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
+                ingresoCodigo.setText("");
+
+            }
+
+            ingresoCodigo.requestFocus();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 
     private void cargarDatos(TableLayout tblLayout){
 
@@ -378,4 +419,5 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
             return salida;
         }
     }
+
 }

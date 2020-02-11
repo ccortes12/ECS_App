@@ -96,11 +96,7 @@ public class TRF_00 extends AppCompatActivity {
 
                     String r = buscarContenedor(); //True si esta consolidado
 
-                    if(!r.equalsIgnoreCase("N")){
-
-                        if(r.equalsIgnoreCase("S")){
-                            iso.requestFocusFromTouch();
-                        }
+                    if(r.equalsIgnoreCase("Consolidado")){
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     }
                 }
@@ -108,6 +104,7 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
+        /*
         csg.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,6 +145,41 @@ public class TRF_00 extends AppCompatActivity {
                 }
             }
         });
+        */
+
+        csg.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if(!csg.getText().toString().equalsIgnoreCase("")){
+
+                    try{
+
+                        cs = new cfs_BuscaConsignatario().execute().get();
+                        if(cs != null){
+
+                            if(cs.getEstado() == 0){
+                                descCsg.setText(cs.getDescCliente());
+                            }else if(cs.getEstado() == 1){
+                                descCsg.setText("");
+                            }
+                        }else{
+                            Toast.makeText(TRF_00.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    descCsg.setText("");
+                }
+                return false;
+            }
+        });
+
 
         mar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -193,10 +225,11 @@ public class TRF_00 extends AppCompatActivity {
 
                 if(!r.equalsIgnoreCase("N")){
 
-                    if(r.equalsIgnoreCase("S")){
+                    if(r.equalsIgnoreCase("Por consolidar")){
                         iso.requestFocusFromTouch();
+                    }else{
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     }
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 }
             }
         });
@@ -351,12 +384,12 @@ public class TRF_00 extends AppCompatActivity {
 
                             estadoIngresosConsolidado(false);
 
-                            return "C";
+                            return "Consolidado";
 
 
                         }
 
-                        return "S";
+                        return "Por consolidar";
                     }else{
                         Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
                         estadoIngresosConsolidado(false);
