@@ -46,8 +46,8 @@ public class TRF_00 extends AppCompatActivity {
     private Contenedor c = new Contenedor();
 
     private Button button_sello,button_lotes,button_limpiar, button_buscar, button_grabar;
-    private EditText anno,cor,cont,codigo,digit,iso,tara,csg,mar,gross,zun;
-    private TextView descShipper,descPuerto, descCsg, descMar;
+    private EditText anno,cor,cont,codigo,digit,tara,csg,mar,gross,zun;
+    private TextView iso,descShipper,descPuerto, descCsg, descMar;
     private Consignatario cs;
     private Marca ma;
     private String user;
@@ -69,7 +69,7 @@ public class TRF_00 extends AppCompatActivity {
         cont = (EditText) findViewById(R.id.editText_cont);
         codigo = (EditText) findViewById(R.id.editText_codigo);
         digit = (EditText) findViewById(R.id.editText_digit);
-        iso = (EditText) findViewById(R.id.inputISO);
+        iso = (TextView) findViewById(R.id.textISO);
         tara = (EditText) findViewById(R.id.inputTara);
         csg = (EditText) findViewById(R.id.editText_csg);
         mar = (EditText) findViewById(R.id.editText_mar);
@@ -226,7 +226,7 @@ public class TRF_00 extends AppCompatActivity {
                 if(!r.equalsIgnoreCase("N")){
 
                     if(r.equalsIgnoreCase("Por consolidar")){
-                        iso.requestFocusFromTouch();
+                        tara.requestFocusFromTouch();
                     }else{
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     }
@@ -359,6 +359,8 @@ public class TRF_00 extends AppCompatActivity {
                         descShipper.setText(c.getCodShipper().trim() + " - " + c.getDescShipper().trim());
                         descPuerto.setText(c.getCodPuerto().trim() + " - " + c.getDescPuerto().trim());
 
+                        iso.setText(Integer.toString(c.getIsoCode()));
+
                         button_grabar.setVisibility(View.VISIBLE);
                         estadoIngresosConsolidado(true);
 
@@ -370,7 +372,6 @@ public class TRF_00 extends AppCompatActivity {
                             mar.setText(c.getCodMarca());
                             descMar.setText(c.getDescMarca());
 
-                            iso.setText(Double.toString(c.getIsoCode()));
                             tara.setText(Double.toString(c.getTara()));
 
                             gross.setText(Double.toString(c.getGross()));
@@ -430,7 +431,7 @@ public class TRF_00 extends AppCompatActivity {
 
     private boolean allCamposVacios(){
 
-        return iso.getText().toString().equalsIgnoreCase("") || tara.getText().toString().equalsIgnoreCase("") || csg.getText().toString().equalsIgnoreCase("")
+        return tara.getText().toString().equalsIgnoreCase("") || csg.getText().toString().equalsIgnoreCase("")
                 || mar.getText().toString().equalsIgnoreCase("") || gross.getText().toString().equalsIgnoreCase("") || zun.getText().toString().equalsIgnoreCase("") || camposVaciosCONT();
     }
 
@@ -477,9 +478,6 @@ public class TRF_00 extends AppCompatActivity {
 
     private void estadoIngresosConsolidado(boolean estado){
 
-        iso.setFocusable(estado);
-        iso.setCursorVisible(estado);
-
         tara.setFocusable(estado);
         tara.setCursorVisible(estado);
 
@@ -496,7 +494,6 @@ public class TRF_00 extends AppCompatActivity {
         zun.setCursorVisible(estado);
 
         if(estado){
-            iso.setFocusableInTouchMode(true);
             tara.setFocusableInTouchMode(true);
             csg.setFocusableInTouchMode(true);
             mar.setFocusableInTouchMode(true);
@@ -559,6 +556,8 @@ public class TRF_00 extends AppCompatActivity {
                         contenedor.setCodPuerto(resultado_xml.getProperty("strCodPuerto").toString());
                         contenedor.setDescPuerto(resultado_xml.getProperty("strDescPuerto").toString());
 
+                        contenedor.setIsoCode(Integer.parseInt(resultado_xml.getProperty("intISOCode").toString()));
+
                         contenedor.setChrConsolidado(resultado_xml.getProperty("chrConsolidado").toString());
 
                         if(resultado_xml.getProperty("chrConsolidado").toString().equalsIgnoreCase("S")){
@@ -570,7 +569,6 @@ public class TRF_00 extends AppCompatActivity {
                             contenedor.setDescMarca(resultado_xml.getProperty("strDescMarca").toString());
                             contenedor.setCodCliente(resultado_xml.getProperty("strCodCliente").toString());
                             contenedor.setDescCliente(resultado_xml.getProperty("strDescCliente").toString());
-                            contenedor.setIsoCode(Integer.parseInt(resultado_xml.getProperty("intISOCode").toString()));
                             contenedor.setTara(Integer.parseInt(resultado_xml.getProperty("intTara").toString()));
                             contenedor.setGross(Integer.parseInt(resultado_xml.getProperty("intGross").toString()));
 

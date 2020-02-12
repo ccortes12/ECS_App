@@ -135,7 +135,7 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="20sp"
-                android:nextFocusDown="@id/inputISO"/>
+                android:nextFocusDown="@id/inputTara"/>
 
         </LinearLayout>
 
@@ -229,16 +229,15 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/inputISO"
+            <TextView
+                android:id="@+id/textISO"
                 android:layout_width="135dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="number"
-                android:nextFocusDown="@+id/inputTara"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/textView16"
