@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 next.putExtra("user",usernameEditText.getText().toString());
                                 startActivity(next);
+                                finish();
+
 
                             } else {
                                 if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
                             next.putExtra("user",usernameEditText.getText().toString());
                             startActivity(next);
+                            finish();
 
                         } else {
                             if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText.setText("");
 
     }
+
 
     private class validarCredencial extends AsyncTask<String,Void,String> {
         @SuppressLint("WrongThread")

@@ -58,6 +58,8 @@ public class TRF_00 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_00);
 
+        getSupportActionBar().setTitle("CFS App - Pantalla principal");
+
         button_sello = (Button) findViewById(R.id.button_sellos);
         button_lotes = (Button) findViewById(R.id.button_lotes);
         button_limpiar = (Button) findViewById(R.id.button_clean);
@@ -83,15 +85,14 @@ public class TRF_00 extends AppCompatActivity {
 
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-
         user = getIntent().getStringExtra("user");
 
         estadoIngresosConsolidado(false);
 
+
         digit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if(actionId == EditorInfo.IME_ACTION_GO  && !digit.getText().toString().equalsIgnoreCase("")){
 
                     String r = buscarContenedor(); //True si esta consolidado
@@ -104,53 +105,9 @@ public class TRF_00 extends AppCompatActivity {
             }
         });
 
-        /*
-        csg.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!csg.getText().toString().equalsIgnoreCase("")){
-
-                    try{
-
-                        cs = new cfs_BuscaConsignatario().execute().get();
-                        if(cs != null){
-
-                            if(cs.getEstado() == 0){
-                                descCsg.setText(cs.getDescCliente());
-                            }else if(cs.getEstado() == 1){
-                                descCsg.setText("");
-                            }
-                        }else{
-                            Toast.makeText(TRF_00.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    descCsg.setText("");
-                }
-            }
-        });
-        */
-
         csg.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if(!csg.getText().toString().equalsIgnoreCase("")){
 
                     try{
@@ -184,7 +141,6 @@ public class TRF_00 extends AppCompatActivity {
         mar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if(actionId == EditorInfo.IME_ACTION_NEXT){
 
                     if(!mar.getText().toString().equalsIgnoreCase("")){
@@ -246,8 +202,6 @@ public class TRF_00 extends AppCompatActivity {
         button_lotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if(c.getCodBarra().equalsIgnoreCase("S")){
                     Intent to_lotes_codigoBarra = new Intent(v.getContext(),TRF_02_lotes_ingresoCodigoBarra.class);
                     to_lotes_codigoBarra.putExtra("objContenedor",(Serializable) c);
@@ -257,7 +211,6 @@ public class TRF_00 extends AppCompatActivity {
                     to_lotes.putExtra("objContenedor",(Serializable) c);
                     startActivity(to_lotes);
                 }
-
             }
         });
 
@@ -267,7 +220,6 @@ public class TRF_00 extends AppCompatActivity {
                 limpiarText();
                 cont.requestFocusFromTouch();
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);  //Forzar la muestra del teclado
-
             }
         });
 
@@ -297,6 +249,12 @@ public class TRF_00 extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
 
     private void confimarIngresoContainer(){
 
@@ -342,7 +300,6 @@ public class TRF_00 extends AppCompatActivity {
                 .show();
 
     }
-
 
     //Retorna true si el contenedor esta consolidado
     private String buscarContenedor(){
@@ -455,8 +412,6 @@ public class TRF_00 extends AppCompatActivity {
         estadoIngresosConsolidado(false);
 
         c = new Contenedor();
-
-        
 
     }
 
@@ -775,7 +730,5 @@ public class TRF_00 extends AppCompatActivity {
 
         }
     }
-
-
 
 }

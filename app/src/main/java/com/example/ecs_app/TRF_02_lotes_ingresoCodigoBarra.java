@@ -1,15 +1,20 @@
 package com.example.ecs_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -52,9 +57,24 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
 
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_02_lotes_ingreso_codigo_barra);
+
+        getSupportActionBar().setTitle("Ingreso Lotes");
+
+
 
         Intent intent = getIntent();
         contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
@@ -67,7 +87,6 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
 
         tblLayout.setFocusable(false);
 
-        bloquearIngresos(tblLayout);
         cargarDatos(tblLayout);
 
         ingresoCodigo.addTextChangedListener(new TextWatcher() {
@@ -98,14 +117,6 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                 return false;
             }
         });
-        /*
-        ingresoCodigo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(ingresoCodigo, InputMethodManager.SHOW_IMPLICIT);
-            }
-        });*/
     }
 
 
@@ -174,7 +185,6 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
         }
     }
 
-
     private void cargarDatos(TableLayout tblLayout){
 
         String cadenaOperacion = contenedor.getAnnoOperacion() + " - " + contenedor.getCorOperacion();
@@ -210,23 +220,6 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
             e.printStackTrace();
         }
         textSaldo.setText(Double.toString(saldo) + " [kg]");
-
-    }
-
-    private void bloquearIngresos(TableLayout tblLayout){
-
-        for(int i = 1; i < tblLayout.getChildCount(); i++ ){
-
-            TableRow row = (TableRow)tblLayout.getChildAt(i);
-
-            for(int j = 1; j < 4; j++ ){
-
-                EditText current = (EditText) row.getChildAt(j);
-
-                current.setFocusable(false);
-                current.setCursorVisible(false);
-            }
-        }
 
     }
 
@@ -413,6 +406,17 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                 e.printStackTrace();
             }
             return salida;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if(s.equalsIgnoreCase("0")){
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();
+            }
         }
     }
 

@@ -1,17 +1,27 @@
 package com.example.ecs_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,28 +51,51 @@ public class TRF_02_lotes extends AppCompatActivity {
     private TableLayout tblLayout;
     private TextView text_saldo;
     private Button button_grabarLotes;
+    private Switch switchEditar;
+    private EditText ingresoLote, ingresoID, ingresoPeso;
 
     private String id_lote,id_paquete;
     private int peso,cor_Lote;
 
+
     private double saldo;
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_02_lotes);
 
+        getSupportActionBar().setTitle("Ingreso Lotes - Manual");
+
         textOperacion = (TextView) findViewById(R.id.textView24);
         textContenedor = (TextView) findViewById(R.id.textView26);
         text_saldo = (TextView) findViewById(R.id.textView_saldo);
         final TableLayout tblLayout = (TableLayout)findViewById(R.id.tableLayout);
         button_grabarLotes = (Button) findViewById(R.id.button_grabarLote);
+        switchEditar = (Switch) findViewById(R.id.switchEditar);
+
+        ingresoLote = (EditText) findViewById(R.id.ingreso_lote);
+        ingresoID = (EditText) findViewById(R.id.ingreso_id);
+        ingresoPeso = (EditText) findViewById(R.id.ingreso_peso);
 
         Intent intent = getIntent();
         contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
 
+        textOperacion.setText(contenedor.getAnnoOperacion() + " - " + contenedor.getCorOperacion());
+        textContenedor.setText(contenedor.getSigla() + "  " + contenedor.getNumero() + " - " + contenedor.getDigito());
 
-        //INICIAL Cargar datos y calcular nuevo indice para no sobrescribir
+        //INICIAL Cargar datos
         cargarDatos(tblLayout);
 
         button_grabarLotes.setOnClickListener(new View.OnClickListener(){
@@ -79,30 +112,57 @@ public class TRF_02_lotes extends AppCompatActivity {
                     Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
                 }else{
 
+                    if(switchEditar.isChecked()){
+                        //Modificacion de los datos de abajo
+                        new AlertDialog.Builder(TRF_02_lotes.this)
+                                .setTitle("Confirmación registro paquetes")
+                                .setMessage("Se ingresaran todos los paquetes al sistema... ")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                    new AlertDialog.Builder(TRF_02_lotes.this)
-                            .setTitle("Confirmación registro paquetes")
-                            .setMessage("Se ingresaran todos los paquetes al sistema... ")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
 
-                                    Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+                                        agregarListaPaquetes(tblLayout);
+                                        cargarDatos(tblLayout);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Log.d("Mensaje" , "Se cancelo acción");
+                                    }
+                                }).show();
+                    }else{
 
-                                    agregarListaPaquetes(tblLayout);
-                                    cargarDatos(tblLayout);
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("Mensaje" , "Se cancelo acción");
-                                }
-                            }).show();
+                        registrarPaqueteCampos(tblLayout);
+                        ingresoLote.requestFocus();
+                    }
+
                 }
             }
         });
 
+        switchEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (switchEditar.isChecked())
+                    estadoCampos(tblLayout,true);
+                else
+                    estadoCampos(tblLayout,false);
+            }
+        });
+
+        ingresoPeso.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_GO){
+                    registrarPaqueteCampos(tblLayout);
+
+                }
+                return false;
+            }
+        });
     }
 
     private class cfs__BuscaPaquetesConsolidados extends AsyncTask<String, Void, ArrayList<Paquete>>{
@@ -172,12 +232,6 @@ public class TRF_02_lotes extends AppCompatActivity {
     }
 
     private void cargarDatos(TableLayout tblLayout){
-
-        String cadenaOperacion = contenedor.getAnnoOperacion() + " - " + contenedor.getCorOperacion();
-        String cadenaContenedor = contenedor.getSigla() + "  " + contenedor.getNumero() + " - " + contenedor.getDigito();
-
-        textOperacion.setText(cadenaOperacion);
-        textContenedor.setText(cadenaContenedor);
 
         saldo = contenedor.getGross() - (int)contenedor.getTara();
 
@@ -269,7 +323,6 @@ public class TRF_02_lotes extends AppCompatActivity {
 
     private void agregarListaPaquetes(TableLayout tblLayout){
 
-
         for(int i = 1; i < tblLayout.getChildCount(); i++){
 
             String respuesta;
@@ -288,7 +341,6 @@ public class TRF_02_lotes extends AppCompatActivity {
                 peso = (int)Double.parseDouble(celdaPeso.getText().toString());
 
                 try {
-
                     respuesta = new cfs_RegistraPaquete().execute().get();
                     if(!respuesta.equalsIgnoreCase("0")){
                         Toast.makeText(TRF_02_lotes.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
@@ -350,6 +402,81 @@ public class TRF_02_lotes extends AppCompatActivity {
                 e.printStackTrace();
             }
             return salida;
+        }
+    }
+
+    private void estadoCampos(TableLayout tblLayout, boolean estado){
+
+        for(int i = 1; i < tblLayout.getChildCount(); i++ ){
+
+            TableRow row = (TableRow)tblLayout.getChildAt(i);
+
+            for(int j = 1; j < 4; j++ ){
+
+                EditText current = (EditText) row.getChildAt(j);
+
+                current.setFocusable(estado);
+                current.setCursorVisible(estado);
+                if(estado){
+                    current.setFocusableInTouchMode(true);
+                }
+
+            }
+        }
+
+    }
+
+    private boolean camposVacios(){
+
+        return ingresoLote.getText().toString().equalsIgnoreCase("") || ingresoID.getText().toString().equalsIgnoreCase("") || ingresoPeso.getText().toString().equalsIgnoreCase("");
+    }
+
+    private void registrarPaqueteCampos(TableLayout tblLayout){
+
+        if(camposVacios()) {
+            Toast.makeText(TRF_02_lotes.this, "ERROR, Campos incompletos", Toast.LENGTH_SHORT).show();
+        }else{
+
+            Paquete p2 = new Paquete(0,ingresoID.getText().toString(),ingresoLote.getText().toString(),Double.parseDouble(ingresoPeso.getText().toString()),"");
+
+            if(listaPaquetes.contains(p2)){
+                Toast.makeText(TRF_02_lotes.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
+            }else if (saldo < (p2.getPeso() + contenedor.getZuncho())) {
+                Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                try{
+                    cor_Lote = listaPaquetes.size() + 1;
+                    id_lote = ingresoLote.getText().toString();
+                    id_paquete = ingresoID.getText().toString();
+                    peso = (int)Double.parseDouble(ingresoPeso.getText().toString());
+
+                    String respuesta = new cfs_RegistraPaquete().execute().get();
+                    if(!respuesta.equalsIgnoreCase("0")){
+                        Toast.makeText(TRF_02_lotes.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        r.play();
+
+                        listaPaquetes.add(p2);
+                        cargarDatos(tblLayout);
+
+                        ingresoID.setText("");
+                        ingresoLote.setText("");
+                        ingresoPeso.setText("");
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

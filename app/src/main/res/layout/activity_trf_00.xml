@@ -9,9 +9,10 @@
 
     <LinearLayout
         android:id="@+id/infoContenedor"
-        android:layout_width="531dp"
-        android:layout_height="87dp"
+        android:layout_width="526dp"
+        android:layout_height="107dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/customborder"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +135,8 @@
                 android:imeOptions="actionGo"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textSize="20sp"
-                android:nextFocusDown="@id/inputTara"/>
+                android:nextFocusDown="@id/inputTara"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -237,7 +238,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -294,9 +295,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="center"
+                android:imeOptions="actionNext"
                 android:inputType="number"
-                android:textSize="20sp"
-                android:imeOptions="actionNext"/>
+                android:textSize="20sp" />
         </LinearLayout>
 
         <TextView
@@ -331,8 +332,8 @@
                 android:gravity="center"
                 android:imeOptions="actionNext"
                 android:inputType="number"
-                android:textSize="20sp"
-                android:maxLength="4"/>
+                android:maxLength="4"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -449,7 +450,8 @@
         android:text="BUSCAR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoContenedor" />
+        app:layout_constraintTop_toBottomOf="@+id/infoContenedor"
+        android:drawableRight="@android:drawable/ic_menu_search"/>
 
     <Button
         android:id="@+id/button_clean"
@@ -464,7 +466,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:drawableRight="@android:drawable/ic_menu_close_clear_cancel"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -475,8 +478,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout8"
-        android:layout_width="293dp"
-        android:layout_height="50dp"
+        android:layout_width="309dp"
+        android:layout_height="51dp"
         android:layout_marginTop="25dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -494,6 +497,7 @@
             android:id="@+id/button_grabar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:drawableRight="@android:drawable/ic_menu_save"
             android:text="GRABAR"
             android:visibility="invisible" />
 

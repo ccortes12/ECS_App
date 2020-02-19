@@ -101,6 +101,7 @@
             android:hint="Usuario"
             android:inputType="number"
             android:textSize="24dp"
+            android:gravity="center"
             tools:layout_editor_absoluteX="-133dp"
             tools:layout_editor_absoluteY="454dp" />
 
@@ -112,13 +113,14 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:textSize="24dp"
+            android:gravity="center"
             android:imeOptions="actionDone"/>
     </LinearLayout>
 
 
     <Button
         android:id="@+id/button_ingreso"
-        android:layout_width="128dp"
+        android:layout_width="347dp"
         android:layout_height="51dp"
         android:layout_marginTop="40dp"
         android:text="Ingreso"

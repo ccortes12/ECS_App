@@ -20,8 +20,6 @@ public class Contenedor  implements Serializable {
     private String descPuerto;
     //CONTAINER Para consolidacion
 
-
-
     private int isoCode;
     private double tara;
 

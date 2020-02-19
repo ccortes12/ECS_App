@@ -3,6 +3,9 @@ package com.example.ecs_app;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -11,6 +14,7 @@ import com.example.ecs_app.Entidades.Sello;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +23,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -44,10 +49,24 @@ public class TRF_01_sellos extends AppCompatActivity {
     private Button ingresarSello;
     private EditText sello;
     private Contenedor contenedor;
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_01_sellos);
+
+        getSupportActionBar().setTitle("Ingreso Lotes");
 
         textViewCont = (TextView) findViewById(R.id.Contenedor);
         textViewOperacion = (TextView) findViewById(R.id.Operacion);
@@ -118,6 +137,11 @@ public class TRF_01_sellos extends AppCompatActivity {
 
                             if (salida.equalsIgnoreCase("0")) {
                                 Toast.makeText(TRF_01_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
+
+                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                r.play();
+
                                 cargarSello();
                             } else {
                                 Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
@@ -162,7 +186,6 @@ public class TRF_01_sellos extends AppCompatActivity {
             ingresarSello.setVisibility(View.INVISIBLE);
 
         }else if(tempSello.getEstado() == 1){ //NO tiene sello
-
 
             sello.setCursorVisible(true);
             sello.setFocusable(true);
