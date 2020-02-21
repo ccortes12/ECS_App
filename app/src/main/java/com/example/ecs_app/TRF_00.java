@@ -1,5 +1,6 @@
 package com.example.ecs_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,13 +8,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -54,11 +62,21 @@ public class TRF_00 extends AppCompatActivity {
     private InputMethodManager imm;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_00);
 
         getSupportActionBar().setTitle("CFS App - Pantalla principal");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         button_sello = (Button) findViewById(R.id.button_sellos);
         button_lotes = (Button) findViewById(R.id.button_lotes);
@@ -238,12 +256,15 @@ public class TRF_00 extends AppCompatActivity {
                             confimarIngresoContainer();
                         }else{
                             Toast.makeText(TRF_00.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
+                            vibrar();
                         }
                     }else{
                         Toast.makeText(TRF_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
+                        vibrar();
                     }
                 }else{
                     Toast.makeText(TRF_00.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }
             }
         });
@@ -255,6 +276,36 @@ public class TRF_00 extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                new AlertDialog.Builder(TRF_00.this)
+                        .setTitle("Fin de sesión")
+                        .setMessage("¿Desea salir de la sesión?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent(TRF_00.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Mensaje" , "Se cancelo acción");
+                            }
+                        })
+                        .show();
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void confimarIngresoContainer(){
 
@@ -277,6 +328,10 @@ public class TRF_00 extends AppCompatActivity {
                             String respuestaTransaccion = new cfs_RegistraConsolidado().execute().get();
 
                             if(isNumeric(respuestaTransaccion)){
+
+                                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                r.play();
 
                                 buscarContenedor();
 
@@ -355,15 +410,18 @@ public class TRF_00 extends AppCompatActivity {
                         limpiarInfo2();
                         button_lotes.setVisibility(View.INVISIBLE);
                         button_sello.setVisibility(View.INVISIBLE);
+                        vibrar();
                         return "N";
                     }
                 }
             }catch(Exception e){
                 Toast.makeText(TRF_00.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                vibrar();
                 return "N";
             }
         }else{
             Toast.makeText(TRF_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
+            vibrar();
             return "N";
         }
         return "N";
@@ -731,4 +789,14 @@ public class TRF_00 extends AppCompatActivity {
         }
     }
 
+    private void vibrar(){
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,12 +14,16 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -65,6 +70,8 @@ public class TRF_02_lotes extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 onBackPressed();
                 return true;
         }
@@ -104,12 +111,16 @@ public class TRF_02_lotes extends AppCompatActivity {
 
                 if(validarCargaLotes(tblLayout).equalsIgnoreCase("Campos incompletos")){
                     Toast.makeText(TRF_02_lotes.this,"ERROR, Campos incompletos",Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }else if(validarCargaLotes(tblLayout).equalsIgnoreCase("Id no corresponde")){
                     Toast.makeText(TRF_02_lotes.this,"ERROR, Id no corresponde",Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }else if(validarCargaLotes(tblLayout).equalsIgnoreCase("Existe un paquete duplicado")){
                     Toast.makeText(TRF_02_lotes.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }else if (validarCargaLotes(tblLayout).equalsIgnoreCase("Peso total excede Max gross")) {
                     Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }else{
 
                     if(switchEditar.isChecked()){
@@ -477,6 +488,17 @@ public class TRF_02_lotes extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private void vibrar(){
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
         }
     }
 }

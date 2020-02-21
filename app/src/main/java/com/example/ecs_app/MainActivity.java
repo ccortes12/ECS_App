@@ -7,14 +7,18 @@ package com.example.ecs_app;
         import android.app.Activity;
         import android.app.DatePickerDialog;
         import android.app.DatePickerDialog.OnDateSetListener;
+        import android.content.Context;
         import android.content.Intent;
         import android.os.AsyncTask;
         import android.os.Build;
         import android.os.Bundle;
+        import android.os.VibrationEffect;
+        import android.os.Vibrator;
         import android.view.Gravity;
         import android.view.KeyEvent;
         import android.view.View;
         import android.view.inputmethod.EditorInfo;
+        import android.view.inputmethod.InputMethodManager;
         import android.widget.Button;
         import android.widget.DatePicker;
         import android.widget.EditText;
@@ -62,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         final String fechaString = Integer.toString(dia) + " / " + Integer.toString(mes+1)  + " / " + Integer.toString(anno);
         fecha.setText(fechaString);
-
 
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -125,8 +128,10 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
                                 Toast.makeText(MainActivity.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
+                                vibrar();
                             }else {
                                 Toast.makeText(MainActivity.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
+                                vibrar();
                             }
                             passwordEditText.getText().clear();
                         }
@@ -136,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else{
                     Toast.makeText(MainActivity.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }
             }
         });
@@ -168,6 +174,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void vibrar(){
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
+        }
+    }
 
     private class validarCredencial extends AsyncTask<String,Void,String> {
         @SuppressLint("WrongThread")

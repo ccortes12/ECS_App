@@ -1,12 +1,14 @@
 package com.example.ecs_app;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.ecs_app.Entidades.Contenedor;
@@ -19,6 +21,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,6 +30,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,11 +55,17 @@ public class TRF_01_sellos extends AppCompatActivity {
     private EditText sello;
     private Contenedor contenedor;
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
+                if(!sello.getText().toString().isEmpty()){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                }
+
                 onBackPressed();
                 return true;
         }
@@ -93,6 +104,7 @@ public class TRF_01_sellos extends AppCompatActivity {
                     confirmarIngresoSello(cadenaOperacion,cadenaContenedor);
                 }else{
                     Toast.makeText(TRF_01_sellos.this,"ERROR, Ingrese un sello",Toast.LENGTH_SHORT).show();
+                    vibrar();
                 }
             }
 
@@ -145,6 +157,7 @@ public class TRF_01_sellos extends AppCompatActivity {
                                 cargarSello();
                             } else {
                                 Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
+                                vibrar();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -193,6 +206,7 @@ public class TRF_01_sellos extends AppCompatActivity {
             ingresarSello.setVisibility(View.VISIBLE);
         }else{
             Toast.makeText(TRF_01_sellos.this,"ERROR, " + tempSello.getMensaje(),Toast.LENGTH_SHORT).show();
+            vibrar();
         }
 
     }
@@ -298,5 +312,16 @@ public class TRF_01_sellos extends AppCompatActivity {
 
 
 
+    }
+
+    private void vibrar(){
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
+        }
     }
 }
