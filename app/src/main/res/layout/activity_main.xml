@@ -130,5 +130,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="125dp"
+        android:layout_height="25dp"
+        android:text="@ 2020, ATI SA"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_ingreso"
+        app:layout_constraintVertical_bias="0.217" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
