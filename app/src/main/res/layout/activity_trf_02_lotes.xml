@@ -10,10 +10,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="266dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="290dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/customborder2"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -67,6 +68,18 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/switchEditar"
+        android:layout_width="195dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:text="Editar campos"
+        android:textSize="18sp"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -163,14 +176,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Saldo = " />
+                android:text="Saldo = "
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_saldo"
-                android:layout_width="92dp"
+                android:layout_width="144dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button_grabarLote"
@@ -187,7 +204,7 @@
     <ScrollView
         android:id="@+id/ScrollViewLotes"
         android:layout_width="490dp"
-        android:layout_height="553dp"
+        android:layout_height="520dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -1439,17 +1456,27 @@
         </TableLayout>
     </ScrollView>
 
-    <Switch
-        android:id="@+id/switchEditar"
-        android:layout_width="195dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="36dp"
-        android:text="Editar campos"
-        android:textSize="18sp"
-        android:typeface="normal"
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="201dp"
+        android:layout_height="19dp"
+        android:text="1. Información contenedor
+"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="2. Registro paquete"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

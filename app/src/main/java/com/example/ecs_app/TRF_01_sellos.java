@@ -77,7 +77,7 @@ public class TRF_01_sellos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_01_sellos);
 
-        getSupportActionBar().setTitle("Ingreso Lotes");
+        getSupportActionBar().setTitle("Ingreso Sello");
 
         textViewCont = (TextView) findViewById(R.id.Contenedor);
         textViewOperacion = (TextView) findViewById(R.id.Operacion);

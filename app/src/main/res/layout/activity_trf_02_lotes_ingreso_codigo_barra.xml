@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".TRF_02_lotes_ingresoCodigoBarra">
 
+
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="240dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="35dp"
+        android:layout_width="264dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/customborder2"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintHorizontal_bias="0.861"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -64,14 +66,17 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="195dp"
-        android:layout_height="25dp"
+        android:layout_width="254dp"
+        android:layout_height="53dp"
+        android:background="@drawable/customborder3"
         android:focusable="false"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.361"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.539">
 
         <TextView
             android:id="@+id/textView30"
@@ -79,20 +84,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SALDO :"
+            android:text="Saldo :"
             android:textAlignment="center"
-            android:textSize="18dp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView32"
-            android:layout_width="98dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18dp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -1414,6 +1420,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="301dp" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:text="1. Información contenedor"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2. Registro código paquete"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
