@@ -1,4 +1,4 @@
-package com.example.ecs_app;
+package com.example.ecs_app.CFS;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -8,8 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -34,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Paquete;
+import com.example.ecs_app.R;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -48,7 +47,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class TRF_02_lotes extends AppCompatActivity {
+public class CFS_01_lotes_manual extends AppCompatActivity {
 
     private TextView textOperacion, textContenedor;
     private Contenedor contenedor;
@@ -110,29 +109,29 @@ public class TRF_02_lotes extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(validarCargaLotes(tblLayout).equalsIgnoreCase("Campos incompletos")){
-                    Toast.makeText(TRF_02_lotes.this,"ERROR, Campos incompletos",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_01_lotes_manual.this,"ERROR, Campos incompletos",Toast.LENGTH_SHORT).show();
                     vibrar();
                 }else if(validarCargaLotes(tblLayout).equalsIgnoreCase("Id no corresponde")){
-                    Toast.makeText(TRF_02_lotes.this,"ERROR, Id no corresponde",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_01_lotes_manual.this,"ERROR, Id no corresponde",Toast.LENGTH_SHORT).show();
                     vibrar();
                 }else if(validarCargaLotes(tblLayout).equalsIgnoreCase("Existe un paquete duplicado")){
-                    Toast.makeText(TRF_02_lotes.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_01_lotes_manual.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
                     vibrar();
                 }else if (validarCargaLotes(tblLayout).equalsIgnoreCase("Peso total excede Max gross")) {
-                    Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_01_lotes_manual.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
                     vibrar();
                 }else{
 
                     if(switchEditar.isChecked()){
                         //Modificacion de los datos de abajo
-                        new AlertDialog.Builder(TRF_02_lotes.this)
+                        new AlertDialog.Builder(CFS_01_lotes_manual.this)
                                 .setTitle("Confirmación registro paquetes")
                                 .setMessage("Se ingresaran todos los paquetes al sistema... ")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CFS_01_lotes_manual.this,"EXITO",Toast.LENGTH_SHORT).show();
 
                                         agregarListaPaquetes(tblLayout);
                                         cargarDatos(tblLayout);
@@ -354,7 +353,7 @@ public class TRF_02_lotes extends AppCompatActivity {
                 try {
                     respuesta = new cfs_RegistraPaquete().execute().get();
                     if(!respuesta.equalsIgnoreCase("0")){
-                        Toast.makeText(TRF_02_lotes.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_01_lotes_manual.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
                     }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -445,15 +444,15 @@ public class TRF_02_lotes extends AppCompatActivity {
     private void registrarPaqueteCampos(TableLayout tblLayout){
 
         if(camposVacios()) {
-            Toast.makeText(TRF_02_lotes.this, "ERROR, Campos incompletos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CFS_01_lotes_manual.this, "ERROR, Campos incompletos", Toast.LENGTH_SHORT).show();
         }else{
 
             Paquete p2 = new Paquete(0,ingresoID.getText().toString(),ingresoLote.getText().toString(),Double.parseDouble(ingresoPeso.getText().toString()),"");
 
             if(listaPaquetes.contains(p2)){
-                Toast.makeText(TRF_02_lotes.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
+                Toast.makeText(CFS_01_lotes_manual.this,"ERROR, Existe un paquete duplicado",Toast.LENGTH_SHORT).show();
             }else if (saldo < (p2.getPeso() + contenedor.getZuncho())) {
-                Toast.makeText(TRF_02_lotes.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CFS_01_lotes_manual.this, "ERROR, Peso total excede Max gross", Toast.LENGTH_SHORT).show();
 
             }else{
 
@@ -465,10 +464,10 @@ public class TRF_02_lotes extends AppCompatActivity {
 
                     String respuesta = new cfs_RegistraPaquete().execute().get();
                     if(!respuesta.equalsIgnoreCase("0")){
-                        Toast.makeText(TRF_02_lotes.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_01_lotes_manual.this,"ERROR, " + respuesta,Toast.LENGTH_SHORT).show();
                     }else{
 
-                        Toast.makeText(TRF_02_lotes.this,"EXITO",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_01_lotes_manual.this,"EXITO",Toast.LENGTH_SHORT).show();
 
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);

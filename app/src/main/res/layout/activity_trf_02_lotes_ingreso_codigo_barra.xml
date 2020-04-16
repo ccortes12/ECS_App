@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TRF_02_lotes_ingresoCodigoBarra">
+    tools:context=".CFS.CFS_01_lotes_codigoBarra">
 
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="264dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/customborder2"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="OPERACIÓN :" />
+                android:text="Operación:" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -48,15 +48,15 @@
 
             <TextView
                 android:id="@+id/textView25"
-                android:layout_width="wrap_content"
+                android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="CONTENEDOR :" />
+                android:text="Contenedor:" />
 
             <TextView
                 android:id="@+id/textView26"
-                android:layout_width="135dp"
+                android:layout_width="142dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -67,7 +67,7 @@
 
     <LinearLayout
         android:layout_width="254dp"
-        android:layout_height="53dp"
+        android:layout_height="60dp"
         android:background="@drawable/customborder3"
         android:focusable="false"
         android:orientation="horizontal"
@@ -76,7 +76,7 @@
         app:layout_constraintHorizontal_bias="0.361"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.539">
+        app:layout_constraintVertical_bias="0.444">
 
         <TextView
             android:id="@+id/textView30"

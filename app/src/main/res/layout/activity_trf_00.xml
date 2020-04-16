@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TRF_00"
+    tools:context=".CFS.CFS_00"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/infoContenedor"
-        android:layout_width="527dp"
+        android:layout_width="550dp"
         android:layout_height="107dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/customborder"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:id="@+id/infoDestinoShipper"
-        android:layout_width="527dp"
+        android:layout_width="550dp"
         android:layout_height="96dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"
@@ -207,7 +207,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="527dp"
+        android:layout_width="550dp"
         android:layout_height="340dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"
@@ -439,7 +439,7 @@
 
     <Button
         android:id="@+id/button_clean"
-        android:layout_width="125dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
@@ -462,8 +462,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout8"
-        android:layout_width="309dp"
-        android:layout_height="51dp"
+        android:layout_width="454dp"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -472,14 +472,14 @@
 
         <Button
             android:id="@+id/button_lotes"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:text="LOTES"
             android:visibility="invisible" />
 
         <Button
             android:id="@+id/button_grabar"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:drawableRight="@android:drawable/ic_menu_save"
             android:text="GRABAR"
@@ -487,7 +487,7 @@
 
         <Button
             android:id="@+id/button_sellos"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:text="SELLOS"
             android:visibility="invisible" />

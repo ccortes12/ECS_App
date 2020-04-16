@@ -1,10 +1,8 @@
 package com.example.ecs_app;
 
-        import androidx.annotation.RequiresApi;
         import androidx.appcompat.app.AppCompatActivity;
 
         import android.annotation.SuppressLint;
-        import android.app.Activity;
         import android.app.DatePickerDialog;
         import android.app.DatePickerDialog.OnDateSetListener;
         import android.content.Context;
@@ -14,11 +12,9 @@ package com.example.ecs_app;
         import android.os.Bundle;
         import android.os.VibrationEffect;
         import android.os.Vibrator;
-        import android.view.Gravity;
         import android.view.KeyEvent;
         import android.view.View;
         import android.view.inputmethod.EditorInfo;
-        import android.view.inputmethod.InputMethodManager;
         import android.widget.Button;
         import android.widget.DatePicker;
         import android.widget.EditText;
@@ -36,7 +32,7 @@ package com.example.ecs_app;
         import java.io.IOException;
         import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     private EditText usernameEditText,passwordEditText;
     private TextView resultado,fecha;
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(actionId == EditorInfo.IME_ACTION_DONE){
 
-                    Intent next = new Intent(v.getContext(),TRF_00.class);
+                    Intent next = new Intent(v.getContext(), MenuPrincipal.class); //Proxima actividad
                     if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
                         try {
                             String pass = new validarCredencial().execute().get();
@@ -89,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
                             } else {
                                 if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
-                                    Toast.makeText(MainActivity.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
                                 }else {
-                                    Toast.makeText(MainActivity.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
                                 }
                                 passwordEditText.getText().clear();
                             }
@@ -100,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             e.getCause();
                         }
                     }else{
-                        Toast.makeText(MainActivity.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent next = new Intent(v.getContext(),TRF_00.class);
+                Intent next = new Intent(v.getContext(), MenuPrincipal.class);
                 if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
                     try {
                         String pass = new validarCredencial().execute().get();
@@ -127,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
-                                Toast.makeText(MainActivity.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
                                 vibrar();
                             }else {
-                                Toast.makeText(MainActivity.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
                                 vibrar();
                             }
                             passwordEditText.getText().clear();
@@ -140,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         e.getCause();
                     }
                 }else{
-                    Toast.makeText(MainActivity.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                     vibrar();
                 }
             }
@@ -151,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new OnDateSetListener() {
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(Login.this, new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 

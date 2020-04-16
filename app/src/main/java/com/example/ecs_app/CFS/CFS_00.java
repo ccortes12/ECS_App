@@ -1,6 +1,5 @@
-package com.example.ecs_app;
+package com.example.ecs_app.CFS;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -16,14 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.telephony.PhoneNumberUtils;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -34,6 +28,7 @@ import android.widget.Toast;
 import com.example.ecs_app.Entidades.Consignatario;
 import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Marca;
+import com.example.ecs_app.R;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -48,7 +43,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 
-public class TRF_00 extends AppCompatActivity {
+public class CFS_00 extends AppCompatActivity {
 
 
     private Contenedor c = new Contenedor();
@@ -74,7 +69,7 @@ public class TRF_00 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trf_00);
 
-        getSupportActionBar().setTitle("CFS App - Pantalla principal");
+        getSupportActionBar().setTitle("CFS");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -139,7 +134,7 @@ public class TRF_00 extends AppCompatActivity {
                                 descCsg.setText("");
                             }
                         }else{
-                            Toast.makeText(TRF_00.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CFS_00.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -173,7 +168,7 @@ public class TRF_00 extends AppCompatActivity {
                                     descMar.setText("");
                                 }
                             }else{
-                                Toast.makeText(TRF_00.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_00.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (InterruptedException e) {
@@ -211,7 +206,7 @@ public class TRF_00 extends AppCompatActivity {
         button_sello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_sello = new Intent(v.getContext(), TRF_01_sellos.class);
+                Intent to_sello = new Intent(v.getContext(), CFS_02_sellos.class);
                 to_sello.putExtra("objContenedor", (Serializable) c);
                 startActivity(to_sello);
             }
@@ -221,11 +216,11 @@ public class TRF_00 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(c.getCodBarra().equalsIgnoreCase("S")){
-                    Intent to_lotes_codigoBarra = new Intent(v.getContext(),TRF_02_lotes_ingresoCodigoBarra.class);
+                    Intent to_lotes_codigoBarra = new Intent(v.getContext(), CFS_01_lotes_codigoBarra.class);
                     to_lotes_codigoBarra.putExtra("objContenedor",(Serializable) c);
                     startActivity(to_lotes_codigoBarra);
                 }else if(c.getCodBarra().equalsIgnoreCase("N")){
-                    Intent to_lotes = new Intent(v.getContext(),TRF_02_lotes.class);
+                    Intent to_lotes = new Intent(v.getContext(), CFS_01_lotes_manual.class);
                     to_lotes.putExtra("objContenedor",(Serializable) c);
                     startActivity(to_lotes);
                 }
@@ -255,15 +250,15 @@ public class TRF_00 extends AppCompatActivity {
                             //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
                             confimarIngresoContainer();
                         }else{
-                            Toast.makeText(TRF_00.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CFS_00.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
                             vibrar();
                         }
                     }else{
-                        Toast.makeText(TRF_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
                         vibrar();
                     }
                 }else{
-                    Toast.makeText(TRF_00.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_00.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
                     vibrar();
                 }
             }
@@ -271,45 +266,9 @@ public class TRF_00 extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                new AlertDialog.Builder(TRF_00.this)
-                        .setTitle("Fin de sesión")
-                        .setMessage("¿Desea salir de la sesión?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Intent intent = new Intent(TRF_00.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d("Mensaje" , "Se cancelo acción");
-                            }
-                        })
-                        .show();
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void confimarIngresoContainer(){
 
-        new AlertDialog.Builder(TRF_00.this)
+        new AlertDialog.Builder(CFS_00.this)
                 .setTitle("Confirmación consolidación container")
                 .setMessage("AÑO : " + anno.getText().toString() + "  OPE: " + cor.getText().toString() + "\n" +
                         "CONT : " + cont.getText().toString().toUpperCase() + " " + codigo.getText().toString() + " - " + digit.getText().toString() + "\n" +
@@ -336,7 +295,7 @@ public class TRF_00 extends AppCompatActivity {
                                 buscarContenedor();
 
                             }else{
-                                Toast.makeText(TRF_00.this,"Error, ingreso Container",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_00.this,"Error, ingreso Container",Toast.LENGTH_SHORT).show();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -404,7 +363,7 @@ public class TRF_00 extends AppCompatActivity {
 
                         return "Por consolidar";
                     }else{
-                        Toast.makeText(TRF_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
                         estadoIngresosConsolidado(false);
                         limpiarInfoCont();
                         limpiarInfo2();
@@ -415,12 +374,12 @@ public class TRF_00 extends AppCompatActivity {
                     }
                 }
             }catch(Exception e){
-                Toast.makeText(TRF_00.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CFS_00.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                 vibrar();
                 return "N";
             }
         }else{
-            Toast.makeText(TRF_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CFS_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
             vibrar();
             return "N";
         }

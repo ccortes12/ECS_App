@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:textAlignment="center"
-    tools:context=".TRF_01_sellos">
+    tools:context=".CFS.CFS_02_sellos">
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="456dp"
+        android:layout_width="450dp"
         android:layout_height="96dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/customborder2"
@@ -26,12 +26,11 @@
 
             <TextView
                 android:id="@+id/textView23"
-                android:layout_width="15dp"
+                android:layout_width="4dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="OPERACIÓN :"
-                android:textAlignment="gravity"
+                android:text="Operación:"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -40,8 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -52,22 +51,21 @@
 
             <TextView
                 android:id="@+id/textView25"
-                android:layout_width="16dp"
+                android:layout_width="184dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="CONTENEDOR :"
-                android:textAlignment="gravity"
+                android:text="Contenedor:"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Contenedor"
-                android:layout_width="wrap_content"
+                android:layout_width="267dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

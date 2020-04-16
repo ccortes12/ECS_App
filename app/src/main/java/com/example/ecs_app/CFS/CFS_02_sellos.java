@@ -1,4 +1,4 @@
-package com.example.ecs_app;
+package com.example.ecs_app.CFS;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,23 +13,19 @@ import android.os.Bundle;
 
 import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Sello;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.ecs_app.R;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +44,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class TRF_01_sellos extends AppCompatActivity {
+public class CFS_02_sellos extends AppCompatActivity {
 
     private TextView textViewCont,textViewOperacion;
     private Button ingresarSello;
@@ -103,7 +99,7 @@ public class TRF_01_sellos extends AppCompatActivity {
                 if (!sello.getText().toString().equalsIgnoreCase("")) {
                     confirmarIngresoSello(cadenaOperacion,cadenaContenedor);
                 }else{
-                    Toast.makeText(TRF_01_sellos.this,"ERROR, Ingrese un sello",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_02_sellos.this,"ERROR, Ingrese un sello",Toast.LENGTH_SHORT).show();
                     vibrar();
                 }
             }
@@ -135,7 +131,7 @@ public class TRF_01_sellos extends AppCompatActivity {
 
     private void confirmarIngresoSello(String cadenaOperacion, String cadenaContenedor){
 
-        new AlertDialog.Builder(TRF_01_sellos.this)
+        new AlertDialog.Builder(CFS_02_sellos.this)
                 .setTitle("Confirmación registro sello")
                 .setMessage("OPERACIÓN : " + cadenaOperacion + "\n" +
                         "CONTENEDOR : " + cadenaContenedor + "\n" +
@@ -148,7 +144,7 @@ public class TRF_01_sellos extends AppCompatActivity {
                             String salida = new cfs_RegistraSello().execute().get();
 
                             if (salida.equalsIgnoreCase("0")) {
-                                Toast.makeText(TRF_01_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_02_sellos.this, "EXITO", Toast.LENGTH_SHORT).show();
 
                                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                                 Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -156,7 +152,7 @@ public class TRF_01_sellos extends AppCompatActivity {
 
                                 cargarSello();
                             } else {
-                                Toast.makeText(TRF_01_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_02_sellos.this, "ERROR, " + salida, Toast.LENGTH_SHORT).show();
                                 vibrar();
                             }
                         } catch (ExecutionException e) {
@@ -205,7 +201,7 @@ public class TRF_01_sellos extends AppCompatActivity {
             sello.setFocusableInTouchMode(true);
             ingresarSello.setVisibility(View.VISIBLE);
         }else{
-            Toast.makeText(TRF_01_sellos.this,"ERROR, " + tempSello.getMensaje(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(CFS_02_sellos.this,"ERROR, " + tempSello.getMensaje(),Toast.LENGTH_SHORT).show();
             vibrar();
         }
 

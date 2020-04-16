@@ -1,4 +1,4 @@
-package com.example.ecs_app;
+package com.example.ecs_app.CFS;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -29,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Paquete;
+import com.example.ecs_app.R;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -43,7 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
+public class CFS_01_lotes_codigoBarra extends AppCompatActivity {
 
     private TextView textOperacion, textContenedor,textSaldo;
     private EditText ingresoCodigo;
@@ -152,19 +152,19 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                                     cargarDatos(tblLayout);
 
                                 } else {
-                                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CFS_01_lotes_codigoBarra.this, respuesta, Toast.LENGTH_SHORT).show();
                                     vibrar();
                                 }
                                 ingresoCodigo.setText("");
 
                             } else {
-                                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_01_lotes_codigoBarra.this, "ERROR, Paquete excede el maximo peso", Toast.LENGTH_SHORT).show();
                                 vibrar();
                             }
                             ingresoCodigo.setText("");
 
                         } else {
-                            Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CFS_01_lotes_codigoBarra.this, "ERROR, Paquete ya ingresado", Toast.LENGTH_SHORT).show();
                             vibrar();
                         }
                         ingresoCodigo.setText("");
@@ -174,17 +174,17 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
-                        Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_01_lotes_codigoBarra.this, "ERROR, " + e.getCause().toString(), Toast.LENGTH_SHORT).show();
                         vibrar();
                     }
                 } else if (tempPaquete.getEstado() == 1) {
-                    Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(CFS_01_lotes_codigoBarra.this, "ERROR, " + tempPaquete.getMensaje(), Toast.LENGTH_LONG).show();
                     vibrar();
                     ingresoCodigo.setText("");
                 }
 
             }else {
-                Toast.makeText(TRF_02_lotes_ingresoCodigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
+                Toast.makeText(CFS_01_lotes_codigoBarra.this,"ERROR, No es posible leer codigo" ,Toast.LENGTH_LONG).show();
                 vibrar();
                 ingresoCodigo.setText("");
             }
@@ -207,7 +207,7 @@ public class TRF_02_lotes_ingresoCodigoBarra extends AppCompatActivity {
         saldo = contenedor.getGross() - (int)contenedor.getTara();
 
         try {
-            listaPaquetes = new TRF_02_lotes_ingresoCodigoBarra.cfs__BuscaPaquetesConsolidados().execute().get();
+            listaPaquetes = new CFS_01_lotes_codigoBarra.cfs__BuscaPaquetesConsolidados().execute().get();
 
             if(listaPaquetes != null){
 
