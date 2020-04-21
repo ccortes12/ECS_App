@@ -83,7 +83,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="537dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="142dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/customborder"

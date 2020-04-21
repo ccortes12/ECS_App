@@ -9,9 +9,9 @@
 
     <LinearLayout
         android:id="@+id/infoContenedor"
-        android:layout_width="550dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="107dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:id="@+id/infoDestinoShipper"
-        android:layout_width="550dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="96dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"
@@ -207,7 +207,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="550dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="340dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"
@@ -430,7 +430,7 @@
         android:id="@+id/button_buscar"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margen_boton"
         android:drawableRight="@android:drawable/ic_menu_search"
         android:text="BUSCAR"
         app:layout_constraintEnd_toEndOf="parent"
@@ -441,7 +441,7 @@
         android:id="@+id/button_clean"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margen_boton"
         android:background="@color/colorPrimaryDark"
         android:drawableRight="@android:drawable/ic_menu_close_clear_cancel"
         android:nextFocusDown="@+id/editText_cont"
@@ -464,7 +464,7 @@
         android:id="@+id/linearLayout8"
         android:layout_width="454dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margen_boton"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

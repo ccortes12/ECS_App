@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.ecs_app.CFS.CFS_00;
+import com.example.ecs_app.Recepcion.Pre_recepcion;
+import com.example.ecs_app.Recepcion.Recepcion_manual;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    private Button cfs_button, gate_button;
+    private Button cfs_button, gate_button,recepcion_button,acopio_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,10 @@ public class MenuPrincipal extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        cfs_button = findViewById(R.id.cfs_button);
-        gate_button = findViewById(R.id.gate_button);
+        cfs_button = findViewById(R.id.button_recepcionManual);
+        gate_button = findViewById(R.id.button_recepcion1);
+        recepcion_button = findViewById(R.id.button_recepcion);
+        acopio_button = findViewById(R.id.button_acopio);
 
 
         cfs_button.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +50,23 @@ public class MenuPrincipal extends AppCompatActivity {
                 Intent intentGate = new Intent(v.getContext(), GateIn.class);
                 startActivity(intentGate);
 
+            }
+        });
+
+        recepcion_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intentRecepcion = new Intent(v.getContext(), Pre_recepcion.class);
+                startActivity(intentRecepcion);
+            }
+        });
+
+        acopio_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAcopio = new Intent(v.getContext(), Acopio_despachoNave.class);
+                startActivity(intentAcopio);
             }
         });
 

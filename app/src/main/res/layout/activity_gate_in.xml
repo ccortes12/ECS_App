@@ -18,9 +18,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout7"
-        android:layout_width="550dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="129dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +48,9 @@
                 android:layout_width="378dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="textVisiblePassword"
                 android:ems="10"
                 android:hint="AABB12"
+                android:inputType="textVisiblePassword"
                 android:maxLength="6"
                 android:nextFocusDown="@id/editText_cont"
                 android:textAlignment="center" />
@@ -78,10 +78,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="ABCD"
-                android:maxLength="4"
                 android:inputType="textCapCharacters"
-                android:textAlignment="center"
-                android:nextFocusDown="@id/editText_codigo"/>
+                android:maxLength="4"
+                android:nextFocusDown="@id/editText_codigo"
+                android:textAlignment="center" />
 
             <EditText
                 android:id="@+id/editText_codigo"
@@ -90,11 +90,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="123456"
-                android:maxLength="6"
                 android:inputType="number"
-                android:textAlignment="center"
+                android:maxLength="6"
                 android:nextFocusDown="@id/editText_digito"
-                />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView47"
@@ -112,18 +111,18 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="0"
+                android:imeOptions="actionGo"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:maxLength="1"
-                android:imeOptions="actionGo"/>
+                android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout13"
-        android:layout_width="550dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="128dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="@dimen/margen_cuadros"
         android:background="@drawable/customborder2"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -237,7 +236,7 @@
         android:id="@+id/button_buscar"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/margen_boton"
         android:drawableRight="@android:drawable/ic_menu_search"
         android:text="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -249,7 +248,7 @@
         android:id="@+id/button2"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/margen_boton"
         android:drawableRight="@android:drawable/ic_menu_save"
         android:text="Grabar"
         android:visibility="invisible"

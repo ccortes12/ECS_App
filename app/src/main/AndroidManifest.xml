@@ -14,31 +14,38 @@
         android:orientation="vertical"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity
+            android:name=".Recepcion.Pre_recepcion"
+            android:parentActivityName=".MenuPrincipal"></activity>
+        <activity
+            android:name=".Acopio_despachoNave"
+            android:parentActivityName=".MenuPrincipal"/>
+        <activity
+            android:name=".Recepcion.Recepcion_manual"
+            android:parentActivityName=".MenuPrincipal" />
+        <activity
+            android:name=".Recepcion.Recepcion_lote"
+            android:parentActivityName=".MenuPrincipal" />
         <activity
             android:name=".GateIn"
-            android:parentActivityName=".MenuPrincipal"/>
-
+            android:parentActivityName=".MenuPrincipal" />
         <activity android:name=".MenuPrincipal" />
-
         <activity
             android:name=".CFS.CFS_01_lotes_codigoBarra"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00"/>
+            android:parentActivityName=".CFS.CFS_00" />
         <activity
             android:name=".CFS.CFS_01_lotes_manual"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00"/>
+            android:parentActivityName=".CFS.CFS_00" />
         <activity
             android:name=".CFS.CFS_02_sellos"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00"/>
+            android:parentActivityName=".CFS.CFS_00" />
         <activity
             android:name=".CFS.CFS_00"
             android:configChanges="orientation"
-            android:parentActivityName=".MenuPrincipal"/>
-
+            android:parentActivityName=".MenuPrincipal" />
         <activity
             android:name=".Login"
             android:windowSoftInputMode="stateHidden">

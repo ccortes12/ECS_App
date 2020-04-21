@@ -102,7 +102,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="540dp"
+        android:layout_width="@dimen/ancho_cuadros"
         android:layout_height="70dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/customborder"
