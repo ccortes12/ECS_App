@@ -79,8 +79,6 @@ public class CFS_01_lotes_codigoBarra extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Ingreso Lotes");
 
-
-
         Intent intent = getIntent();
         contenedor = (Contenedor) intent.getSerializableExtra("objContenedor");
 
@@ -207,7 +205,7 @@ public class CFS_01_lotes_codigoBarra extends AppCompatActivity {
         saldo = contenedor.getGross() - (int)contenedor.getTara();
 
         try {
-            listaPaquetes = new CFS_01_lotes_codigoBarra.cfs__BuscaPaquetesConsolidados().execute().get();
+            listaPaquetes = new CFS_01_lotes_codigoBarra.cfs_BuscaPaquetesConsolidados().execute().get();
 
             if(listaPaquetes != null){
 
@@ -234,7 +232,7 @@ public class CFS_01_lotes_codigoBarra extends AppCompatActivity {
 
     }
 
-    private class cfs__BuscaPaquetesConsolidados extends AsyncTask<String, Void, ArrayList<Paquete>> {
+    private class cfs_BuscaPaquetesConsolidados extends AsyncTask<String, Void, ArrayList<Paquete>> {
 
         @Override
         protected ArrayList<Paquete> doInBackground(String... strings) {

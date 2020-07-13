@@ -4,19 +4,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Recepcion.Recepcion_lote">
+    tools:context=".Remanejo">
 
     <Button
-        android:id="@+id/button_recepcionar2"
-        android:layout_width="@dimen/largo_button"
+        android:id="@+id/button6"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margen_boton"
         android:drawableRight="@android:drawable/ic_menu_save"
-        android:text="Recepcionar"
-        android:visibility="invisible"
+        android:text="Transferir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout14" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
+
+    <TextView
+        android:id="@+id/textView75"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. Destino"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.099"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView58"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3. Origen"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout16"
+        android:layout_width="@dimen/largo_cuadros"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/margen_cuadros"
+        android:background="@drawable/customborder3"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_area"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Area"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_area22"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_celda"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Celda"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView_333"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout10"
@@ -39,29 +122,10 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
-        <LinearLayout
+        <Spinner
+            android:id="@+id/spinner_minera2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView82"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spinner_minera2"
-                android:layout_width="480dp"
-                android:layout_height="35dp"
-                android:gravity="center"
-                android:spinnerMode="dialog"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-        </LinearLayout>
+            android:layout_height="35dp" />
 
         <TextView
             android:id="@+id/textView44"
@@ -86,7 +150,7 @@
     <LinearLayout
         android:id="@+id/linearLayout14"
         android:layout_width="@dimen/largo_cuadros"
-        android:layout_height="221dp"
+        android:layout_height="220dp"
         android:layout_marginTop="@dimen/margen_cuadros"
         android:background="@drawable/customborder2"
         android:orientation="vertical"
@@ -103,7 +167,7 @@
             <TextView
                 android:id="@+id/textView48"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="57dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Lote"
@@ -112,7 +176,7 @@
 
             <EditText
                 android:id="@+id/ingreso_lote2"
-                android:layout_width="263dp"
+                android:layout_width="258dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -131,7 +195,7 @@
             <TextView
                 android:id="@+id/textView56"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="79dp"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Paquete"
@@ -140,7 +204,7 @@
 
             <EditText
                 android:id="@+id/ingreso_lote3"
-                android:layout_width="284dp"
+                android:layout_width="371dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -252,7 +316,64 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout14"
         app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintHorizontal_bias="0.685"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout18"
+        android:layout_width="@dimen/largo_cuadros"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/margen_cuadros"
+        android:background="@drawable/customborder3"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_area2"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Area"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinner_area2"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView_celda2"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Celda"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinner_celda2"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

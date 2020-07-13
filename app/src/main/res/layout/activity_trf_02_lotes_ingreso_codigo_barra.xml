@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Operación:" />
+                android:text="Operación" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Contenedor:" />
+                android:text="Contenedor" />
 
             <TextView
                 android:id="@+id/textView26"
@@ -102,7 +102,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout6"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="70dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/customborder"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="CODIGO :"
+            android:text="CODIGO"
             android:textSize="18dp"
             android:textStyle="bold" />
 

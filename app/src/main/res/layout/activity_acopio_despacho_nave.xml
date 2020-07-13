@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout17"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="219dp"
         android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder"
@@ -29,7 +29,7 @@
                 android:layout_width="69dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Operación:"
+                android:text="Operación"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Minera:"
+                android:text="Minera"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -81,7 +81,7 @@
                 android:layout_width="69dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Celda desde:"
+                android:text="Celda desde"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />

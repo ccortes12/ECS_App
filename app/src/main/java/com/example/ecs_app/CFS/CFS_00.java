@@ -637,15 +637,11 @@ public class CFS_00 extends AppCompatActivity {
             String SOAP_ACTION = "http://www.atiport.cl/CFS_BuscaMarca";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
             request.addProperty("codigoMarca",mar.getText().toString());
             request.addProperty("codigoShipper",c.getCodShipper());
-
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
-
             envelope.setOutputSoapObject(request);
-
             HttpTransportSE transport = new HttpTransportSE(URL);
 
             try{
@@ -654,7 +650,6 @@ public class CFS_00 extends AppCompatActivity {
                 SoapObject resultado_xml = (SoapObject) envelope.getResponse();
 
                 if(Integer.parseInt(resultado_xml.getProperty("intEstado").toString()) != -1){
-
                     Marca marca = new Marca();
 
                     marca.setEstado(Integer.parseInt(resultado_xml.getProperty("intEstado").toString()));

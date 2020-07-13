@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Acopio_despachoNave extends AppCompatActivity {
+public class Remanejo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acopio_despacho_nave);
+        setContentView(R.layout.activity_remanejo);
 
-        getSupportActionBar().setTitle("Acopio");
+        getSupportActionBar().setTitle("Remanejo");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

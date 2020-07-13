@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Operación:"
+                android:text="Operación"
                 android:textAlignment="center" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Contenedor:"
+                android:text="Contenedor"
                 android:textAlignment="center" />
 
             <TextView
@@ -83,7 +83,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="142dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/customborder"

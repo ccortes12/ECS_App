@@ -8,6 +8,15 @@ public class Paquete {
     private double peso;
     private String mensaje;
 
+    private String codigoPaquete;
+    private int piezas;
+    private double pesoBruto;
+    private double pesoNeto;
+    private String chrFlgChequeo;
+    private String area;
+    private String celda;
+
+    private String descEstado;
 
     public Paquete() {
     }
@@ -59,4 +68,70 @@ public class Paquete {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
+
+    public String getCodigoPaquete() {
+        return codigoPaquete;
+    }
+
+    public void setCodigoPaquete(String codigoPaquete) {
+        this.codigoPaquete = codigoPaquete;
+    }
+
+    public int getPiezas() {
+        return piezas;
+    }
+
+    public void setPiezas(int piezas) {
+        this.piezas = piezas;
+    }
+
+    public double getPesoBruto() {
+        return pesoBruto;
+    }
+
+    public void setPesoBruto(double pesoBruto) {
+        this.pesoBruto = pesoBruto;
+    }
+
+    public double getPesoNeto() {
+        return pesoNeto;
+    }
+
+    public void setPesoNeto(double pesoNeto) {
+        this.pesoNeto = pesoNeto;
+    }
+
+    public String getChrFlgChequeo() {
+        return chrFlgChequeo;
+    }
+
+    public void setChrFlgChequeo(String chrFlgChequeo) {
+        this.chrFlgChequeo = chrFlgChequeo;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getCelda() {
+        return celda;
+    }
+
+    public void setCelda(String celda) {
+        this.celda = celda;
+    }
+
+    public String getDescEstado() {
+        return descEstado;
+    }
+
+    public void setDescEstado(String descEstado) {
+        this.descEstado = descEstado;
+    }
+
+
 }

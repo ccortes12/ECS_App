@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="@dimen/ancho_cuadros"
-        android:layout_height="448dp"
+        android:layout_width="@dimen/largo_cuadros"
+        android:layout_height="528dp"
         android:layout_marginTop="@dimen/margen_top"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,13 +63,20 @@
             android:id="@+id/button_acopio"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Acopio"
+            android:text="Despacho"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_remanejo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Remanejo"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/button_transferencia"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="66dp"
             android:text="Transferencia"
             android:textSize="18sp" />
     </LinearLayout>

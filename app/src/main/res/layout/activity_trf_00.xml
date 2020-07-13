@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/infoContenedor"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="107dp"
         android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder"
@@ -145,7 +145,7 @@
 
     <LinearLayout
         android:id="@+id/infoDestinoShipper"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="96dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"
@@ -207,7 +207,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="340dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/customborder2"

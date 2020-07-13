@@ -14,11 +14,10 @@ import android.widget.Button;
 
 import com.example.ecs_app.CFS.CFS_00;
 import com.example.ecs_app.Recepcion.Pre_recepcion;
-import com.example.ecs_app.Recepcion.Recepcion_manual;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    private Button cfs_button, gate_button,recepcion_button,acopio_button;
+    private Button cfs_button, gate_button,recepcion_button,despacho_button,almacenaje_button,remanejo_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +30,9 @@ public class MenuPrincipal extends AppCompatActivity {
         cfs_button = findViewById(R.id.button_recepcionManual);
         gate_button = findViewById(R.id.button_recepcion1);
         recepcion_button = findViewById(R.id.button_recepcion);
-        acopio_button = findViewById(R.id.button_acopio);
-
+        despacho_button = findViewById(R.id.button_acopio);
+        almacenaje_button = findViewById(R.id.button_almacenaje);
+        remanejo_button = findViewById(R.id.button_remanejo);
 
         cfs_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +62,27 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
 
-        acopio_button.setOnClickListener(new View.OnClickListener() {
+        despacho_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentAcopio = new Intent(v.getContext(), Acopio_despachoNave.class);
+                Intent intentAcopio = new Intent(v.getContext(), Despachar.class);
                 startActivity(intentAcopio);
+            }
+        });
+
+        almacenaje_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAlmacenaje = new Intent(v.getContext(), Almacenaje.class);
+                startActivity(intentAlmacenaje);
+            }
+        });
+
+        remanejo_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentRemanejo = new Intent(v.getContext(), Remanejo.class);
+                startActivity(intentRemanejo);
             }
         });
 

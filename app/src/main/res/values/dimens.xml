@@ -1,8 +1,9 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margen_top">50dp</dimen>
+    <dimen name="margen_top">30dp</dimen>
+    <dimen name="margen_top_RepDes">20dp</dimen>
     <dimen name="margen_cuadros">30dp</dimen>
     <dimen name="margen_boton">20dp</dimen>
-    <dimen name="ancho_cuadros">550dp</dimen>
-    <dimen name="ancho_button">150dp</dimen>
+    <dimen name="largo_cuadros">550dp</dimen>
+    <dimen name="largo_button">150dp</dimen>
 </resources>

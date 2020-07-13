@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="@dimen/ancho_cuadros"
+        android:layout_width="@dimen/largo_cuadros"
         android:layout_height="96dp"
         android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder2"
@@ -29,7 +29,7 @@
                 android:layout_width="4dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Operación:"
+                android:text="Operación"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 android:layout_width="184dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Contenedor:"
+                android:text="Contenedor"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
