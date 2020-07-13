@@ -58,12 +58,23 @@
 
             <Spinner
                 android:id="@+id/spinner_area"
-                android:gravity="center"
-                android:spinnerMode="dialog"
-                android:textAlignment="center"
                 android:layout_width="423dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:spinnerMode="dialog"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/area_textView"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+
         </LinearLayout>
 
         <View
@@ -95,6 +106,14 @@
                 android:spinnerMode="dialog"
                 android:textAlignment="center"
                 android:layout_weight="1" />
+            <TextView
+                android:id="@+id/celda_textView"
+                android:layout_width="423dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
         </LinearLayout>
 
     </LinearLayout>

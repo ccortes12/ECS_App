@@ -43,7 +43,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
 
     private Spinner minerasSpinner,areasSpinner,celdasSpinner;
     private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado,tituloSeccion;
+    private TextView peso, estado,tituloSeccion,areaTextView,celdaTextView;
     private Button buscar,almacenar;
     private Switch modoManual;
     private LinearLayout seccionUbicacion;
@@ -83,6 +83,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         almacenar = findViewById(R.id.button18);
         seccionUbicacion = findViewById(R.id.linearLayout16);
         tituloSeccion = findViewById(R.id.textView95);
+        areaTextView = findViewById(R.id.area_textView);
+        celdaTextView = findViewById(R.id.celda_textView);
 
         cargarSpinner();
         cargarSpinnerAreas();
@@ -140,6 +142,13 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     almacenar.setVisibility(View.VISIBLE);
                     tituloSeccion.setVisibility(View.VISIBLE);
 
+                    areaTextView.setVisibility(View.GONE);
+                    celdaTextView.setVisibility(View.GONE);
+
+                    areasSpinner.setVisibility(View.VISIBLE);
+                    celdasSpinner.setVisibility(View.VISIBLE);
+
+
                     if(!modoManual.isChecked()){
                         lote.setText(busquedaPaquete.getLote());
                         paquete.setText(busquedaPaquete.getIdPaquete());
@@ -157,15 +166,10 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     almacenar.setVisibility(View.INVISIBLE);
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
 
-                    //areasSpinner.setSelection(0);
-                    //celdasSpinner.setSelection(0);
-
                     if(!modoManual.isChecked()){
                         lote.setText(busquedaPaquete.getLote());
                         paquete.setText(busquedaPaquete.getIdPaquete());
                     }
-
-
                     //cargar ubicacion al spinner y bloquear spinner
                     cargarSpinnerBlock(busquedaPaquete);
 
@@ -175,7 +179,6 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     tituloSeccion.setVisibility(View.INVISIBLE);
                     almacenar.setVisibility(View.INVISIBLE);
                 }
-
 
             }
         });
@@ -187,10 +190,12 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                 if(modoManual.isChecked()){
 
                     new AlertDialog.Builder(Almacenaje.this)
-                            .setTitle("Confirmar recepción paquete")
-                            .setMessage("Paquete a recepcionar: \n" +
-                                    "Lote : " + lote.getText().toString() + "\n" +
-                                    "Codigo Paquete : " + busquedaPaquete.getIdPaquete())
+                            .setTitle("Confirmar almacenar paquete")
+                            .setMessage("Paquete a almacenar: \n" +
+                                    "Lote: " + lote.getText().toString() + "\n" +
+                                    "Codigo Paquete: " + busquedaPaquete.getIdPaquete()+ "\n" +
+                                    "Area: " + areasSpinner.getSelectedItem().toString() + "\n" +
+                                    "Celda: " + celdasSpinner.getSelectedItem().toString())
                             .setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -198,7 +203,6 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                                     //Primero debo despachar y luego almacenar
                                     String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda()};
 
-                                    //fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha();
                                     try{
                                         String resp = new Almacenaje.ecs_Despachar().execute(params).get();
                                     } catch (InterruptedException e) {
@@ -237,7 +241,6 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     //Primero debo despachar y luego almacenar
                     String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda()};
 
-                    //fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha();
                     try{
                         String resp = new Almacenaje.ecs_Despachar().execute(params).get();
                     } catch (InterruptedException e) {
@@ -305,7 +308,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     private void cargarSpinnerBlock(Paquete paquete){
-        int i,x;
+        /**int i,x;
         for(i = 0; i < listaAreas.size(); i++){
             if(listaAreas.get(i).getCodArea().equalsIgnoreCase(paquete.getArea())){
                 break;
@@ -330,7 +333,14 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                 break;
             }
         }
-        celdasSpinner.setSelection(x+1);
+        celdasSpinner.setSelection(x+1);*/
+
+        areasSpinner.setVisibility(View.GONE);
+        areaTextView.setText(paquete.getArea());
+        areaTextView.setVisibility(View.VISIBLE);
+        celdasSpinner.setVisibility(View.GONE);
+        celdaTextView.setText(paquete.getCelda());
+        celdaTextView.setVisibility(View.VISIBLE);
 
     }
 
@@ -604,7 +614,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     private class ecs_AlmacenaPaquete extends AsyncTask<String,Void,String>{
-        @SuppressLint("WrongThread")
+
         @Override
         protected String doInBackground(String... strings) {
 
@@ -615,15 +625,15 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            String[] area = areasSpinner.getSelectedItem().toString().split(" - ");
-            String[] celda = celdasSpinner.getSelectedItem().toString().split(" - ");
+            String area = areasSpinner.getSelectedItem().toString();
+            String celda = celdasSpinner.getSelectedItem().toString();
 
             request.addProperty("intIdRelacionPaquete", busquedaPaquete.getIdPaquete());
             request.addProperty("intRutUsuario", rutCliente);
             request.addProperty("fechaRecepcion", fechaRecepcion);
             request.addProperty("intTurnoRecepcion", turnoRecepcion);
-            request.addProperty("area",area[0]);
-            request.addProperty("celda",celda[0]);
+            request.addProperty("area",area);
+            request.addProperty("celda",celda);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;

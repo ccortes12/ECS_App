@@ -164,6 +164,9 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                     }
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
 
+                    areasSpinner.setSelection(0);
+                    celdasSpinner.setSelection(0);
+
                     //cargar ubicacion al spinner y bloquear spinner
                     area.setText(busquedaPaquete.getArea());
                     celda.setText(busquedaPaquete.getCelda());
@@ -250,7 +253,6 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
 
                     estadoCampos(false);
                 }
-                areasSpinner.setSelection(0);
             }
         });
 
