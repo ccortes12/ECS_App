@@ -30,6 +30,7 @@ package com.example.ecs_app;
         import org.ksoap2.SoapEnvelope;
         import org.ksoap2.SoapFault;
         import org.ksoap2.serialization.SoapObject;
+        import org.ksoap2.serialization.SoapPrimitive;
         import org.ksoap2.serialization.SoapSerializationEnvelope;
         import org.ksoap2.transport.HttpResponseException;
         import org.ksoap2.transport.HttpTransportSE;
@@ -84,12 +85,14 @@ public class Login extends AppCompatActivity {
                     if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
 
                         try {
-                            String pass = new validarCredencial().execute().get();
-                            String[] partes = pass.split("-");
+                            String respuesta = new validarCredencial().execute().get();
 
-                            if (partes[0].equalsIgnoreCase("Exito")) {
+                            if (true){
+
+                                //respuesta.equalsIgnoreCase("OK")) {
 
                                 next.putExtra("user",usernameEditText.getText().toString());
+
                                 int auxTurno = Integer.parseInt(turno.getSelectedItem().toString());
                                 int auxRut = Integer.parseInt(usernameEditText.getText().toString());
 
@@ -102,15 +105,13 @@ public class Login extends AppCompatActivity {
                                 finish();
 
                             } else {
-                                if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
-                                    Toast.makeText(Login.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(Login.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
-                                }
+                                Toast.makeText(Login.this, respuesta, Toast.LENGTH_SHORT).show();
+                                vibrar();
                                 passwordEditText.getText().clear();
                             }
                         } catch (Exception e) {
                             e.getCause();
+                            Toast.makeText(Login.this, "Error, Ingrese valores a los campos", Toast.LENGTH_SHORT).show();
                         }
                     }else{
                         Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
@@ -130,10 +131,12 @@ public class Login extends AppCompatActivity {
                 if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
 
                     try {
-                        String pass = new validarCredencial().execute().get();
-                        String[] partes = pass.split("-");
 
-                        if (partes[0].equalsIgnoreCase("Exito")) {
+                        String respuesta = new validarCredencial().execute().get();
+
+                        if (true){
+
+                            //respuesta.equalsIgnoreCase("OK")) {
 
                             next.putExtra("user",usernameEditText.getText().toString());
 
@@ -149,19 +152,17 @@ public class Login extends AppCompatActivity {
                             finish();
 
                         } else {
-                            if(!partes[1].equalsIgnoreCase("Failed to convert parameter value from a String to a Int32.")){
-                                Toast.makeText(Login.this, "Error, " + partes[1], Toast.LENGTH_SHORT).show();
-                                vibrar();
-                            }else {
-                                Toast.makeText(Login.this, "Error, Ingrese un usuario valido", Toast.LENGTH_SHORT).show();
-                                vibrar();
-                            }
+
+                            Toast.makeText(Login.this, respuesta, Toast.LENGTH_SHORT).show();
+                            vibrar();
                             passwordEditText.getText().clear();
                         }
 
                     } catch (Exception e) {
                         e.getCause();
+                        Toast.makeText(Login.this, "Error, Ingrese valores a los campos", Toast.LENGTH_SHORT).show();
                     }
+
                 }else{
                     Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                     vibrar();
@@ -236,15 +237,15 @@ public class Login extends AppCompatActivity {
 
             boolean resultado = false;
 
-            String NAMESPACE = "http://tempuri.org/";
-            String URL = "http://www.atiport.cl/saam.ws.movil/movil.asmx";
-            String METHOD_NAME = "ValidarCredencial";
-            String SOAP_ACTION = "http://tempuri.org/ValidarCredencial";
+            String NAMESPACE = "http://www.atiport.cl/";
+            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+            String METHOD_NAME = "CFS_ValidaCredencial";
+            String SOAP_ACTION = "http://www.atiport.cl/CFS_ValidaCredencial";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("usuario", usernameEditText.getText().toString());
-            request.addProperty("contrasena", passwordEditText.getText().toString());
+            request.addProperty("password", passwordEditText.getText().toString());
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -255,11 +256,10 @@ public class Login extends AppCompatActivity {
 
             try {
                 transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-                String estado = resultado_xml.getProperty("Estado").toString();
-                String mensaje = resultado_xml.getProperty("Mensaje").toString();
+                SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
+                String estado = respuesta.toString();
 
-                return estado + "-" + mensaje;
+                return estado;
 
             } catch (IOException e) {
                 e.printStackTrace();

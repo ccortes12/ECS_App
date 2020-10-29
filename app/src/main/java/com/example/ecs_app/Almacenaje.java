@@ -90,7 +90,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         cargarSpinnerAreas();
         estadoCampos(false);
 
-        fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha();
+        fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha().replaceAll(" ","");
         turnoRecepcion = Integer.toString(((AtiApp) Almacenaje.this.getApplication()).getTurno());
         rutUsuario = Integer.toString(((AtiApp) Almacenaje.this.getApplication()).getRutUsuario());
 
@@ -201,18 +201,11 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     //Primero debo despachar y luego almacenar
-                                    String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda()};
-
-                                    try{
-                                        String resp = new Almacenaje.ecs_Despachar().execute(params).get();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    } catch (ExecutionException e) {
-                                        e.printStackTrace();
-                                    }
+                                    String[] params = {busquedaPaquete.getIdPaquete(),rutUsuario,turnoRecepcion,
+                                        busquedaPaquete.getArea().toString(),busquedaPaquete.getCelda().toString()};
 
                                     try {
-                                        String resp = new Almacenaje.ecs_AlmacenaPaquete().execute().get();
+                                        String resp = new Almacenaje.ecs_AlmacenaPaquete().execute(params).get();
 
                                         if(resp.equalsIgnoreCase("OK")){
                                             Toast.makeText(Almacenaje.this,"Almacenado con exito",Toast.LENGTH_SHORT).show();
@@ -239,18 +232,11 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                 }else{
 
                     //Primero debo despachar y luego almacenar
-                    String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda()};
-
-                    try{
-                        String resp = new Almacenaje.ecs_Despachar().execute(params).get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
+                    String[] params = {busquedaPaquete.getIdPaquete(),rutUsuario,turnoRecepcion,
+                            busquedaPaquete.getArea().toString(),busquedaPaquete.getCelda().toString()};
 
                     try {
-                        String resp = new Almacenaje.ecs_AlmacenaPaquete().execute().get();
+                        String resp = new Almacenaje.ecs_AlmacenaPaquete().execute(params).get();
 
                         if(resp.equalsIgnoreCase("OK")){
                             Toast.makeText(Almacenaje.this,"Almacenado con exito",Toast.LENGTH_SHORT).show();
@@ -308,32 +294,6 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     private void cargarSpinnerBlock(Paquete paquete){
-        /**int i,x;
-        for(i = 0; i < listaAreas.size(); i++){
-            if(listaAreas.get(i).getCodArea().equalsIgnoreCase(paquete.getArea())){
-                break;
-            }
-        }
-        areasSpinner.setSelection(i+1);
-
-
-        try {
-            String[] params = {areasSpinner.getSelectedItem().toString()};
-            listaCeldas = new ecs_listarCeldas().execute(params).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        cargarCeldas();
-
-        for(x = 0; x < listaCeldas.size(); x++){
-            if(listaCeldas.get(x).getCodCelda().equalsIgnoreCase(paquete.getCelda())){
-                break;
-            }
-        }
-        celdasSpinner.setSelection(x+1);*/
 
         areasSpinner.setVisibility(View.GONE);
         areaTextView.setText(paquete.getArea());
@@ -625,8 +585,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            String area = areasSpinner.getSelectedItem().toString();
-            String celda = celdasSpinner.getSelectedItem().toString();
+            @SuppressLint("WrongThread") String area = areasSpinner.getSelectedItem().toString();
+            @SuppressLint("WrongThread") String celda = celdasSpinner.getSelectedItem().toString();
 
             request.addProperty("intIdRelacionPaquete", busquedaPaquete.getIdPaquete());
             request.addProperty("intRutUsuario", rutCliente);

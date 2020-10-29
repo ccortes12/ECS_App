@@ -134,7 +134,7 @@
         android:id="@+id/textView35"
         android:layout_width="125dp"
         android:layout_height="25dp"
-        android:text="@ 2020, ATI SA"
+        android:text="@2020, ATI SA"
         android:textAlignment="gravity"
         android:textSize="18sp"
         android:textStyle="italic"

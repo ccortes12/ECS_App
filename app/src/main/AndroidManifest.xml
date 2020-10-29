@@ -8,16 +8,19 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:allowBackup="true"
         android:name=".AtiApp"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
         android:icon="@drawable/ati"
         android:label="@string/app_name"
         android:orientation="vertical"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Recepcion.Recepcion_manualPaquete"
+            android:parentActivityName=".Recepcion.Recepcion_manual"></activity>
         <activity
             android:name=".Despachar"
-            android:parentActivityName=".MenuPrincipal"></activity>
+            android:parentActivityName=".MenuPrincipal" />
         <activity
             android:name=".Remanejo"
             android:parentActivityName=".MenuPrincipal" />

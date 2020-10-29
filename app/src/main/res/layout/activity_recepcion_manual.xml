@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout15"
         android:layout_width="@dimen/largo_cuadros"
-        android:layout_height="395dp"
+        android:layout_height="220dp"
         android:layout_marginTop="@dimen/margen_top"
         android:background="@drawable/customborder"
         android:orientation="vertical"
@@ -25,75 +25,31 @@
             <TextView
                 android:id="@+id/textView54"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
+                android:layout_width="360dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:text="Cliente"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editText65"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:spinnerMode="dialog"
+                android:textAlignment="center"
+                android:textSize="32sp"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"/>
 
-            <TextView
-                android:id="@+id/textView60"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Producto"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editText66"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView62"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Marca"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editText79"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,9 +59,10 @@
             <TextView
                 android:id="@+id/textView64"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
+                android:layout_width="39dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Patente"
                 android:textAlignment="center"
                 android:textSize="20sp"
@@ -117,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textVisiblePassword"
                 android:textAlignment="center" />
         </LinearLayout>
 
@@ -129,10 +86,11 @@
             <TextView
                 android:id="@+id/textView66"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="38dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="Guía"
+                android:gravity="center"
+                android:text="Guía digital"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -143,75 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView69"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="143dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Peso bruto"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editText82"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/textView70"
-                    style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="kg."
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView72"
-                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                android:layout_width="56dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total paquetes"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/editText84"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAlignment="center" />
         </LinearLayout>
 
