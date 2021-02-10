@@ -22,6 +22,8 @@ import com.example.ecs_app.AtiApp;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -49,6 +51,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
     private int rutCliente,relacionCliente;
     private Paquete busquedaPaquete;
     ArrayAdapter<String> comboAdapter;
+    WS_Torpedo ws = new WS_TorpedoImp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         listaMineras_spinner = findViewById(R.id.spinner_minera2);
-        auxSpinner = new ArrayList<String>();
+        auxSpinner = new ArrayList<>();
 
         codigoBarra = findViewById(R.id.editText_codigoPaquete);
         modoManual = findViewById(R.id.switch1);
@@ -82,11 +85,8 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(modoManual.isChecked()){ //Bloquear campos de cb
-                    estadoCampos(true);
-                }else{
-                    estadoCampos(false);
-                }
+
+                estadoCampos(modoManual.isChecked());
             }
         });
 
@@ -94,25 +94,26 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View v) {
 
-                //Busqueda objeto minera segun la seleccion del spinner
                 for (Minera m : listaMineras){
                     if(listaMineras_spinner.getSelectedItem().toString().equalsIgnoreCase(m.getVchNombreFantasia())){
                         rutCliente = m.getIntRutCliente();
                     }
                 }
 
-                if(modoManual.isChecked()){  //Busqueda manual
+                if(modoManual.isChecked()){
                     try {
-                        busquedaPaquete = new ecs_BuscarPaquete().execute().get();
+                        String [] params = {String.valueOf(rutCliente),lote.getText().toString(),paquete.getText().toString()};
+                        busquedaPaquete = new ecs_BuscarPaquete().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                }else{  //Busqueda por CB
+                }else{
                     try {
-                        busquedaPaquete = new ecs_BuscarPaquetesCB().execute().get();
+                        String [] params = {String.valueOf(rutCliente),codigoBarra.getText().toString()};
+                        busquedaPaquete = new ecs_BuscarPaquetesCB().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -123,12 +124,11 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                 if(busquedaPaquete.getDescEstado().equalsIgnoreCase("No recepcionado")) {
                     recepcionar.setVisibility(View.VISIBLE);
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
+
                 }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("No se encuentra")){
                     peso.setText("");
                     recepcionar.setVisibility(View.INVISIBLE);
-                    if(modoManual.isChecked()){
-                        estadoCampos(false);
-                    }else estadoCampos(true);
+                    estadoCampos(!modoManual.isChecked());
 
                 }else{
                     lote.setText(busquedaPaquete.getLote());
@@ -156,7 +156,8 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     try {
-                                        String resp = new ecs_RecepcionPaquete().execute().get();
+                                        String[] params = {busquedaPaquete.getIdPaquete(),String.valueOf(rutCliente),fechaRecepcion,String.valueOf(turnoRecepcion)};
+                                        String resp = new ecs_RecepcionPaquete().execute(params).get();
 
                                         if(resp.equalsIgnoreCase("OK")){
                                             Toast.makeText(Recepcion_lote.this,"Recepcionado con exito",Toast.LENGTH_SHORT).show();
@@ -257,7 +258,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         }
         listaMineras_spinner.setOnItemSelectedListener(this);
 
-        comboAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, auxSpinner);
+        comboAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, auxSpinner);
 
         listaMineras_spinner.setAdapter(comboAdapter);
 
@@ -268,59 +269,8 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         @SuppressLint("WrongThread")
         protected Paquete doInBackground(String... strings) {
 
-            Paquete auxPaquete;
+            return ws.ecs_BuscarPaquetesCB(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_BuscarPaquetesCB";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetesCB";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", rutCliente);
-            request.addProperty("codigo_barra", codigoBarra.getText().toString());
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                auxPaquete = new Paquete();
-
-                auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-
-                if(auxPaquete.getPesoBruto() != 0){
-                    auxPaquete.setMensaje(resultado_xml.getProperty("strDescEstado").toString());
-                    auxPaquete.setLote(resultado_xml.getProperty("strLote").toString().trim());
-                    auxPaquete.setIdPaquete(resultado_xml.getProperty("strIdPaquete").toString());
-                    auxPaquete.setPeso(Integer.parseInt(resultado_xml.getProperty("dblPeso").toString()));
-
-                    auxPaquete.setCodigoPaquete(resultado_xml.getProperty("CodigoPaquete").toString().trim());
-                    auxPaquete.setPiezas(Integer.parseInt(resultado_xml.getProperty("Piezas").toString()));
-                    auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-                    auxPaquete.setPesoNeto(Double.parseDouble(resultado_xml.getProperty("PesoNetoPaquete").toString()));
-                    auxPaquete.setChrFlgChequeo(resultado_xml.getProperty("chrFlgChequeo").toString());
-                    auxPaquete.setDescEstado(resultado_xml.getProperty("DescEstado").toString());
-                    auxPaquete.setArea(resultado_xml.getProperty("Area").toString().trim());
-                    auxPaquete.setCelda(resultado_xml.getProperty("Celda").toString().trim());
-
-                }else{
-                    auxPaquete.setDescEstado("No se encuentra");
-                }
-                return auxPaquete;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
@@ -329,61 +279,9 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         @SuppressLint("WrongThread")
         @Override
         protected Paquete doInBackground(String... strings) {
-            Paquete auxPaquete;
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_BuscarPaquetes";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetes";
+            return ws.ecs_BuscarPaquete(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", rutCliente);
-            request.addProperty("lote",lote.getText().toString());
-            request.addProperty("paquete",paquete.getText().toString());
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                auxPaquete = new Paquete();
-
-                auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-
-                if(auxPaquete.getPesoBruto() != 0){
-                    auxPaquete.setEstado(Integer.parseInt(resultado_xml.getProperty("intEstado").toString()));
-                    auxPaquete.setMensaje(resultado_xml.getProperty("strDescEstado").toString());
-                    auxPaquete.setLote(resultado_xml.getProperty("strLote").toString().trim());
-                    auxPaquete.setIdPaquete(resultado_xml.getProperty("strIdPaquete").toString().trim());
-                    auxPaquete.setPeso(Integer.parseInt(resultado_xml.getProperty("dblPeso").toString()));
-
-                    auxPaquete.setCodigoPaquete(resultado_xml.getProperty("CodigoPaquete").toString().trim());
-                    auxPaquete.setPiezas(Integer.parseInt(resultado_xml.getProperty("Piezas").toString()));
-                    //auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-                    auxPaquete.setPesoNeto(Double.parseDouble(resultado_xml.getProperty("PesoNetoPaquete").toString()));
-                    auxPaquete.setChrFlgChequeo(resultado_xml.getProperty("chrFlgChequeo").toString());
-                    auxPaquete.setDescEstado(resultado_xml.getProperty("DescEstado").toString());
-                    auxPaquete.setArea(resultado_xml.getProperty("Area").toString().trim());
-                    auxPaquete.setCelda(resultado_xml.getProperty("Celda").toString().trim());
-
-                }else{
-                    auxPaquete.setDescEstado("No se encuentra");
-                }
-                return auxPaquete;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
@@ -392,39 +290,8 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         @Override
         protected String doInBackground(String... strings) {
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_RecepcionPaquete";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_RecepcionPaquete";
+            return ws.ecs_RecepcionPaquete(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("intIdRelacionPaquete", busquedaPaquete.getIdPaquete());
-            request.addProperty("intRutUsuario", rutCliente);
-            request.addProperty("fechaRecepcion", fechaRecepcion);
-            request.addProperty("intTurnoRecepcion", turnoRecepcion);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
-                String salida = respuesta.toString();
-                return salida;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 }
