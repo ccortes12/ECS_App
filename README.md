@@ -5,7 +5,7 @@
 ## Tecnologías
   
 - Android Studio:
-     - 
+     - Android Studio version "4.1.2"
 - Java:
     - java version "15.0.2"
 
