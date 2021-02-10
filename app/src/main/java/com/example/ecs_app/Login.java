@@ -1,8 +1,6 @@
 package com.example.ecs_app;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
@@ -22,21 +20,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.ecs_app.Entidades.Area;
 import com.example.ecs_app.Entidades.Minera;
-import com.example.ecs_app.Recepcion.Pre_recepcion;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +33,6 @@ public class Login extends AppCompatActivity {
     private Button ingresoButton;
     private ImageButton pickDate;
     private Spinner turno;
-    private boolean pass = false;
 
     WS_Torpedo ws = new WS_TorpedoImp();
 
@@ -192,7 +176,6 @@ public class Login extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-
         usernameEditText.setText("");
         passwordEditText.setText("");
 
@@ -231,7 +214,6 @@ public class Login extends AppCompatActivity {
     }
 
     private class validarCredencial extends AsyncTask<String, Void, String> {
-        @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... strings) {
 
@@ -242,7 +224,6 @@ public class Login extends AppCompatActivity {
     }
 
     private class ecs_listaMineras extends AsyncTask<Void, Void, ArrayList<Minera>> {
-
         @Override
         protected ArrayList<Minera> doInBackground(Void... voids) {
 
@@ -252,7 +233,6 @@ public class Login extends AppCompatActivity {
     }
 
     private class ecs_listarAreas extends AsyncTask<Void, Void, ArrayList<Area>> {
-
         @Override
         protected ArrayList<Area> doInBackground(Void... voids) {
 

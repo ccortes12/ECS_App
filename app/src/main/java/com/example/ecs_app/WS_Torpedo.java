@@ -1,6 +1,7 @@
 package com.example.ecs_app;
 
 import com.example.ecs_app.Entidades.Area;
+import com.example.ecs_app.Entidades.Celda;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
 import com.example.ecs_app.Entidades.PaqueteManual;
@@ -29,4 +30,11 @@ public interface WS_Torpedo {
 
     String ecs_EliminarPaqueteManual(String... strings);
 
+    String ecs_AlmacenaPaquete(String... strings);
+
+    ArrayList<Celda> ecs_ListarCeldas(String... strings);
+
+    String ecs_Despachar(String... strings);
+
+    String ecs_Remanejar(String... strings);
 }

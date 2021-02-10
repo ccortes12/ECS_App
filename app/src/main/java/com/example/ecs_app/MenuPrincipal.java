@@ -3,7 +3,6 @@ package com.example.ecs_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.ecs_app.CFS.CFS_00;
 import com.example.ecs_app.Recepcion.Pre_recepcion;
 import com.example.ecs_app.Transferencia.PreTransferencia;

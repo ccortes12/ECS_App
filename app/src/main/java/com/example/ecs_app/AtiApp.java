@@ -1,20 +1,8 @@
 package com.example.ecs_app;
 
 import android.app.Application;
-import android.os.AsyncTask;
-
 import com.example.ecs_app.Entidades.Area;
 import com.example.ecs_app.Entidades.Minera;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class AtiApp extends Application {

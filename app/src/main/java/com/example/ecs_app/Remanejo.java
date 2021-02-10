@@ -38,22 +38,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
-public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner minerasSpinner,areasSpinner,celdasSpinner;
+    private Spinner minerasSpinner, areasSpinner, celdasSpinner;
     private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado,tituloSeccionOrigen,tituloSeccionDestino,celda,area;
-    private Button buscar,remanejo;
+    private TextView peso, estado, tituloSeccionOrigen, tituloSeccionDestino, celda, area;
+    private Button buscar, remanejo;
     private Switch modoManual;
-    private LinearLayout seccionOrigen,seccionDestino;
+    private LinearLayout seccionOrigen, seccionDestino;
     private ArrayList<Minera> listaMineras;
     private ArrayList<Area> listaAreas;
     private ArrayList<Celda> listaCeldas;
-    private ArrayList<String> auxSpinner,auxSpinnerCelda,auxSpinnerArea;
+    private ArrayList<String> auxSpinner, auxSpinnerCelda, auxSpinnerArea;
     private ArrayAdapter<String> comboAdapter;
-    private String fechaRecepcion,turnoRecepcion,rutUsuario;
+    private String fecha, turno, rutUsuario;
     private Paquete busquedaPaquete;
-    private int rutCliente,relacionCliente;
+    private int rutCliente, relacionCliente;
+
+    WS_Torpedo ws = new WS_TorpedoImp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +92,14 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         cargarSpinnerAreas();
         estadoCampos(false);
 
-        fechaRecepcion = ((AtiApp) Remanejo.this.getApplication()).getFecha();
-        turnoRecepcion = Integer.toString(((AtiApp) Remanejo.this.getApplication()).getTurno());
+        fecha = ((AtiApp) Remanejo.this.getApplication()).getFecha();
+        turno = Integer.toString(((AtiApp) Remanejo.this.getApplication()).getTurno());
         rutUsuario = Integer.toString(((AtiApp) Remanejo.this.getApplication()).getRutUsuario());
 
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(modoManual.isChecked()){ //Bloquear campos de cb
-                    estadoCampos(true);
-                }else{
-                    estadoCampos(false);
-                }
+                estadoCampos(modoManual.isChecked());
             }
         });
 
@@ -109,25 +107,26 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
             @Override
             public void onClick(View v) {
 
-                //Busqueda objeto minera segun la seleccion del spinner
                 for (Minera m : listaMineras){
                     if(minerasSpinner.getSelectedItem().toString().equalsIgnoreCase(m.getVchNombreFantasia())){
                         rutCliente = m.getIntRutCliente();
                     }
                 }
 
-                if(modoManual.isChecked()){  //Busqueda manual
+                if (modoManual.isChecked()) {
                     try {
-                        busquedaPaquete = new Remanejo.ecs_BuscarPaquete().execute().get();
+                        String[] params = {String.valueOf(rutCliente), lote.getText().toString(), paquete.getText().toString()};
+                        busquedaPaquete = new Remanejo.ecs_BuscarPaquete().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                }else{  //Busqueda por CB
+                } else {
                     try {
-                        busquedaPaquete = new Remanejo.ecs_BuscarPaquetesCB().execute().get();
+                        String[] params = {String.valueOf(rutCliente), codigoBarra.getText().toString()};
+                        busquedaPaquete = new Remanejo.ecs_BuscarPaquetesCB().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -167,7 +166,6 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                     areasSpinner.setSelection(0);
                     celdasSpinner.setSelection(0);
 
-                    //cargar ubicacion al spinner y bloquear spinner
                     area.setText(busquedaPaquete.getArea());
                     celda.setText(busquedaPaquete.getCelda());
 
@@ -202,18 +200,17 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    //Primero debo despachar y luego almacenar
-                                    String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda(),
-                                            areasSpinner.getSelectedItem().toString(),celdasSpinner.getSelectedItem().toString()};
+                                    String[] params = {busquedaPaquete.getIdPaquete(), busquedaPaquete.getArea(), busquedaPaquete.getCelda(),
+                                            areasSpinner.getSelectedItem().toString(), celdasSpinner.getSelectedItem().toString(),
+                                            String.valueOf(rutUsuario), fecha, turno};
 
-                                    //fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha();
-                                    try{
+                                    try {
                                         String resp = new Remanejo.ecs_Remanejar().execute(params).get();
-                                        if(resp.equalsIgnoreCase("OK")){
-                                            Toast.makeText(Remanejo.this,"Remanejo con exito",Toast.LENGTH_SHORT).show();
+                                        if (resp.equalsIgnoreCase("OK")) {
+                                            Toast.makeText(Remanejo.this, "Remanejo con exito", Toast.LENGTH_SHORT).show();
 
-                                        }else{
-                                            Toast.makeText(Remanejo.this,"ERROR",Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(Remanejo.this, "ERROR", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
@@ -231,19 +228,19 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                             })
                             .show();
 
-                }else{
+                }else {
 
-                    //Primero debo despachar y luego almacenar
-                    String[] params = {busquedaPaquete.getIdPaquete(),busquedaPaquete.getArea(),busquedaPaquete.getCelda(),
-                            areasSpinner.getSelectedItem().toString(),celdasSpinner.getSelectedItem().toString()};
+                    String[] params = {busquedaPaquete.getIdPaquete(), busquedaPaquete.getArea(), busquedaPaquete.getCelda(),
+                            areasSpinner.getSelectedItem().toString(), celdasSpinner.getSelectedItem().toString(),
+                            String.valueOf(rutUsuario), fecha, turno};
 
-                    try{
+                    try {
                         String resp = new Remanejo.ecs_Remanejar().execute(params).get();
-                        if(resp.equalsIgnoreCase("OK")){
-                            Toast.makeText(Remanejo.this,"Remanejo con exito",Toast.LENGTH_SHORT).show();
+                        if (resp.equalsIgnoreCase("OK")) {
+                            Toast.makeText(Remanejo.this, "Remanejo con exito", Toast.LENGTH_SHORT).show();
 
-                        }else{
-                            Toast.makeText(Remanejo.this,"ERROR",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Remanejo.this, "ERROR", Toast.LENGTH_SHORT).show();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -259,7 +256,6 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         areasSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Cargar spinner de celdas dependiendo de la opcion
 
                 if(!parent.getItemAtPosition(position).equals("")){
                     try {
@@ -279,7 +275,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //Borrar seleccion
+
 
             }
         });
@@ -385,124 +381,19 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         @SuppressLint("WrongThread")
         protected Paquete doInBackground(String... strings) {
 
-            Paquete auxPaquete;
+            return ws.ecs_BuscarPaquetesCB(strings);
 
-
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_BuscarPaquetesCB";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetesCB";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", rutCliente);
-            request.addProperty("codigo_barra", codigoBarra.getText().toString());
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                auxPaquete = new Paquete();
-
-                auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-
-                if(auxPaquete.getPesoBruto() != 0){
-                    auxPaquete.setMensaje(resultado_xml.getProperty("strDescEstado").toString().trim());
-                    auxPaquete.setLote(resultado_xml.getProperty("strLote").toString().trim());
-                    auxPaquete.setIdPaquete(resultado_xml.getProperty("strIdPaquete").toString().trim());
-                    auxPaquete.setPeso(Integer.parseInt(resultado_xml.getProperty("dblPeso").toString()));
-
-                    auxPaquete.setCodigoPaquete(resultado_xml.getProperty("CodigoPaquete").toString().trim());
-                    auxPaquete.setPiezas(Integer.parseInt(resultado_xml.getProperty("Piezas").toString()));
-                    auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-                    auxPaquete.setPesoNeto(Double.parseDouble(resultado_xml.getProperty("PesoNetoPaquete").toString()));
-                    auxPaquete.setChrFlgChequeo(resultado_xml.getProperty("chrFlgChequeo").toString());
-                    auxPaquete.setDescEstado(resultado_xml.getProperty("DescEstado").toString());
-                    auxPaquete.setArea(resultado_xml.getProperty("Area").toString().trim());
-                    auxPaquete.setCelda(resultado_xml.getProperty("Celda").toString().trim());
-
-
-                }else{
-                    auxPaquete.setDescEstado("No se encuentra");
-                }
-                return auxPaquete;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
     private class ecs_BuscarPaquete extends AsyncTask<String,Void, Paquete>{
 
         @SuppressLint("WrongThread")
         @Override
         protected Paquete doInBackground(String... strings) {
-            Paquete auxPaquete;
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_BuscarPaquetes";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetes";
+            return ws.ecs_BuscarPaquete();
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", rutCliente);
-            request.addProperty("lote",lote.getText().toString());
-            request.addProperty("paquete",paquete.getText().toString());
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                auxPaquete = new Paquete();
-
-                auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-
-                if(auxPaquete.getPesoBruto() != 0){
-                    auxPaquete.setMensaje(resultado_xml.getProperty("strDescEstado").toString());
-                    auxPaquete.setLote(resultado_xml.getProperty("strLote").toString().trim());
-                    auxPaquete.setIdPaquete(resultado_xml.getProperty("strIdPaquete").toString());
-                    auxPaquete.setPeso(Integer.parseInt(resultado_xml.getProperty("dblPeso").toString()));
-
-                    auxPaquete.setCodigoPaquete(resultado_xml.getProperty("CodigoPaquete").toString().trim());
-                    auxPaquete.setPiezas(Integer.parseInt(resultado_xml.getProperty("Piezas").toString()));
-                    //auxPaquete.setPesoBruto(Double.parseDouble(resultado_xml.getProperty("PesoBrutoPaquete").toString()));
-                    auxPaquete.setPesoNeto(Double.parseDouble(resultado_xml.getProperty("PesoNetoPaquete").toString()));
-                    auxPaquete.setChrFlgChequeo(resultado_xml.getProperty("chrFlgChequeo").toString());
-                    auxPaquete.setDescEstado(resultado_xml.getProperty("DescEstado").toString());
-                    auxPaquete.setArea(resultado_xml.getProperty("Area").toString().trim());
-                    auxPaquete.setCelda(resultado_xml.getProperty("Celda").toString().trim());
-
-                }else{
-                    auxPaquete.setDescEstado("No se encuentra");
-                }
-                return auxPaquete;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
@@ -512,59 +403,8 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         @Override
         protected ArrayList<Celda> doInBackground(String... strings) {
 
-            ArrayList<Celda> salida = new ArrayList<>();
+            return ws.ecs_ListarCeldas(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarCeldas";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarCeldas";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("codigoArea", strings[0]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject listaCeldas = (SoapObject) resultado_xml.getProperty("lstCeldas");
-
-                int numCeldas = listaCeldas.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++){
-                    SoapObject celdaAux = (SoapObject) listaCeldas.getProperty(i);
-                    Celda temp = new Celda();
-                    temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
-                    temp.setCodCelda(celdaAux.getProperty("codCelda").toString().trim());
-                    temp.setDesCelda(celdaAux.getProperty("desCelda").toString().trim());
-                    temp.setCodArea(celdaAux.getProperty("codArea").toString().trim());
-                    temp.setDesArea(celdaAux.getProperty("desArea").toString().trim());
-                    temp.setCapacidadPaquetes(Integer.parseInt(celdaAux.getProperty("capacidadPaquetes").toString()));
-                    temp.setPreAcopio(celdaAux.getProperty("preAcopio").toString());
-                    temp.setTimeStamp(Integer.parseInt(celdaAux.getProperty("timeStamp").toString()));
-
-                    salida.add(temp);
-                }
-
-                return salida;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (SoapFault soapFault) {
-                soapFault.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
@@ -573,42 +413,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         @Override
         protected String doInBackground(String... strings) {
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_Remanejar";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_Remanejar";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("Id", strings[0]);
-            request.addProperty("codAreaOrigen",strings[1]);
-            request.addProperty("codCeldaOrigen",strings[2]);
-            request.addProperty("codAreaDestino",strings[3]);
-            request.addProperty("codCeldaDestino",strings[4]);
-            request.addProperty("rut",rutUsuario);
-            request.addProperty("fecha",fechaRecepcion);
-            request.addProperty("turno",String.valueOf(turnoRecepcion));
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
-                String salida = respuesta.toString();
-                return salida;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return ws.ecs_Remanejar(strings);
         }
     }
 }

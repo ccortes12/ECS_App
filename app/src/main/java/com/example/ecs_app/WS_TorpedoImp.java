@@ -1,6 +1,9 @@
 package com.example.ecs_app;
 
+import android.annotation.SuppressLint;
+
 import com.example.ecs_app.Entidades.Area;
+import com.example.ecs_app.Entidades.Celda;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
 import com.example.ecs_app.Entidades.PaqueteManual;
@@ -515,6 +518,185 @@ public class WS_TorpedoImp implements WS_Torpedo{
         }
         return null;
 
+    }
+
+    @Override
+    public String ecs_AlmacenaPaquete(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_AlmacenaPaquete";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_AlmacenaPaquete";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+
+        request.addProperty("area", strings[0]);
+        request.addProperty("celda", strings[1]);
+        request.addProperty("intIdRelacionPaquete", strings[2]);
+        request.addProperty("intRutUsuario", strings[3]);
+        request.addProperty("fechaRecepcion", strings[4]);
+        request.addProperty("intTurnoRecepcion", strings[5]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
+            String salida = respuesta.toString();
+            return salida;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Celda> ecs_ListarCeldas(String... strings) {
+
+        ArrayList<Celda> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarCeldas";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarCeldas";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("codigoArea", strings[0]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject listaCeldas = (SoapObject) resultado_xml.getProperty("lstCeldas");
+
+            int numCeldas = listaCeldas.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+                SoapObject celdaAux = (SoapObject) listaCeldas.getProperty(i);
+                Celda temp = new Celda();
+                temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
+                temp.setCodCelda(celdaAux.getProperty("codCelda").toString().trim());
+                temp.setDesCelda(celdaAux.getProperty("desCelda").toString().trim());
+                temp.setCodArea(celdaAux.getProperty("codArea").toString().trim());
+                temp.setDesArea(celdaAux.getProperty("desArea").toString().trim());
+                temp.setCapacidadPaquetes(Integer.parseInt(celdaAux.getProperty("capacidadPaquetes").toString()));
+                temp.setPreAcopio(celdaAux.getProperty("preAcopio").toString());
+                temp.setTimeStamp(Integer.parseInt(celdaAux.getProperty("timeStamp").toString()));
+
+                salida.add(temp);
+            }
+
+            return salida;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    @Override
+    public String ecs_Despachar(String... strings) {
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_Despachar";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_Despachar";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("Id", strings[0]);
+        request.addProperty("codArea", strings[1]);
+        request.addProperty("codCelda", strings[2]);
+        request.addProperty("patenteCamion", "");
+        request.addProperty("rut", strings[3]);
+        request.addProperty("fecha", strings[4]);
+        request.addProperty("turno", strings[5]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
+            String salida = respuesta.toString();
+            return salida;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public String ecs_Remanejar(String... strings) {
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_Remanejar";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_Remanejar";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("Id", strings[0]);
+        request.addProperty("codAreaOrigen", strings[1]);
+        request.addProperty("codCeldaOrigen", strings[2]);
+        request.addProperty("codAreaDestino", strings[3]);
+        request.addProperty("codCeldaDestino", strings[4]);
+        request.addProperty("rut", strings[5]);
+        request.addProperty("fecha", strings[6]);
+        request.addProperty("turno", strings[7]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
+            String salida = respuesta.toString();
+            return salida;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

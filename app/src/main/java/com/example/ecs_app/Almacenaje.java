@@ -41,19 +41,19 @@ import java.util.concurrent.ExecutionException;
 
 public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner minerasSpinner,areasSpinner,celdasSpinner;
+    private Spinner minerasSpinner, areasSpinner, celdasSpinner;
     private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado,tituloSeccion,areaTextView,celdaTextView;
-    private Button buscar,almacenar;
+    private TextView peso, estado, tituloSeccion, areaTextView, celdaTextView;
+    private Button buscar, almacenar;
     private Switch modoManual;
     private LinearLayout seccionUbicacion;
     private ArrayList<Minera> listaMineras;
     private ArrayList<Area> listaAreas;
     private ArrayList<Celda> listaCeldas;
-    private ArrayList<String> auxSpinner,auxSpinnerCelda,auxSpinnerArea;
+    private ArrayList<String> auxSpinner, auxSpinnerCelda, auxSpinnerArea;
     private ArrayAdapter<String> comboAdapter;
-    private String fechaRecepcion,turnoRecepcion,rutUsuario;
-    private int rutCliente,relacionCliente;
+    private String fecha, turno, rutUsuario;
+    private int rutCliente, relacionCliente;
     private Paquete busquedaPaquete;
 
 
@@ -90,16 +90,16 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         cargarSpinnerAreas();
         estadoCampos(false);
 
-        fechaRecepcion = ((AtiApp) Almacenaje.this.getApplication()).getFecha().replaceAll(" ","");
-        turnoRecepcion = Integer.toString(((AtiApp) Almacenaje.this.getApplication()).getTurno());
+        fecha = ((AtiApp) Almacenaje.this.getApplication()).getFecha().replaceAll(" ", "");
+        turno = Integer.toString(((AtiApp) Almacenaje.this.getApplication()).getTurno());
         rutUsuario = Integer.toString(((AtiApp) Almacenaje.this.getApplication()).getRutUsuario());
 
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(modoManual.isChecked()){ //Bloquear campos de cb
+                if (modoManual.isChecked()) { //Bloquear campos de cb
                     estadoCampos(true);
-                }else{
+                } else {
                     estadoCampos(false);
                 }
             }
@@ -259,6 +259,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                 //Cargar spinner de celdas dependiendo de la opcion
 
                 if(!parent.getItemAtPosition(position).equals("") && !estado.getText().toString().equalsIgnoreCase("Almacenado")){
+
                     try {
                         String [] codArea = {areasSpinner.getSelectedItem().toString()};
                         listaCeldas = new ecs_listarCeldas().execute(codArea).get();
