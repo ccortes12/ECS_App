@@ -3,6 +3,8 @@ package com.example.ecs_app;
 import com.example.ecs_app.Entidades.Area;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
+import com.example.ecs_app.Entidades.PaqueteManual;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
@@ -11,6 +13,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,6 +30,7 @@ public class WS_TorpedoImp implements WS_Torpedo{
 
         request.addProperty("usuario", strings[0]);
         request.addProperty("password", strings[1]);
+
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
@@ -324,6 +328,193 @@ public class WS_TorpedoImp implements WS_Torpedo{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Integer ingresoGuiaManual(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_IngresoGuiaManual";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_IngresoGuiaManual";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("rutMinera", strings[0]);
+        request.addProperty("numGuia", strings[1]);
+        request.addProperty("patente", strings[2]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            int codigo = Integer.parseInt(resultado_xml.getProperty("codigo").toString());
+
+            return codigo;
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public String ingresoPaqueteManual(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_IngresoPaqueteManual\n";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_IngresoPaqueteManual\n";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("intIdRelacionCarro", strings[0]);
+        request.addProperty("chrCodigoLote", strings[1]);
+        request.addProperty("chrCodigoPaquete", strings[2]);
+        request.addProperty("decPeso", strings[3]);
+        request.addProperty("rutUsuarioRecepcion", strings[4]);
+        request.addProperty("fechaRecepcion", strings[5]);
+        request.addProperty("piezas", 0);
+        request.addProperty("zuncho", 0);
+        request.addProperty("intTurno", strings[6]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            String codigo = resultado_xml.getProperty("codigo").toString();
+            return codigo;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<PaqueteManual> ecs_BuscarPaquetesPorCarro(String... strings) {
+
+        ArrayList<PaqueteManual> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_BuscarPaquetesPorCarro";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetesPorCarro";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("carro", strings[0]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject listTemp = (SoapObject) resultado_xml.getProperty(1);
+            SoapObject listaPaquetes = (SoapObject) listTemp.getProperty(0);
+            SoapObject paquete = (SoapObject) listTemp.getProperty(0);
+
+            int numPaquetes = listaPaquetes.getPropertyCount();
+
+            //caso de dataTable vacia
+            SoapObject auxPaquete = (SoapObject) paquete.getProperty(0);
+            if (auxPaquete.getProperty("intIdRelacionPaquete").toString().equalsIgnoreCase("-1")) {
+                return salida;
+            }
+
+            for (int i = 0; i < numPaquetes; i++) {
+                auxPaquete = (SoapObject) paquete.getProperty(i);
+                PaqueteManual temp = new PaqueteManual();
+                temp.setIntIdRelacionPaquete(Integer.parseInt(auxPaquete.getProperty("intIdRelacionPaquete").toString()));
+                String auxLote = auxPaquete.getProperty("chrCodigoLote").toString().replaceAll(" ", "");
+                temp.setCodigoLote(Integer.parseInt(auxLote));
+                String auxCodPaquete = auxPaquete.getProperty("chrCodigoPaquete").toString().replaceAll(" ", "");
+                temp.setCodigoPaquete(Integer.parseInt(auxCodPaquete));
+                temp.setPesoNeto(Double.parseDouble(auxPaquete.getProperty("decPesoNeto").toString()));
+
+                salida.add(temp);
+            }
+
+            return salida;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public String ecs_EliminarPaqueteManual(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_EliminarPaqueteManual\n";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_EliminarPaqueteManual\n";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("intIdRelacionPaquete", strings[0]);
+        request.addProperty("intRutUsuario", strings[1]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            String codigo = resultado_xml.getProperty("codigo").toString();
+            return codigo;
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 
