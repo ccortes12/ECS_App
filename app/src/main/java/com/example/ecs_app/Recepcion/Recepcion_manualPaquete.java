@@ -2,7 +2,6 @@ package com.example.ecs_app.Recepcion;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,26 +13,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.ecs_app.Almacenaje;
 import com.example.ecs_app.AtiApp;
-import com.example.ecs_app.Entidades.Paquete;
 import com.example.ecs_app.Entidades.PaqueteManual;
 import com.example.ecs_app.R;
 import com.example.ecs_app.WS_Torpedo;
 import com.example.ecs_app.WS_TorpedoImp;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 public class Recepcion_manualPaquete extends AppCompatActivity implements DialogPaquete.PaqueteDialogListener {
