@@ -43,8 +43,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Login extends AppCompatActivity {
 
-    private EditText usernameEditText,passwordEditText;
-    private TextView resultado,fecha;
+    private EditText usernameEditText, passwordEditText;
+    private TextView resultado, fecha;
     private Button ingresoButton;
     private ImageButton pickDate;
     private Spinner turno;
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
         final int mes = c.get(Calendar.MONTH);
         final int anno = c.get(Calendar.YEAR);
 
-        final String fechaString = Integer.toString(dia) + " / " + Integer.toString(mes+1)  + " / " + Integer.toString(anno);
+        final String fechaString = Integer.toString(dia) + " / " + Integer.toString(mes + 1) + " / " + Integer.toString(anno);
         fecha.setText(fechaString);
 
         cargarDatos();
@@ -79,19 +79,19 @@ public class Login extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if(actionId == EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                     Intent next = new Intent(v.getContext(), MenuPrincipal.class);
-                    if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
+                    if (!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
 
                         try {
 
-                            String [] params = {usernameEditText.getText().toString(),passwordEditText.getText().toString()};
+                            String[] params = {usernameEditText.getText().toString(), passwordEditText.getText().toString()};
                             String respuesta = new validarCredencial().execute(params).get();
 
-                            if (respuesta.equalsIgnoreCase("OK")){
+                            if (respuesta.equalsIgnoreCase("OK")) {
 
-                                next.putExtra("user",usernameEditText.getText().toString());
+                                next.putExtra("user", usernameEditText.getText().toString());
 
                                 int auxTurno = Integer.parseInt(turno.getSelectedItem().toString());
                                 int auxRut = Integer.parseInt(usernameEditText.getText().toString());
@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
                             e.getCause();
                             Toast.makeText(Login.this, "Error, Ingrese valores a los campos", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                         vibrar();
                     }
@@ -128,15 +128,15 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent next = new Intent(v.getContext(), MenuPrincipal.class);
-                if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
+                if (!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
 
                     try {
 
                         String respuesta = new validarCredencial().execute().get();
 
-                        if (respuesta.equalsIgnoreCase("OK")){
+                        if (respuesta.equalsIgnoreCase("OK")) {
 
-                            next.putExtra("user",usernameEditText.getText().toString());
+                            next.putExtra("user", usernameEditText.getText().toString());
 
                             int auxTurno = Integer.parseInt(turno.getSelectedItem().toString());
                             int auxRut = Integer.parseInt(usernameEditText.getText().toString());
@@ -161,7 +161,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "Error, Ingrese valores a los campos", Toast.LENGTH_SHORT).show();
                     }
 
-                }else{
+                } else {
                     Toast.makeText(Login.this, "Ingrese turno", Toast.LENGTH_SHORT).show();
                     vibrar();
                 }
@@ -179,8 +179,8 @@ public class Login extends AppCompatActivity {
 
                         fecha.setText(Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year));
                     }
-                },dia, mes , anno);
-                datePickerDialog.updateDate(anno,mes,dia);
+                }, dia, mes, anno);
+                datePickerDialog.updateDate(anno, mes, dia);
                 datePickerDialog.show();
             }
 
@@ -188,7 +188,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
         usernameEditText.setText("");
@@ -196,7 +196,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    public void cargarDatos(){
+    public void cargarDatos() {
         try {
             ArrayList<Minera> listaMinera = new ecs_listaMineras().execute().get();
             ((AtiApp) Login.this.getApplication()).setListaMineras(listaMinera);
@@ -207,7 +207,7 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try{
+        try {
             ArrayList<Area> listaArea = new ecs_listarAreas().execute().get();
             ((AtiApp) Login.this.getApplication()).setListaAreas(listaArea);
         } catch (InterruptedException e) {
@@ -217,7 +217,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private void vibrar(){
+    private void vibrar() {
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -228,7 +228,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private class validarCredencial extends AsyncTask<String,Void,String> {
+    private class validarCredencial extends AsyncTask<String, Void, String> {
         @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... strings) {
@@ -270,7 +270,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private class ecs_listaMineras extends AsyncTask<Void,Void, ArrayList<Minera>> {
+    private class ecs_listaMineras extends AsyncTask<Void, Void, ArrayList<Minera>> {
 
         @Override
         protected ArrayList<Minera> doInBackground(Void... voids) {
@@ -339,7 +339,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    private class ecs_listarAreas extends AsyncTask<Void,Void,ArrayList<Area>>{
+    private class ecs_listarAreas extends AsyncTask<Void, Void, ArrayList<Area>> {
 
         @Override
         protected ArrayList<Area> doInBackground(Void... voids) {
@@ -368,7 +368,7 @@ public class Login extends AppCompatActivity {
 
                 int numAreas = listaAreas.getPropertyCount();
 
-                for(int i = 0; i < numAreas - 1; i++){
+                for (int i = 0; i < numAreas - 1; i++) {
 
                     SoapObject areaAux = (SoapObject) listaAreas.getProperty(i);
                     Area temp = new Area();
