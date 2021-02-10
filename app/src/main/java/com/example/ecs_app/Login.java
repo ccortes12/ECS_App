@@ -1,45 +1,45 @@
 package com.example.ecs_app;
 
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import android.annotation.SuppressLint;
-        import android.app.DatePickerDialog;
-        import android.app.DatePickerDialog.OnDateSetListener;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.os.VibrationEffect;
-        import android.os.Vibrator;
-        import android.view.KeyEvent;
-        import android.view.View;
-        import android.view.inputmethod.EditorInfo;
-        import android.widget.Button;
-        import android.widget.DatePicker;
-        import android.widget.EditText;
-        import android.widget.ImageButton;
-        import android.widget.Spinner;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.example.ecs_app.Entidades.Area;
-        import com.example.ecs_app.Entidades.Minera;
-        import com.example.ecs_app.Recepcion.Pre_recepcion;
+import com.example.ecs_app.Entidades.Area;
+import com.example.ecs_app.Entidades.Minera;
+import com.example.ecs_app.Recepcion.Pre_recepcion;
 
-        import org.ksoap2.SoapEnvelope;
-        import org.ksoap2.SoapFault;
-        import org.ksoap2.serialization.SoapObject;
-        import org.ksoap2.serialization.SoapPrimitive;
-        import org.ksoap2.serialization.SoapSerializationEnvelope;
-        import org.ksoap2.transport.HttpResponseException;
-        import org.ksoap2.transport.HttpTransportSE;
-        import org.xmlpull.v1.XmlPullParserException;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.SoapFault;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpResponseException;
+import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
-        import java.io.IOException;
-        import java.util.ArrayList;
-        import java.util.Calendar;
-        import java.util.concurrent.ExecutionException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class Login extends AppCompatActivity {
 
@@ -85,7 +85,9 @@ public class Login extends AppCompatActivity {
                     if(!turno.getSelectedItem().toString().equalsIgnoreCase("-")) {
 
                         try {
-                            String respuesta = new validarCredencial().execute().get();
+
+                            String [] params = {usernameEditText.getText().toString(),passwordEditText.getText().toString()};
+                            String respuesta = new validarCredencial().execute(params).get();
 
                             if (respuesta.equalsIgnoreCase("OK")){
 
@@ -240,8 +242,8 @@ public class Login extends AppCompatActivity {
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("usuario", usernameEditText.getText().toString());
-            request.addProperty("password", passwordEditText.getText().toString());
+            request.addProperty("usuario", strings[0]);
+            request.addProperty("password", strings[1]);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
