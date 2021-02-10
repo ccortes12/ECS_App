@@ -21,6 +21,8 @@ import com.example.ecs_app.AtiApp;
 import com.example.ecs_app.Despachar;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.kobjects.util.Strings;
 import org.ksoap2.SoapEnvelope;
@@ -44,6 +46,7 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
     private ArrayList<Minera> listaMineras;
     private ArrayList<String> auxSpinner;
     private ArrayAdapter<String> comboAdapter;
+    WS_Torpedo ws = new WS_TorpedoImp();
 
 
     @Override
@@ -58,7 +61,7 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
         spinnerMineras = findViewById(R.id.spinner2);
         patente = findViewById(R.id.editText80);
         guiaDigital = findViewById(R.id.editText81);
-        auxSpinner = new ArrayList<String>();
+        auxSpinner = new ArrayList<>();
         grabar = findViewById(R.id.button4);
 
         cargarSpinner();
@@ -88,9 +91,9 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
                             intentManual.putExtra("patente",String.valueOf(patente.getText().toString()));
                             startActivity(intentManual);
                         }
-                    } catch (ExecutionException e) {
+                    }catch(ExecutionException e) {
                         e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    }catch(InterruptedException e) {
                         e.printStackTrace();
                     }
 
@@ -117,7 +120,7 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
         }
         spinnerMineras.setOnItemSelectedListener(this);
 
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, auxSpinner);
+        comboAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, auxSpinner);
 
         spinnerMineras.setAdapter(comboAdapter);
 
@@ -136,10 +139,7 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
     private int buscarRutMinera(String nombreFantasia) {
 
         listaMineras = ((AtiApp) Recepcion_manual.this.getApplication()).getListaMineras();
-        Iterator<Minera> i = listaMineras.iterator();
-        while (i.hasNext()) {
-            Minera item = i.next();
-
+        for (Minera item : listaMineras) {
             if (item.getVchNombreFantasia().equalsIgnoreCase(nombreFantasia)) {
                 return item.getIntRutCliente();
             }
@@ -147,47 +147,13 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
         return -1;
     }
 
-
     private class ingresoGuiaManual extends AsyncTask<String,Void,Integer>{
 
         @Override
         protected Integer doInBackground(String... strings) {
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_IngresoGuiaManual";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_IngresoGuiaManual";
+            return ws.ingresoGuiaManual(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutMinera", strings[0]);
-            request.addProperty("numGuia", strings[1]);
-            request.addProperty("patente", strings[2]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                int codigo = Integer.parseInt(resultado_xml.getProperty("codigo").toString());
-
-                return codigo;
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (SoapFault soapFault) {
-                soapFault.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
