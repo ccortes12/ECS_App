@@ -87,9 +87,7 @@ public class Login extends AppCompatActivity {
                         try {
                             String respuesta = new validarCredencial().execute().get();
 
-                            if (true){
-
-                                //respuesta.equalsIgnoreCase("OK")) {
+                            if (respuesta.equalsIgnoreCase("OK")){
 
                                 next.putExtra("user",usernameEditText.getText().toString());
 
@@ -134,9 +132,7 @@ public class Login extends AppCompatActivity {
 
                         String respuesta = new validarCredencial().execute().get();
 
-                        if (true){
-
-                            //respuesta.equalsIgnoreCase("OK")) {
+                        if (respuesta.equalsIgnoreCase("OK")){
 
                             next.putExtra("user",usernameEditText.getText().toString());
 

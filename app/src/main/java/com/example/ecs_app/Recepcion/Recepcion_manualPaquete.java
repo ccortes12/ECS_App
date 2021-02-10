@@ -40,6 +40,7 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
     private Button buttonAgregar;
     private TextView carro;
     private int intIDRelacionCarro;
+    private String patente;
     private ArrayList<String> listaPaquetesString;
     private ArrayList<PaqueteManual> listaPaquetes;
     private ArrayAdapter adapter;
@@ -54,6 +55,7 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         intIDRelacionCarro = Integer.parseInt(getIntent().getStringExtra("codigo"));
+        patente = getIntent().getStringExtra("patente");
 
         //Cargar la lista de paquetes segun el carro
         String[] params = {String.valueOf(intIDRelacionCarro)};
@@ -68,11 +70,12 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         listaPaquetesString = cargarPaquetes();
 
         listView = findViewById(R.id.listview);
-        carro = findViewById(R.id.IntRelacionCarro);
+        carro = findViewById(R.id.PatenteCarro);
         buttonAgregar = findViewById(R.id.buttonAgregarPaquete);
 
-        adapter = new ArrayAdapter<String>(Recepcion_manualPaquete.this, android.R.layout.simple_list_item_activated_1,listaPaquetesString);
+        adapter = new ArrayAdapter<String>(Recepcion_manualPaquete.this, R.layout.layout_rowlistview,listaPaquetesString);
         listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,13 +127,10 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
                 })
                 .show();
 
-
-
-
             }
         });
 
-        carro.setText(String.valueOf(intIDRelacionCarro));
+        carro.setText(patente);
 
         buttonAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +147,6 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         dialogPaquete.show(getSupportFragmentManager(),"dialogPaquete");
 
     }
-
-
 
     @Override
     public void applyTexts(String lote, String codigoPaquete, String pesoNeto) {
@@ -169,8 +167,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
             }else if (resp.equalsIgnoreCase("0")){
                 Toast.makeText(Recepcion_manualPaquete.this,"Paquete ya ingresado", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(Recepcion_manualPaquete.this,"IntRelacionPaquete " + resp , Toast.LENGTH_SHORT).show();
-                listaPaquetesString.add("IntRelacionPaquete: " + resp + "\nLote: " + lote + " - Codigo: " + codigoPaquete + " -  Peso neto: " + pesoNeto + " [kg]");
+                //Toast.makeText(Recepcion_manualPaquete.this,"IntRelacionPaquete " + resp , Toast.LENGTH_SHORT).show();
+                listaPaquetesString.add("Lote: " + lote + " - Codigo: " + codigoPaquete + "\nPeso neto: " + pesoNeto + " [kg]");
                 PaqueteManual paqueteNuevo = new PaqueteManual(Integer.parseInt(resp),Integer.parseInt(lote),
                         Integer.parseInt(codigoPaquete),Double.parseDouble(pesoNeto));
                 listaPaquetes.add(paqueteNuevo);
@@ -191,8 +189,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         if(listaPaquetes.size() > 0){
 
             for(PaqueteManual it: listaPaquetes){
-                salida.add("IntRelacionPaquete: " + String.valueOf(it.getIntIdRelacionPaquete()) + "\nLote: " + String.valueOf(it.getCodigoLote()) + " - Codigo: " +
-                        String.valueOf(it.getCodigoPaquete()) + " - Peso Neto: " +
+                salida.add("Lote: " + String.valueOf(it.getCodigoLote()) + " - Codigo: " +
+                        String.valueOf(it.getCodigoPaquete()) + "\nPeso Neto: " +
                         String.valueOf(it.getPesoNeto()) +  " [kg]");
             }
         }

@@ -1,6 +1,7 @@
 package com.example.ecs_app.Entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Minera implements Serializable {
 
@@ -159,5 +160,18 @@ public class Minera implements Serializable {
 
     public void setIntTonMinTurno2(float intTonMinTurno2) {
         this.intTonMinTurno2 = intTonMinTurno2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Minera minera = (Minera) o;
+        return intRutCliente == minera.intRutCliente;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(intRutCliente);
     }
 }

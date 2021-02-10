@@ -85,6 +85,7 @@ public class Recepcion_manual extends AppCompatActivity implements AdapterView.O
                         }else{
                             Intent intentManual = new Intent(v.getContext(), Recepcion_manualPaquete.class);
                             intentManual.putExtra("codigo",String.valueOf(intIDRelacionCarro));
+                            intentManual.putExtra("patente",String.valueOf(patente.getText().toString()));
                             startActivity(intentManual);
                         }
                     } catch (ExecutionException e) {

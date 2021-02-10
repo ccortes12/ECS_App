@@ -14,7 +14,23 @@
         <item>COBRE</item>
         <item>ANODO</item>
     </string-array>
-    <string name="title_activity_rececpcion_manual__paquete">Rececpcion_manual_Paquete</string>
+    <string-array name="spinnerBodegas">
+        <item></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string name="title_activity_rececpcion_manual__paquete">Recepcion_manual_Paquete</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

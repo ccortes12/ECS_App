@@ -14,10 +14,12 @@ import android.widget.Button;
 
 import com.example.ecs_app.CFS.CFS_00;
 import com.example.ecs_app.Recepcion.Pre_recepcion;
+import com.example.ecs_app.Transferencia.PreTransferencia;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    private Button cfs_button, gate_button,recepcion_button,despacho_button,almacenaje_button,remanejo_button;
+    private Button cfs_button, gate_button,recepcion_button,despacho_button,almacenaje_button,
+            remanejo_button,transferencia_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MenuPrincipal extends AppCompatActivity {
         despacho_button = findViewById(R.id.button_acopio);
         almacenaje_button = findViewById(R.id.button_almacenaje);
         remanejo_button = findViewById(R.id.button_remanejo);
+        transferencia_button = findViewById(R.id.button_transferencia);
 
         cfs_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,14 @@ public class MenuPrincipal extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentRemanejo = new Intent(v.getContext(), Remanejo.class);
                 startActivity(intentRemanejo);
+            }
+        });
+
+        transferencia_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTransferencia = new Intent(v.getContext(), PreTransferencia.class);
+                startActivity(intentTransferencia);
             }
         });
 

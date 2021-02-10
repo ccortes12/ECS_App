@@ -66,8 +66,9 @@
                 android:layout_width="145dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Turno:"
+                android:text="Turno"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="20dp" />
 
             <Spinner
@@ -77,6 +78,7 @@
                 android:layout_weight="1"
                 android:drawSelectorOnTop="true"
                 android:entries="@array/spinner"
+                android:gravity="center"
                 android:spinnerMode="dropdown"
                 android:textAlignment="center" />
         </LinearLayout>

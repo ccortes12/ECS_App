@@ -24,6 +24,15 @@ public class AtiApp extends Application {
     private int rutUsuario;
     private ArrayList<Minera> listaMineras;
     private ArrayList<Area> listaAreas;
+    private String lastCorrelativo;
+
+    public String getLastCorrelativo() {
+        return lastCorrelativo;
+    }
+
+    public void setLastCorrelativo(String lastCorrelativo) {
+        this.lastCorrelativo = lastCorrelativo;
+    }
 
     public String getFecha() {
         return fecha;
@@ -65,48 +74,4 @@ public class AtiApp extends Application {
         this.listaAreas = listaAreas;
     }
 
-    private class ecs_Despachar extends AsyncTask<String,Void,String>{
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_Despachar";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_Despachar";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("Id", strings[0]);
-            request.addProperty("codArea",strings[1]);
-            request.addProperty("codCelda",strings[2]);
-            request.addProperty("patenteCamion","");
-            request.addProperty("rut",rutUsuario);
-            request.addProperty("fecha",fecha);
-            request.addProperty("turno",String.valueOf(turno));
-
-
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapPrimitive respuesta = (SoapPrimitive) envelope.getResponse();
-                String salida = respuesta.toString();
-                return salida;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
 }
