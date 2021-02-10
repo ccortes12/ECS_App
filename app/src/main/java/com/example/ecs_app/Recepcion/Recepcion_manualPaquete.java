@@ -20,6 +20,8 @@ import com.example.ecs_app.AtiApp;
 import com.example.ecs_app.Entidades.Paquete;
 import com.example.ecs_app.Entidades.PaqueteManual;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -44,6 +46,7 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
     private ArrayList<String> listaPaquetesString;
     private ArrayList<PaqueteManual> listaPaquetes;
     private ArrayAdapter adapter;
+    WS_Torpedo ws = new WS_TorpedoImp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,8 +169,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
 
             }else if (resp.equalsIgnoreCase("0")){
                 Toast.makeText(Recepcion_manualPaquete.this,"Paquete ya ingresado", Toast.LENGTH_SHORT).show();
+
             }else{
-                //Toast.makeText(Recepcion_manualPaquete.this,"IntRelacionPaquete " + resp , Toast.LENGTH_SHORT).show();
                 listaPaquetesString.add("Lote: " + lote + " - Codigo: " + codigoPaquete + "\nPeso neto: " + pesoNeto + " [kg]");
                 PaqueteManual paqueteNuevo = new PaqueteManual(Integer.parseInt(resp),Integer.parseInt(lote),
                         Integer.parseInt(codigoPaquete),Double.parseDouble(pesoNeto));
@@ -184,7 +187,7 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
 
     private ArrayList<String> cargarPaquetes(){
 
-        ArrayList<String> salida = new ArrayList<String>();
+        ArrayList<String> salida = new ArrayList<>();
 
         if(listaPaquetes.size() > 0){
 
@@ -203,45 +206,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         @Override
         protected String doInBackground(String... strings) {
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_IngresoPaqueteManual\n";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_IngresoPaqueteManual\n";
+            return ws.ingresoPaqueteManual(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("intIdRelacionCarro", strings[0]);
-            request.addProperty("chrCodigoLote", strings[1]);
-            request.addProperty("chrCodigoPaquete", strings[2]);
-            request.addProperty("decPeso", strings[3]);
-            request.addProperty("rutUsuarioRecepcion", strings[4]);
-            request.addProperty("fechaRecepcion", strings[5]);
-            request.addProperty("piezas", 0);
-            request.addProperty("zuncho", 0);
-            request.addProperty("intTurno", strings[6]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                String codigo = resultado_xml.getProperty("codigo").toString();
-                return codigo;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 
@@ -250,66 +216,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         @Override
         protected ArrayList<PaqueteManual> doInBackground(String... strings) {
 
-            ArrayList<PaqueteManual> salida = new ArrayList<>();
+            return ws.ecs_BuscarPaquetesPorCarro(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_BuscarPaquetesPorCarro";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_BuscarPaquetesPorCarro";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("carro", strings[0]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject listTemp = (SoapObject) resultado_xml.getProperty(1);
-                SoapObject listaPaquetes = (SoapObject) listTemp.getProperty(0);
-                SoapObject paquete = (SoapObject) listTemp.getProperty(0);
-
-                int numPaquetes = listaPaquetes.getPropertyCount();
-
-                //caso de dataTable vacia
-                SoapObject auxPaquete = (SoapObject) paquete.getProperty(0);
-                if (auxPaquete.getProperty("intIdRelacionPaquete").toString().equalsIgnoreCase("-1")){
-                    return salida;
-                }
-
-                for(int i = 0; i < numPaquetes; i++){
-                    auxPaquete = (SoapObject) paquete.getProperty(i);
-                    PaqueteManual temp = new PaqueteManual();
-                    temp.setIntIdRelacionPaquete(Integer.parseInt(auxPaquete.getProperty("intIdRelacionPaquete").toString()));
-                    String auxLote = auxPaquete.getProperty("chrCodigoLote").toString().replaceAll(" ","");
-                    temp.setCodigoLote(Integer.parseInt(auxLote));
-                    String auxCodPaquete = auxPaquete.getProperty("chrCodigoPaquete").toString().replaceAll(" ","");
-                    temp.setCodigoPaquete(Integer.parseInt(auxCodPaquete));
-                    temp.setPesoNeto(Double.parseDouble(auxPaquete.getProperty("decPesoNeto").toString()));
-
-                    salida.add(temp);
-                }
-
-                return salida;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (SoapFault soapFault) {
-                soapFault.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
         }
     }
 
@@ -318,38 +226,8 @@ public class Recepcion_manualPaquete extends AppCompatActivity implements Dialog
         @Override
         protected String doInBackground(String... strings) {
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_EliminarPaqueteManual\n";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_EliminarPaqueteManual\n";
+            return ws.ecs_EliminarPaqueteManual(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("intIdRelacionPaquete", strings[0]);
-            request.addProperty("intRutUsuario", strings[1]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                String codigo = resultado_xml.getProperty("codigo").toString();
-                return codigo;
-
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 }
