@@ -2,6 +2,7 @@ package com.example.ecs_app.Recepcion;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -25,15 +26,6 @@ import com.example.ecs_app.R;
 import com.example.ecs_app.WS_Torpedo;
 import com.example.ecs_app.WS_TorpedoImp;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
@@ -41,15 +33,16 @@ import java.util.concurrent.ExecutionException;
 public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner listaMineras_spinner;
-    private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado;
-    private Button buscar,recepcionar;
+    private EditText codigoBarra, lote, paquete, editTextLote;
+    private TextView peso, estado, textViewLote, pesoBruto, cantPiezas;
+    private Button buscar, recepcionar;
     private Switch modoManual;
-    private ArrayList<String> auxSpinner ;
+    private ArrayList<String> auxSpinner;
     private ArrayList<Minera> listaMineras;
-    private String fechaRecepcion,turnoRecepcion;
-    private int rutCliente,relacionCliente;
+    private String fechaRecepcion, turnoRecepcion;
+    private int rutCliente, relacionCliente;
     private Paquete busquedaPaquete;
+    private Toolbar toolbar;
     ArrayAdapter<String> comboAdapter;
     WS_Torpedo ws = new WS_TorpedoImp();
 
@@ -58,7 +51,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recepcion_lote);
 
-        getSupportActionBar().setTitle("Recepción lote");
+        getSupportActionBar().setTitle("Recepción Lote");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -73,10 +66,13 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         peso = findViewById(R.id.textView61);
         estado = findViewById(R.id.textView65);
         recepcionar = findViewById(R.id.button_recepcionar2);
-
+        textViewLote = findViewById(R.id.textViewLote);
+        editTextLote = findViewById(R.id.editTextLote);
+        pesoBruto = findViewById(R.id.textView81);
+        cantPiezas = findViewById(R.id.textView181);
 
         cargarSpinner();
-        estadoCampos(false);
+        estadoCampos();
 
         fechaRecepcion = ((AtiApp) Recepcion_lote.this.getApplication()).getFecha();
         turnoRecepcion = Integer.toString(((AtiApp) Recepcion_lote.this.getApplication()).getTurno());
@@ -86,7 +82,17 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View v) {
 
-                estadoCampos(modoManual.isChecked());
+                if (modoManual.isChecked()) {
+                    textViewLote.setVisibility(View.VISIBLE);
+                    editTextLote.setVisibility(View.VISIBLE);
+                    editTextLote.requestFocus();
+
+                } else {
+                    textViewLote.setVisibility(View.GONE);
+                    editTextLote.setVisibility(View.GONE);
+                }
+                estadoCampos();
+
             }
         });
 
@@ -102,7 +108,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
 
                 if(modoManual.isChecked()){
                     try {
-                        String [] params = {String.valueOf(rutCliente),lote.getText().toString(),paquete.getText().toString()};
+                        String[] params = {String.valueOf(rutCliente), editTextLote.getText().toString(), codigoBarra.getText().toString()};
                         busquedaPaquete = new ecs_BuscarPaquete().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -128,12 +134,14 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                 }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("No se encuentra")){
                     peso.setText("");
                     recepcionar.setVisibility(View.INVISIBLE);
-                    estadoCampos(!modoManual.isChecked());
+                    estadoCampos();
 
-                }else{
+                }else {
                     lote.setText(busquedaPaquete.getLote());
                     paquete.setText(busquedaPaquete.getCodigoPaquete());
-                    peso.setText(String.valueOf(busquedaPaquete.getPeso()));
+                    peso.setText(String.valueOf(busquedaPaquete.getPesoNeto()));
+                    pesoBruto.setText(String.valueOf(busquedaPaquete.getPesoBruto()));
+                    cantPiezas.setText(String.valueOf(busquedaPaquete.getPiezas()));
                 }
 
                 estado.setText(busquedaPaquete.getDescEstado());
@@ -149,7 +157,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                     new AlertDialog.Builder(Recepcion_lote.this)
                             .setTitle("Confirmar recepción paquete")
                             .setMessage("Paquete a recepcionar: \n" +
-                                    "Lote : " + lote.getText().toString() + "\n" +
+                                    "Lote : " + editTextLote.getText().toString() + "\n" +
                                     "Codigo Paquete : " + busquedaPaquete.getIdPaquete())
                             .setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener() {
                                 @Override
@@ -170,7 +178,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    estadoCampos(true);
+                                    estadoCampos();
                                 }
                             })
                             .setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener() {
@@ -182,24 +190,28 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                             .show();
                 }else{
                     try {
-                        String resp = new ecs_RecepcionPaquete().execute().get();
+                        String[] params = {busquedaPaquete.getIdPaquete(), String.valueOf(rutCliente), fechaRecepcion, String.valueOf(turnoRecepcion)};
+                        String resp = new ecs_RecepcionPaquete().execute(params).get();
 
-                        if(resp.equalsIgnoreCase("OK")){
-                            Toast.makeText(Recepcion_lote.this,"Recepcionado con exito",Toast.LENGTH_SHORT).show();
 
-                        }else{
-                            Toast.makeText(Recepcion_lote.this,"ERROR",Toast.LENGTH_SHORT).show();
+                        //Validar respuesta recepcion
+                        if (resp.equalsIgnoreCase("OK")) {
+                            Toast.makeText(Recepcion_lote.this, "Recepcionado con exito", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(Recepcion_lote.this, "ERROR", Toast.LENGTH_SHORT).show();
                         }
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    estadoCampos(false);
+                    estadoCampos();
                 }
             }
         });
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -211,39 +223,23 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    private void estadoCampos(boolean flag){  //True si esta en modo manual
+    private void estadoCampos() {  //True si esta en modo manual
 
-        estado.setText("");
-        peso.setText("");
-        recepcionar.setVisibility(View.INVISIBLE);
-
+        editTextLote.setText("");
         codigoBarra.setText("");
         paquete.setText("");
         lote.setText("");
+        estado.setText("");
+        peso.setText("");
+        pesoBruto.setText("");
+        cantPiezas.setText("");
 
+        lote.setFocusable(false);
+        lote.setCursorVisible(false);
+        paquete.setFocusable(false);
+        paquete.setCursorVisible(false);
 
-        if (flag){
-            lote.setFocusable(true);
-            lote.setCursorVisible(true);
-            lote.setFocusableInTouchMode(true);
-            paquete.setFocusable(true);
-            paquete.setCursorVisible(true);
-            paquete.setFocusableInTouchMode(true);
-
-            codigoBarra.setFocusable(false);
-            codigoBarra.setCursorVisible(false);
-            codigoBarra.setText("");
-
-        }else{
-            lote.setFocusable(false);
-            lote.setCursorVisible(false);
-            paquete.setFocusable(false);
-            paquete.setCursorVisible(false);
-
-            codigoBarra.setFocusable(true);
-            codigoBarra.setCursorVisible(true);
-            codigoBarra.setFocusableInTouchMode(true);
-        }
+        recepcionar.setVisibility(View.INVISIBLE);
     }
 
     private void cargarSpinner(){

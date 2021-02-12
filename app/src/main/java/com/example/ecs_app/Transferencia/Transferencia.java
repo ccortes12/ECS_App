@@ -19,6 +19,8 @@ import com.example.ecs_app.Entidades.Marca;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Puerto;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -35,16 +37,16 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
 
     private Spinner  mineraSpinner, puertosSpinnner, marcasSpinner, gruasSpinner, grueroSpinner;
     private Button siguienteButton;
-
-    private ArrayList<String> auxSpinnerMinera, auxSpinnerPuertos,auxSpinnerMarcas,auxSpinnerGrua,auxSpinnerOperadores;
+    private ArrayList<String> auxSpinnerMinera, auxSpinnerPuertos, auxSpinnerMarcas, auxSpinnerGrua, auxSpinnerOperadores;
     private ArrayList<Minera> listaMineras, listaminerasSpinner;
     private ArrayList<Puerto> listaPuertos;
     private ArrayList<Grua> listaGruas;
     private ArrayList<Marca> listaMarcas;
     private ArrayList<Gruero> listaOperadores;
     private ArrayAdapter<String> comboAdapter;
-
     private String correlativo;
+
+    WS_Torpedo ws = new WS_TorpedoImp();
 
 
     @Override
@@ -301,67 +303,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         @Override
         protected ArrayList<Minera> doInBackground(String... strings) {
 
-            ArrayList<Minera> salida = new ArrayList<>();
+            return ws.ecs_ListarMinerasRecalada(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarMinerasRecalada";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarMinerasRecalada";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("corrRecalada", strings[0]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaMineras = (SoapObject) resultado_xml.getProperty("lstMineras");
-
-                int numCeldas = auxListaMineras.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++){
-
-                    SoapObject celdaAux = (SoapObject) auxListaMineras.getProperty(i);
-                    Minera temp = new Minera();
-                    temp.setIntRutCliente(Integer.parseInt(celdaAux.getProperty("rutCliente").toString()));
-                    temp.setChrDvCliente(celdaAux.getProperty("dvCliente").toString());
-                    temp.setVchRazonSocial(celdaAux.getProperty("razonSocial").toString());
-                    temp.setVchNombreFantasia(celdaAux.getProperty("nombreFantasia").toString());
-                    //temp.setVchGiro(celdaAux.getProperty("vchGiro").toString());
-                    temp.setVchDireccion(celdaAux.getProperty("direccion").toString());
-                    //temp.setVchTelefonoFax(celdaAux.getProperty("vchTelefonoFax").toString());
-                    temp.setChrCodComuna(celdaAux.getProperty("codComuna").toString());
-                    temp.setBigTimeStamp(Long.parseLong(celdaAux.getProperty("timeStamp").toString()));
-                    temp.setIntTonMin(Float.parseFloat(celdaAux.getProperty("tonMin").toString()));
-                    //temp.setChrTipoEmbarque(mineraAux.getProperty("chrTipoEmbarque").toString());
-                    temp.setFlgCantidadPiezas(Integer.parseInt(celdaAux.getProperty("flgCantidadPiezas").toString()));
-                    temp.setDblTarifaAlmacenaje(Float.parseFloat(celdaAux.getProperty("dblTarifaAlmacenaje").toString()));
-                    //temp.setColorPatioGrafico(celdaAux.getProperty("colorPatioGrafico").toString());
-                    temp.setDblTarTonMinimo(Float.parseFloat(celdaAux.getProperty("tarTonMinimo").toString()));
-                    temp.setIntTonMinTurno2(Float.parseFloat(celdaAux.getProperty("tonMinTurno2").toString()));
-
-                    salida.add(temp);
-
-
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-
-            return salida;
         }
     }
 
@@ -370,54 +313,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         @Override
         protected ArrayList<Puerto> doInBackground(String... strings) {
 
-            ArrayList<Puerto> salida = new ArrayList<>();
+            return ws.ecs_ListarPuertos(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarPuertos";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarPuertos";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", Integer.parseInt(strings[0]));
-            request.addProperty("corRecalada", Integer.parseInt(strings[1]));
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaPuertos = (SoapObject) resultado_xml.getProperty("lstPuertos");
-
-                int numCeldas = auxListaPuertos.getPropertyCount();
-
-
-                for(int i = 0; i < numCeldas - 1 ; i++) {
-
-                    SoapObject celdaAux = (SoapObject) auxListaPuertos.getProperty(i);
-                    Puerto temp = new Puerto();
-                    temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
-                    temp.setStrCodPuerto(celdaAux.getProperty("strCodPuerto").toString());
-                    temp.setStrDesPuerto(celdaAux.getProperty("strDesPuerto").toString());
-
-                    salida.add(temp);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-
-
-            return salida;
         }
     }
 
@@ -425,51 +322,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         @Override
         protected ArrayList<Marca> doInBackground(String... strings) {
 
-            ArrayList<Marca> salida = new ArrayList<>();
+            return ws.ecs_ListarMarcas(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarMarcas";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarMarcas";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("rutCliente", Integer.parseInt(strings[0]));
-            request.addProperty("corRecalada", Integer.parseInt(strings[1]));
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaMarcas = (SoapObject) resultado_xml.getProperty("lstMarcas");
-                int numCeldas = auxListaMarcas.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++) {
-
-                    SoapObject celdaAux = (SoapObject) auxListaMarcas.getProperty(i);
-                    Marca temp = new Marca();
-                    temp.setCodMarca(celdaAux.getProperty("strCodMarca").toString());
-                    temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
-                    temp.setDescMarca(celdaAux.getProperty("strDescMarca").toString());
-
-                    salida.add(temp);
-
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return salida;
         }
     }
 
@@ -478,45 +332,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         @Override
         protected ArrayList<Grua> doInBackground(Void... voids) {
 
-            ArrayList<Grua> salida = new ArrayList<>();
+            return ws.ecs_ListarGruas();
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarGruas";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarGruas";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaGruas = (SoapObject) resultado_xml.getProperty("lstGruas");
-                int numCeldas = auxListaGruas.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++) {
-                    SoapObject celdaAux = (SoapObject) auxListaGruas.getProperty(i);
-                    Grua temp = new Grua();
-                    temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
-                    temp.setCodGrua(Integer.parseInt(celdaAux.getProperty("strCodGrua").toString()));
-                    temp.setDescGrua(celdaAux.getProperty("strDesGrua").toString());
-                    salida.add(temp);
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return salida;
         }
     }
 
@@ -524,48 +341,9 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
 
         @Override
         protected ArrayList<Gruero> doInBackground(String... strings) {
-            ArrayList<Gruero> salida = new ArrayList<>();
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarOperadores";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarOperadores";
+            return ws.ecs_ListarOperadores(strings);
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("corRecalada", Integer.parseInt(strings[0]));
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaGruero = (SoapObject) resultado_xml.getProperty("lstOperador");
-                int numCeldas = auxListaGruero.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++) {
-                    SoapObject celdaAux = (SoapObject) auxListaGruero.getProperty(i);
-                    Gruero temp = new Gruero();
-                    temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
-                    temp.setCodOperador(Integer.parseInt(celdaAux.getProperty("strCodOperador").toString()));
-                    temp.setDesOperador(celdaAux.getProperty("strDesOperador").toString());
-                    salida.add(temp);
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return salida;
         }
     }
 }

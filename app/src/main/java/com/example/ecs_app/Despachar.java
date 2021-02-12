@@ -57,7 +57,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despacho);
 
-        getSupportActionBar().setTitle("Despacho");
+        getSupportActionBar().setTitle("Despachar");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -87,7 +87,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (modoManual.isChecked()) { //Bloquear campos de cb
+                if (modoManual.isChecked()) {
                     estadoCampos(true);
                 } else {
                     estadoCampos(false);

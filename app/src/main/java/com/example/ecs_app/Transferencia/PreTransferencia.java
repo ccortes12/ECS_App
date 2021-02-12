@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.ecs_app.AtiApp;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -29,6 +31,7 @@ public class PreTransferencia extends AppCompatActivity {
     private EditText correlativo;
     private Button siguienteButton;
     private ArrayList<Minera> lista;
+    WS_Torpedo ws = new WS_TorpedoImp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,6 @@ public class PreTransferencia extends AppCompatActivity {
 
                     Intent next = new Intent(v.getContext(), Transferencia.class);
 
-                    //next.putExtra("correlativo",correlativo.getText().toString());
-
                     ((AtiApp) PreTransferencia.this.getApplication()).setLastCorrelativo(correlativo.getText().toString());
                     startActivity(next);
 
@@ -82,67 +83,8 @@ public class PreTransferencia extends AppCompatActivity {
         @Override
         protected ArrayList<Minera> doInBackground(String... strings) {
 
-            ArrayList<Minera> salida = new ArrayList<>();
+            return ws.ecs_ListarMinerasRecalada(strings);
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarMinerasRecalada";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarMinerasRecalada";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("corrRecalada", strings[0]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaMineras = (SoapObject) resultado_xml.getProperty("lstMineras");
-
-                int numCeldas = auxListaMineras.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++){
-
-                    SoapObject celdaAux = (SoapObject) auxListaMineras.getProperty(i);
-                    Minera temp = new Minera();
-                    temp.setIntRutCliente(Integer.parseInt(celdaAux.getProperty("rutCliente").toString()));
-                    temp.setChrDvCliente(celdaAux.getProperty("dvCliente").toString());
-                    temp.setVchRazonSocial(celdaAux.getProperty("razonSocial").toString());
-                    temp.setVchNombreFantasia(celdaAux.getProperty("nombreFantasia").toString());
-                    //temp.setVchGiro(celdaAux.getProperty("vchGiro").toString());
-                    temp.setVchDireccion(celdaAux.getProperty("direccion").toString());
-                    //temp.setVchTelefonoFax(celdaAux.getProperty("vchTelefonoFax").toString());
-                    temp.setChrCodComuna(celdaAux.getProperty("codComuna").toString());
-                    temp.setBigTimeStamp(Long.parseLong(celdaAux.getProperty("timeStamp").toString()));
-                    temp.setIntTonMin(Float.parseFloat(celdaAux.getProperty("tonMin").toString()));
-                    //temp.setChrTipoEmbarque(mineraAux.getProperty("chrTipoEmbarque").toString());
-                    temp.setFlgCantidadPiezas(Integer.parseInt(celdaAux.getProperty("flgCantidadPiezas").toString()));
-                    temp.setDblTarifaAlmacenaje(Float.parseFloat(celdaAux.getProperty("dblTarifaAlmacenaje").toString()));
-                    //temp.setColorPatioGrafico(celdaAux.getProperty("colorPatioGrafico").toString());
-                    temp.setDblTarTonMinimo(Float.parseFloat(celdaAux.getProperty("tarTonMinimo").toString()));
-                    temp.setIntTonMinTurno2(Float.parseFloat(celdaAux.getProperty("tonMinTurno2").toString()));
-
-                    salida.add(temp);
-
-
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-
-            return salida;
         }
     }
 }

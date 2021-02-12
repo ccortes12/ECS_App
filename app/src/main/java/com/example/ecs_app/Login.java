@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         usernameEditText = findViewById(R.id.userId);
         passwordEditText = findViewById(R.id.password);
@@ -118,7 +118,8 @@ public class Login extends AppCompatActivity {
 
                     try {
 
-                        String respuesta = new validarCredencial().execute().get();
+                        String[] params = {usernameEditText.getText().toString(), passwordEditText.getText().toString()};
+                        String respuesta = new validarCredencial().execute(params).get();
 
                         if (respuesta.equalsIgnoreCase("OK")) {
 

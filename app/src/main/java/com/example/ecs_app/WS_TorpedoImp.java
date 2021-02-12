@@ -1,12 +1,16 @@
 package com.example.ecs_app;
 
-import android.annotation.SuppressLint;
 
 import com.example.ecs_app.Entidades.Area;
 import com.example.ecs_app.Entidades.Celda;
+import com.example.ecs_app.Entidades.Grua;
+import com.example.ecs_app.Entidades.Gruero;
+import com.example.ecs_app.Entidades.Marca;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
+import com.example.ecs_app.Entidades.PaqueteCarro;
 import com.example.ecs_app.Entidades.PaqueteManual;
+import com.example.ecs_app.Entidades.Puerto;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -16,7 +20,6 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -622,6 +625,7 @@ public class WS_TorpedoImp implements WS_Torpedo{
 
     @Override
     public String ecs_Despachar(String... strings) {
+
         String NAMESPACE = "http://www.atiport.cl/";
         String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
         String METHOD_NAME = "ECS_Despachar";
@@ -699,5 +703,477 @@ public class WS_TorpedoImp implements WS_Torpedo{
         return null;
     }
 
+    @Override
+    public ArrayList<Minera> ecs_ListarMinerasRecalada(String... strings) {
+
+        ArrayList<Minera> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarMinerasRecalada";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarMinerasRecalada";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("corrRecalada", strings[0]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaMineras = (SoapObject) resultado_xml.getProperty("lstMineras");
+
+            int numCeldas = auxListaMineras.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+
+                SoapObject celdaAux = (SoapObject) auxListaMineras.getProperty(i);
+                Minera temp = new Minera();
+                temp.setIntRutCliente(Integer.parseInt(celdaAux.getProperty("rutCliente").toString()));
+                temp.setChrDvCliente(celdaAux.getProperty("dvCliente").toString());
+                temp.setVchRazonSocial(celdaAux.getProperty("razonSocial").toString());
+                temp.setVchNombreFantasia(celdaAux.getProperty("nombreFantasia").toString());
+                //temp.setVchGiro(celdaAux.getProperty("vchGiro").toString());
+                temp.setVchDireccion(celdaAux.getProperty("direccion").toString());
+                //temp.setVchTelefonoFax(celdaAux.getProperty("vchTelefonoFax").toString());
+                temp.setChrCodComuna(celdaAux.getProperty("codComuna").toString());
+                temp.setBigTimeStamp(Long.parseLong(celdaAux.getProperty("timeStamp").toString()));
+                temp.setIntTonMin(Float.parseFloat(celdaAux.getProperty("tonMin").toString()));
+                //temp.setChrTipoEmbarque(mineraAux.getProperty("chrTipoEmbarque").toString());
+                temp.setFlgCantidadPiezas(Integer.parseInt(celdaAux.getProperty("flgCantidadPiezas").toString()));
+                temp.setDblTarifaAlmacenaje(Float.parseFloat(celdaAux.getProperty("dblTarifaAlmacenaje").toString()));
+                //temp.setColorPatioGrafico(celdaAux.getProperty("colorPatioGrafico").toString());
+                temp.setDblTarTonMinimo(Float.parseFloat(celdaAux.getProperty("tarTonMinimo").toString()));
+                temp.setIntTonMinTurno2(Float.parseFloat(celdaAux.getProperty("tonMinTurno2").toString()));
+
+                salida.add(temp);
+
+
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+        return salida;
+    }
+
+    @Override
+    public String[] ecs_RegistroTransferencia(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_RegistroTransferencia";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_RegistroTransferencia";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("intIdRelacionPaquete", strings[0]);
+        request.addProperty("intCorRecalada", strings[1]);
+        request.addProperty("intRutCliente", strings[2]);
+        request.addProperty("vchCodPuertoDestino", strings[3]);
+        request.addProperty("chrCodMarca", strings[4]);
+        request.addProperty("intRutUsuarioEmbarque", strings[5]);
+        request.addProperty("sdtFechaEmbarque", strings[6]);
+        request.addProperty("intTurnoEmbarque", strings[7]);
+        request.addProperty("chrCodNave", strings[8]);
+        request.addProperty("chrCodBodegaNave", strings[9]);
+        request.addProperty("vchCodGrua", strings[10]);
+        request.addProperty("vchDesGrua", strings[11]);
+        request.addProperty("intRutOperador", strings[12]);
+        request.addProperty("vchOperador", strings[13]);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            String codigo = String.valueOf(resultado_xml.getProperty("codigo"));
+            String descripcion = String.valueOf(resultado_xml.getProperty("descripcion"));
+
+            return new String[]{codigo, descripcion};
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+
+        return new String[0];
+
+    }
+
+    @Override
+    public ArrayList<Puerto> ecs_ListarPuertos(String... strings) {
+
+        ArrayList<Puerto> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarPuertos";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarPuertos";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("rutCliente", Integer.parseInt(strings[0]));
+        request.addProperty("corRecalada", Integer.parseInt(strings[1]));
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaPuertos = (SoapObject) resultado_xml.getProperty("lstPuertos");
+
+            int numCeldas = auxListaPuertos.getPropertyCount();
+
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+
+                SoapObject celdaAux = (SoapObject) auxListaPuertos.getProperty(i);
+                Puerto temp = new Puerto();
+                temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
+                temp.setStrCodPuerto(celdaAux.getProperty("strCodPuerto").toString());
+                temp.setStrDesPuerto(celdaAux.getProperty("strDesPuerto").toString());
+
+                salida.add(temp);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+
+        return salida;
+    }
+
+    @Override
+    public ArrayList<Marca> ecs_ListarMarcas(String... strings) {
+
+        ArrayList<Marca> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarMarcas";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarMarcas";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("rutCliente", Integer.parseInt(strings[0]));
+        request.addProperty("corRecalada", Integer.parseInt(strings[1]));
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaMarcas = (SoapObject) resultado_xml.getProperty("lstMarcas");
+            int numCeldas = auxListaMarcas.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+
+                SoapObject celdaAux = (SoapObject) auxListaMarcas.getProperty(i);
+                Marca temp = new Marca();
+                temp.setCodMarca(celdaAux.getProperty("strCodMarca").toString());
+                temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
+                temp.setDescMarca(celdaAux.getProperty("strDescMarca").toString());
+
+                salida.add(temp);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        return salida;
+
+
+    }
+
+    @Override
+    public ArrayList<Grua> ecs_ListarGruas() {
+
+        ArrayList<Grua> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarGruas";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarGruas";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaGruas = (SoapObject) resultado_xml.getProperty("lstGruas");
+            int numCeldas = auxListaGruas.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+                SoapObject celdaAux = (SoapObject) auxListaGruas.getProperty(i);
+                Grua temp = new Grua();
+                temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
+                temp.setCodGrua(Integer.parseInt(celdaAux.getProperty("strCodGrua").toString()));
+                temp.setDescGrua(celdaAux.getProperty("strDesGrua").toString());
+                salida.add(temp);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        return salida;
+    }
+
+    @Override
+    public ArrayList<Gruero> ecs_ListarOperadores(String... strings) {
+
+        ArrayList<Gruero> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarOperadores";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarOperadores";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("corRecalada", Integer.parseInt(strings[0]));
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaGruero = (SoapObject) resultado_xml.getProperty("lstOperador");
+            int numCeldas = auxListaGruero.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+                SoapObject celdaAux = (SoapObject) auxListaGruero.getProperty(i);
+                Gruero temp = new Gruero();
+                temp.setEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
+                temp.setCodOperador(Integer.parseInt(celdaAux.getProperty("strCodOperador").toString()));
+                temp.setDesOperador(celdaAux.getProperty("strDesOperador").toString());
+                salida.add(temp);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        return salida;
+
+    }
+
+    @Override
+    public ArrayList<String> ecs_ListarParas() {
+
+        ArrayList<String> salida = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ListarParas";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarParas";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+
+        try {
+
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaParas = (SoapObject) resultado_xml.getProperty("lstPara");
+            int numCeldas = auxListaParas.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+                SoapObject celdaAux = (SoapObject) auxListaParas.getProperty(i);
+                String para = celdaAux.getProperty("strCodPara").toString() + celdaAux.getProperty("strDesPara").toString();
+                salida.add(para);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        return salida;
+
+    }
+
+    @Override
+    public String[] ecs_RegistroParas(String... strings) {
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_RegistroParas";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_RegistroParas";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("intCorRecalada", strings[0]);
+        request.addProperty("chrCodTipoIncidente", strings[1]);
+        request.addProperty("sdtFechaInicio", strings[2]);
+        request.addProperty("sdtFechaTermino", strings[3]);
+        request.addProperty("intRutCliente", strings[4]);
+        request.addProperty("chrCodMarca", strings[5]);
+        request.addProperty("chrCodBodegaNave", strings[6]);
+        request.addProperty("intRutUsuario", strings[7]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            String codigo = String.valueOf(resultado_xml.getProperty("codigo"));
+            String descripcion = String.valueOf(resultado_xml.getProperty("descripcion"));
+
+            return new String[]{codigo, descripcion};
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+        return new String[0];
+    }
+
+    @Override
+    public ArrayList<PaqueteCarro> ecs_ObtenerRelacionPaquete(String... strings) {
+
+        ArrayList<PaqueteCarro> listaPaquetes = new ArrayList<>();
+
+        String NAMESPACE = "http://www.atiport.cl/";
+        String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
+        String METHOD_NAME = "ECS_ObtenerRelacionPaquete";
+        String SOAP_ACTION = "http://www.atiport.cl/ECS_ObtenerRelacionPaquete";
+
+        SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+        request.addProperty("intCorRecalada", strings[0]);
+        request.addProperty("intRutCliente", strings[1]);
+        request.addProperty("vchCodPuertoDestino", strings[2]);
+        request.addProperty("chrCodMarca", strings[3]);
+        request.addProperty("chrCodigoLote", strings[4]);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transport = new HttpTransportSE(URL);
+
+        try {
+            transport.call(SOAP_ACTION, envelope);
+            SoapObject resultado_xml = (SoapObject) envelope.getResponse();
+
+            SoapObject auxListaPaquetes = (SoapObject) resultado_xml.getProperty("lstRelacionPaquete");
+            int numCeldas = auxListaPaquetes.getPropertyCount();
+
+            for (int i = 0; i < numCeldas - 1; i++) {
+
+                SoapObject celdaAux = (SoapObject) auxListaPaquetes.getProperty(i);
+                PaqueteCarro temp = new PaqueteCarro();
+                temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("IntEstado").toString()));
+                temp.setStrDescEstado(celdaAux.getProperty("strDescEstado").toString());
+                temp.setIntIdRelacionCarro(Integer.parseInt(celdaAux.getProperty("intIdRelacionCarro").toString()));
+                temp.setIntIdRelacionPaquete(Integer.parseInt(celdaAux.getProperty("intIdRelacionPaquete").toString()));
+                temp.setChrNumeroCarro(celdaAux.getProperty("chrNumeroCarro").toString());
+                temp.setSdtFechaRecepcion(celdaAux.getProperty("sdtFechaRecepcion").toString());
+                temp.setChrCodigoPaquete(celdaAux.getProperty("chrCodigoPaquete").toString());
+                temp.setChrCodigoLote(celdaAux.getProperty("chrCodigoLote").toString());
+                temp.setDecPesoNeto(Double.parseDouble(celdaAux.getProperty("decPesoNeto").toString()));
+                temp.setDecPesoBruto(Double.parseDouble(celdaAux.getProperty("decPesoBruto").toString()));
+                temp.setIntCantidadPiezas(Double.parseDouble(celdaAux.getProperty("intCantidadPiezas").toString()));
+
+                listaPaquetes.add(temp);
+            }
+
+            return listaPaquetes;
+
+
+        } catch (HttpResponseException e) {
+            e.printStackTrace();
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 
 }

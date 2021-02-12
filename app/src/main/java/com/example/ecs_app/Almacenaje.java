@@ -42,8 +42,8 @@ import java.util.concurrent.ExecutionException;
 public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner minerasSpinner, areasSpinner, celdasSpinner;
-    private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado, tituloSeccion, areaTextView, celdaTextView;
+    private EditText codigoBarra, lote, paquete, editTextLote;
+    private TextView peso, estado, tituloSeccion, areaTextView, celdaTextView, textViewLote;
     private Button buscar, almacenar;
     private Switch modoManual;
     private LinearLayout seccionUbicacion;
@@ -85,6 +85,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         tituloSeccion = findViewById(R.id.textView95);
         areaTextView = findViewById(R.id.area_textView);
         celdaTextView = findViewById(R.id.celda_textView);
+        editTextLote = findViewById(R.id.editText_lote2);
+        textViewLote = findViewById(R.id.textViewLote2);
 
         cargarSpinner();
         cargarSpinnerAreas();
@@ -97,10 +99,16 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (modoManual.isChecked()) { //Bloquear campos de cb
+
+                if (modoManual.isChecked()) {
                     estadoCampos(true);
+                    textViewLote.setVisibility(View.VISIBLE);
+                    editTextLote.setVisibility(View.VISIBLE);
+                    editTextLote.requestFocus();
                 } else {
                     estadoCampos(false);
+                    textViewLote.setVisibility(View.GONE);
+                    editTextLote.setVisibility(View.GONE);
                 }
             }
         });
@@ -148,33 +156,33 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     areasSpinner.setVisibility(View.VISIBLE);
                     celdasSpinner.setVisibility(View.VISIBLE);
 
-
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
-
                     celdasSpinner.setSelection(0);
                     areasSpinner.setSelection(0);
 
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
+                    lote.setText(busquedaPaquete.getLote().toString());
+                    paquete.setText(busquedaPaquete.getCodigoPaquete().toString());
 
-                }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Almacenado")){
+                }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Almacenado")) {
 
                     seccionUbicacion.setVisibility(View.VISIBLE);
                     tituloSeccion.setVisibility(View.VISIBLE);
                     almacenar.setVisibility(View.INVISIBLE);
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
+                    lote.setText(busquedaPaquete.getLote().toString());
+                    paquete.setText(String.valueOf(busquedaPaquete.getPeso()));
 
-                    if(!modoManual.isChecked()){
+                    if (!modoManual.isChecked()) {
                         lote.setText(busquedaPaquete.getLote());
                         paquete.setText(busquedaPaquete.getIdPaquete());
                     }
                     //cargar ubicacion al spinner y bloquear spinner
                     cargarSpinnerBlock(busquedaPaquete);
 
-                }else{
+                }else {
                     peso.setText("");
+                    lote.setText("");
+                    paquete.setText("");
                     seccionUbicacion.setVisibility(View.INVISIBLE);
                     tituloSeccion.setVisibility(View.INVISIBLE);
                     almacenar.setVisibility(View.INVISIBLE);
@@ -192,7 +200,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     new AlertDialog.Builder(Almacenaje.this)
                             .setTitle("Confirmar almacenar paquete")
                             .setMessage("Paquete a almacenar: \n" +
-                                    "Lote: " + lote.getText().toString() + "\n" +
+                                    "Lote: " + editTextLote.getText().toString() + "\n" +
                                     "Codigo Paquete: " + busquedaPaquete.getIdPaquete() + "\n" +
                                     "Area: " + areasSpinner.getSelectedItem().toString() + "\n" +
                                     "Celda: " + celdasSpinner.getSelectedItem().toString())
@@ -348,8 +356,10 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         celdasSpinner.setAdapter(comboAdapter);
     }
 
-    private void estadoCampos(boolean flag){
+    private void estadoCampos(boolean flag) {
 
+        editTextLote.setText("");
+        codigoBarra.setText("");
         estado.setText("");
         peso.setText("");
         codigoBarra.setText("");
@@ -360,30 +370,11 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
         seccionUbicacion.setVisibility(View.INVISIBLE);
         tituloSeccion.setVisibility(View.INVISIBLE);
 
+        lote.setFocusable(false);
+        lote.setCursorVisible(false);
+        paquete.setFocusable(false);
+        paquete.setCursorVisible(false);
 
-        if(flag){
-            lote.setFocusable(true);
-            lote.setCursorVisible(true);
-            lote.setFocusableInTouchMode(true);
-            paquete.setFocusable(true);
-            paquete.setCursorVisible(true);
-            paquete.setFocusableInTouchMode(true);
-
-            codigoBarra.setFocusable(false);
-            codigoBarra.setCursorVisible(false);
-            codigoBarra.setText("");
-        }else{
-            lote.setFocusable(false);
-            lote.setCursorVisible(false);
-            lote.setText("");
-            paquete.setFocusable(false);
-            paquete.setCursorVisible(false);
-            paquete.setText("");
-
-            codigoBarra.setFocusable(true);
-            codigoBarra.setCursorVisible(true);
-            codigoBarra.setFocusableInTouchMode(true);
-        }
 
     }
 

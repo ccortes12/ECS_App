@@ -31,7 +31,8 @@
                 android:text="Cliente"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center" />
 
             <Spinner
                 android:id="@+id/spinner2"

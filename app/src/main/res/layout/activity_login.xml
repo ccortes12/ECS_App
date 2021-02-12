@@ -11,7 +11,7 @@
         android:id="@+id/imageView_ati"
         android:layout_width="322dp"
         android:layout_height="171dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="65dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"

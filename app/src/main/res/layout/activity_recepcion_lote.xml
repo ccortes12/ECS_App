@@ -20,9 +20,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout10"
-        android:layout_width="@dimen/largo_cuadros"
-        android:layout_height="156dp"
-        android:layout_marginTop="@dimen/margen_top"
+        android:layout_width="558dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:background="@drawable/customborder"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +64,26 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewLote"
+            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Codigo Lote"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextLote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textVisiblePassword"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/textView44"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
             android:layout_width="match_parent"
@@ -81,12 +101,26 @@
             android:imeOptions="actionSearch"
             android:inputType="textVisiblePassword"
             android:textAlignment="center" />
+
+
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="191dp"
+        android:layout_height="46dp"
+        android:text="Habilitar manual"
+        android:textCursorDrawable="@color/colorPrimaryDark"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout14"
-        android:layout_width="@dimen/largo_cuadros"
-        android:layout_height="221dp"
+        android:layout_width="541dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margen_cuadros"
         android:background="@drawable/customborder2"
         android:orientation="vertical"
@@ -104,8 +138,9 @@
                 android:id="@+id/textView48"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="57dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Lote"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -115,6 +150,7 @@
                 android:layout_width="263dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textVisiblePassword"
@@ -132,8 +168,9 @@
                 android:id="@+id/textView56"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="79dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Paquete"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -141,8 +178,9 @@
             <EditText
                 android:id="@+id/ingreso_lote3"
                 android:layout_width="284dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textVisiblePassword"
@@ -152,33 +190,107 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView50"
                 style="@style/Widget.AppCompat.TextView.SpinnerItem"
                 android:layout_width="119dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Peso"
+                android:gravity="center"
+                android:text="Peso neto"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView61"
                 android:layout_width="242dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:editable="false"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView51"
                 android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="kg."
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView80"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="119dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Peso bruto"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView81"
+                android:layout_width="242dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:editable="false"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView83"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="kg."
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/piezas"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                android:layout_width="119dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Piezas"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView181"
+                android:layout_width="242dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:editable="false"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView183"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="unid."
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -194,7 +306,7 @@
             android:id="@+id/textView63"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:text="Estado"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -202,7 +314,7 @@
         <TextView
             android:id="@+id/textView65"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:text="------"
             android:textAlignment="center"
             android:textSize="36sp" />
@@ -227,7 +339,7 @@
         android:text="1. Busqueda paquete"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -242,17 +354,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:text="Habilitar manual"
-        android:textCursorDrawable="@color/colorPrimaryDark"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout14"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintHorizontal_bias="0.685"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

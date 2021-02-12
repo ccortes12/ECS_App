@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.ecs_app.AtiApp;
 import com.example.ecs_app.R;
+import com.example.ecs_app.WS_Torpedo;
+import com.example.ecs_app.WS_TorpedoImp;
 
 import org.joda.time.DateTime;
 import org.ksoap2.SoapEnvelope;
@@ -47,8 +49,9 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
     private Spinner motivoSpinner;
     private ArrayAdapter<String> comboAdapter;
     private TimePickerDialog timePickerDialog;
+    private int dia, mes, anno, hora, minutos;
 
-    private int dia, mes,anno,hora, minutos;
+    WS_Torpedo ws = new WS_TorpedoImp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,92 +253,16 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
 
-            ArrayList<String> salida = new ArrayList<>();
+            return ws.ecs_ListarParas();
 
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_ListarParas";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_ListarParas";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-
-            try {
-
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                SoapObject auxListaParas = (SoapObject) resultado_xml.getProperty("lstPara");
-                int numCeldas = auxListaParas.getPropertyCount();
-
-                for(int i = 0; i < numCeldas - 1 ; i++) {
-                    SoapObject celdaAux = (SoapObject) auxListaParas.getProperty(i);
-                    String para = celdaAux.getProperty("strCodPara").toString() + celdaAux.getProperty("strDesPara").toString();
-                    salida.add(para);
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-            return salida;
         }
     }
 
-    private class ecs_registroParas extends AsyncTask<String[],Void,String[]>{
+    private class ecs_registroParas extends AsyncTask<String, Void, String[]> {
 
         @Override
-        protected String[] doInBackground(String[]... strings) {
-
-            String NAMESPACE = "http://www.atiport.cl/";
-            String URL = "http://www.atiport.cl/ws_services/PRD/Torpedo.asmx";
-            String METHOD_NAME = "ECS_RegistroParas";
-            String SOAP_ACTION = "http://www.atiport.cl/ECS_RegistroParas";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("intCorRecalada", strings[0]);
-            request.addProperty("chrCodTipoIncidente", strings[1]);
-            request.addProperty("sdtFechaInicio", strings[2]);
-            request.addProperty("sdtFechaTermino", strings[3]);
-            request.addProperty("intRutCliente", strings[4]);
-            request.addProperty("chrCodMarca", strings[5]);
-            request.addProperty("chrCodBodegaNave", strings[6]);
-            request.addProperty("intRutUsuario", strings[7]);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.dotNet = true;
-
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            try {
-                transport.call(SOAP_ACTION, envelope);
-                SoapObject resultado_xml = (SoapObject) envelope.getResponse();
-
-                String codigo = String.valueOf(resultado_xml.getProperty("codigo"));
-                String descripcion =  String.valueOf(resultado_xml.getProperty("descripcion"));
-
-                return new String[] {codigo,descripcion};
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            }
-
-            return new String[0];
+        protected String[] doInBackground(String... strings) {
+            return ws.ecs_RegistroParas(strings);
         }
     }
 }

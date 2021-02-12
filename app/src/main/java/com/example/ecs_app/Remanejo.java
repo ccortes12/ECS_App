@@ -62,10 +62,6 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remanejo);
 
-        getSupportActionBar().setTitle("Remanejo");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         minerasSpinner = findViewById(R.id.spinner_minera2);
         auxSpinner = new ArrayList<String>();
         areasSpinner = findViewById(R.id.spinner_area2);
@@ -99,7 +95,12 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                estadoCampos(modoManual.isChecked());
+
+                if (modoManual.isChecked()) {
+                    estadoCampos(true);
+                } else {
+                    estadoCampos(false);
+                }
             }
         });
 
@@ -414,6 +415,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         protected String doInBackground(String... strings) {
 
             return ws.ecs_Remanejar(strings);
+
         }
     }
 }
