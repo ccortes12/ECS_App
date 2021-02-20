@@ -145,7 +145,7 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                         e.printStackTrace();
                     }
                 }
-                estado.setText(busquedaPaquete.getDescEstado());
+
 
                 if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Recepcionado") ||
                         busquedaPaquete.getDescEstado().equalsIgnoreCase("Despachado")) {
@@ -171,14 +171,11 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     seccionUbicacion.setVisibility(View.VISIBLE);
                     tituloSeccion.setVisibility(View.VISIBLE);
                     almacenar.setVisibility(View.INVISIBLE);
+
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
                     lote.setText(busquedaPaquete.getLote().toString());
                     paquete.setText(String.valueOf(busquedaPaquete.getPeso()));
 
-                    if (!modoManual.isChecked()) {
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
                     //cargar ubicacion al spinner y bloquear spinner
                     cargarSpinnerBlock(busquedaPaquete);
 
@@ -190,6 +187,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                     tituloSeccion.setVisibility(View.INVISIBLE);
                     almacenar.setVisibility(View.INVISIBLE);
                 }
+
+                estado.setText(busquedaPaquete.getDescEstado());
 
             }
         });
@@ -212,8 +211,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     //Primero debo despachar y luego almacenar
-                                    String[] params = {busquedaPaquete.getIdPaquete(), rutUsuario, turno,
-                                            busquedaPaquete.getArea().toString(), busquedaPaquete.getCelda().toString()};
+                                    String[] params = {areasSpinner.getSelectedItem().toString(), celdasSpinner.getSelectedItem().toString(),
+                                            busquedaPaquete.getIdPaquete(), rutUsuario,fecha, turno};
 
                                     try {
                                         String resp = new Almacenaje.ecs_AlmacenaPaquete().execute(params).get();
@@ -243,8 +242,8 @@ public class Almacenaje extends AppCompatActivity implements AdapterView.OnItemS
                 } else {
 
                     //Primero debo despachar y luego almacenar
-                    String[] params = {busquedaPaquete.getIdPaquete(), rutUsuario, turno,
-                            busquedaPaquete.getArea().toString(), busquedaPaquete.getCelda().toString()};
+                    String[] params = {areasSpinner.getSelectedItem().toString(), celdasSpinner.getSelectedItem().toString(),
+                            busquedaPaquete.getIdPaquete(), rutUsuario, fecha, turno};
 
                     try {
                         String resp = new Almacenaje.ecs_AlmacenaPaquete().execute(params).get();
