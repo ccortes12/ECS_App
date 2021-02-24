@@ -44,7 +44,7 @@
 
 
         <ListView
-            android:id="@+id/listview"
+            android:id="@+id/listviewPaquetes"
             android:layout_width="506dp"
             android:layout_height="522dp"
             android:layout_gravity="center"
@@ -106,7 +106,7 @@
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/siguienteButton"
+            android:id="@+id/buscarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@android:drawable/ic_menu_search"

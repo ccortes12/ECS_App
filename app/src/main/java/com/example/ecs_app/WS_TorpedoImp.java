@@ -1140,12 +1140,12 @@ public class WS_TorpedoImp implements WS_Torpedo{
             SoapObject auxListaPaquetes = (SoapObject) resultado_xml.getProperty("lstRelacionPaquete");
             int numCeldas = auxListaPaquetes.getPropertyCount();
 
-            for (int i = 0; i < numCeldas - 1; i++) {
+            for (int i = 0; i < numCeldas-1; i++) {
 
                 SoapObject celdaAux = (SoapObject) auxListaPaquetes.getProperty(i);
                 PaqueteCarro temp = new PaqueteCarro();
-                temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("IntEstado").toString()));
-                temp.setStrDescEstado(celdaAux.getProperty("strDescEstado").toString());
+
+                temp.setIntEstado(Integer.parseInt(celdaAux.getProperty("intEstado").toString()));
                 temp.setIntIdRelacionCarro(Integer.parseInt(celdaAux.getProperty("intIdRelacionCarro").toString()));
                 temp.setIntIdRelacionPaquete(Integer.parseInt(celdaAux.getProperty("intIdRelacionPaquete").toString()));
                 temp.setChrNumeroCarro(celdaAux.getProperty("chrNumeroCarro").toString());

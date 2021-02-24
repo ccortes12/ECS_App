@@ -117,7 +117,32 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
                 marcasSpinner.getSelectedItem().toString().equals("") || gruasSpinner.getSelectedItem().toString().equals("")
                         || grueroSpinner.getSelectedItem().toString().equals("") || bodegaSpinner.getSelectedItem().toString().equals(""))){
 
+                    //Entrega parametros a Embarque activity
                     Intent next = new Intent(v.getContext(), Embarque.class);
+
+                    for(Minera m : listaMineras){
+                        if(mineraSpinner.getSelectedItem().toString().equalsIgnoreCase(m.getVchNombreFantasia())){
+                            String rutSeleccionado = String.valueOf(m.getIntRutCliente());
+                            next.putExtra("rutCliente",rutSeleccionado);
+                            break;
+                        }
+                    }
+
+                    String[] auxMarca = marcasSpinner.getSelectedItem().toString().split("-");
+                    String valorMarca = auxMarca[0].trim();
+
+                    for(Marca marca: listaMarcas){
+
+                        if(valorMarca.equalsIgnoreCase(marca.getCodMarca().trim())){
+                            String codMarca = marca.getCodMarca();
+                            next.putExtra("codMarca",codMarca.trim());
+                            break;
+                        }
+                    }
+
+                    String[] auxPuerto = puertosSpinnner.getSelectedItem().toString().split("-");
+                    next.putExtra("codPuertoDestino",auxPuerto[1].trim());
+
                     startActivity(next);
                     //finish();
 
@@ -135,7 +160,6 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
 
                 if(!parent.getItemAtPosition(position).equals("")){
 
-                    //Rescatar el rut cliente
                     int rutSeleccionado = 0;
 
                     for(Minera m : listaMineras){
