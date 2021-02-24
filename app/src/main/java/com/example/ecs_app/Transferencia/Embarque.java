@@ -74,7 +74,7 @@ public class Embarque extends AppCompatActivity {
                     }else{
                         for(PaqueteCarro p : listaPaquetes){
                             listaStringPaquetes.add("Lote : " + p.getChrCodigoLote().trim() + " - Paquete: " + p.getChrCodigoPaquete().trim() + " - Peso : " + p.getDecPesoNeto() + " [kg]\n " +
-                                    "Estado : " + p.getStrDescEstado());
+                                    "Estado : " + p.getChrFlgChequeo());
                         }
 
                         adapter.notifyDataSetChanged();

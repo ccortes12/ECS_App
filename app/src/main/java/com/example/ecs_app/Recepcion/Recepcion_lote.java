@@ -99,6 +99,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
 
                 for (Minera m : listaMineras){
                     if(listaMineras_spinner.getSelectedItem().toString().equalsIgnoreCase(m.getVchNombreFantasia())){
@@ -145,6 +146,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
                 }
 
                 estado.setText(busquedaPaquete.getDescEstado());
+
             }
         });
 

@@ -1155,6 +1155,7 @@ public class WS_TorpedoImp implements WS_Torpedo{
                 temp.setDecPesoNeto(Double.parseDouble(celdaAux.getProperty("decPesoNeto").toString()));
                 temp.setDecPesoBruto(Double.parseDouble(celdaAux.getProperty("decPesoBruto").toString()));
                 temp.setIntCantidadPiezas(Double.parseDouble(celdaAux.getProperty("intCantidadPiezas").toString()));
+                temp.setChrFlgChequeo(celdaAux.getProperty("chrFlgChequeo").toString());
 
                 listaPaquetes.add(temp);
             }
