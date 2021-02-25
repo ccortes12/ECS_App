@@ -13,6 +13,12 @@ public class AtiApp extends Application {
     private ArrayList<Minera> listaMineras;
     private ArrayList<Area> listaAreas;
     private String lastCorrelativo;
+    private String[] listaTurnos = {"","1","2","3"};
+    private String[] bodegasEmbarque = {"","1","2","3","4","5","6","7","8","9","10","11","12"};
+
+    public String[] getBodegasEmbarque() {
+        return bodegasEmbarque;
+    }
 
     public String getLastCorrelativo() {
         return lastCorrelativo;
@@ -62,4 +68,7 @@ public class AtiApp extends Application {
         this.listaAreas = listaAreas;
     }
 
+    public String[] getListaTurnos() {
+        return listaTurnos;
+    }
 }

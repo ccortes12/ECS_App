@@ -13,6 +13,7 @@ import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -47,7 +48,12 @@ public class Login extends AppCompatActivity {
         fecha = findViewById(R.id.textView_Fecha);
         ingresoButton = findViewById(R.id.button_ingreso);
         pickDate = findViewById(R.id.imageButton);
-        turno = findViewById(R.id.spinner);
+        turno = findViewById(R.id.spinnerTurno);
+
+        //Carga spinner turnos
+        ArrayAdapter<String> comboSpinner = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ((AtiApp) Login.this.getApplication()).getListaTurnos());
+        turno.setAdapter(comboSpinner);
+
 
         Calendar c = Calendar.getInstance();
         final DatePickerDialog datePickerDialog;

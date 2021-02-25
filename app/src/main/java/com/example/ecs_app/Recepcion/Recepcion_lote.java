@@ -256,7 +256,7 @@ public class Recepcion_lote extends AppCompatActivity implements AdapterView.OnI
         }
         listaMineras_spinner.setOnItemSelectedListener(this);
 
-        comboAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, auxSpinner);
+        comboAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, auxSpinner);
 
         listaMineras_spinner.setAdapter(comboAdapter);
 

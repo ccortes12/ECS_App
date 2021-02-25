@@ -18,6 +18,7 @@ import com.example.ecs_app.Entidades.Gruero;
 import com.example.ecs_app.Entidades.Marca;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Puerto;
+import com.example.ecs_app.Login;
 import com.example.ecs_app.R;
 import com.example.ecs_app.WS_Torpedo;
 import com.example.ecs_app.WS_TorpedoImp;
@@ -35,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Transferencia extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner  mineraSpinner, puertosSpinnner, marcasSpinner, gruasSpinner, grueroSpinner;
+    private Spinner  mineraSpinner, puertosSpinnner, marcasSpinner, gruasSpinner, grueroSpinner,bodegaSpinner;
     private Button siguienteButton;
     private ArrayList<String> auxSpinnerMinera, auxSpinnerPuertos, auxSpinnerMarcas, auxSpinnerGrua, auxSpinnerOperadores;
     private ArrayList<Minera> listaMineras, listaminerasSpinner;
@@ -68,18 +69,18 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         auxSpinnerGrua = new ArrayList<String>();
         grueroSpinner = findViewById(R.id.spinner6);
         auxSpinnerOperadores = new ArrayList<String>();
-
-        final Spinner bodegaSpinner = (Spinner) findViewById(R.id.spinner7);
-
+        bodegaSpinner = (Spinner) findViewById(R.id.spinner7);
         Button buttonParas = (Button) findViewById(R.id.buttonParas);
         marcasSpinner = findViewById(R.id.listaMarcas);
         siguienteButton = findViewById(R.id.siguienteButton);
 
         listaMineras = ((AtiApp) Transferencia.this.getApplication()).getListaMineras();
-
         correlativo = ((AtiApp) Transferencia.this.getApplication()).getLastCorrelativo();
 
         //Carga de spinners
+        ArrayAdapter<String> comboSpinner2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ((AtiApp) Transferencia.this.getApplication()).getBodegasEmbarque());
+        bodegaSpinner.setAdapter(comboSpinner2);
+
         String[] params = {correlativo};
 
         try {

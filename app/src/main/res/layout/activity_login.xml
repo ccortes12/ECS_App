@@ -21,8 +21,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout12"
-        android:layout_width="354dp"
-        android:layout_height="105dp"
+        android:layout_width="357dp"
+        android:layout_height="116dp"
         android:layout_marginTop="60dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +39,8 @@
 
             <TextView
                 android:id="@+id/textView_Fecha"
-                android:layout_width="213dp"
-                android:layout_height="40dp"
+                android:layout_width="215dp"
+                android:layout_height="54dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="DD / MM / YYYY"
@@ -66,20 +66,18 @@
                 android:layout_width="145dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Turno"
                 android:textAlignment="center"
-                android:gravity="center"
                 android:textSize="20dp" />
 
             <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
+                android:id="@+id/spinnerTurno"
+                android:layout_width="79dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/spinner"
                 android:gravity="center"
-                android:spinnerMode="dropdown"
+                android:spinnerMode="dialog"
                 android:textAlignment="center" />
         </LinearLayout>
 
