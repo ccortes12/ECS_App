@@ -2,7 +2,6 @@ package com.example.ecs_app;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -18,19 +17,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
@@ -38,8 +26,8 @@ import java.util.concurrent.ExecutionException;
 public class Despachar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner minerasSpinner;
-    private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado, tituloSeccion, celda, area;
+    private EditText codigoBarra, lote, paquete,editTextLote;
+    private TextView peso, estado, tituloSeccion, celda, area, textViewLote;
     private Button buscar, despachar;
     private Switch modoManual;
     private LinearLayout seccionUbicacion;
@@ -76,9 +64,12 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
         despachar = findViewById(R.id.button11);
         modoManual = findViewById(R.id.switch3);
         seccionUbicacion = findViewById(R.id.linearLayout16);
+        editTextLote = findViewById(R.id.editTextLote3);
+        textViewLote = findViewById(R.id.textViewLote3);
+
 
         cargarSpinner();
-        estadoCampos(false);
+        estadoCampos();
 
         fecha = ((AtiApp) Despachar.this.getApplication()).getFecha();
         turno = Integer.toString(((AtiApp) Despachar.this.getApplication()).getTurno());
@@ -87,11 +78,17 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (modoManual.isChecked()) {
-                    estadoCampos(true);
+                    textViewLote.setVisibility(View.VISIBLE);
+                    editTextLote.setVisibility(View.VISIBLE);
+                    editTextLote.requestFocus();
                 } else {
-                    estadoCampos(false);
+                    textViewLote.setVisibility(View.GONE);
+                    editTextLote.setVisibility(View.GONE);
                 }
+
+                estadoCampos();
             }
         });
 
@@ -107,7 +104,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
 
                 if (modoManual.isChecked()) {
                     try {
-                        String[] params = {String.valueOf(rutCliente), codigoBarra.getText().toString()};
+                        String[] params = {String.valueOf(rutCliente),editTextLote.getText().toString(), codigoBarra.getText().toString()};
                         busquedaPaquete = new Despachar.ecs_BuscarPaquete().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -117,7 +114,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
 
                 } else {
                     try {
-                        String[] params = {String.valueOf(rutCliente), lote.getText().toString(), paquete.getText().toString()};
+                        String[] params = {String.valueOf(rutCliente),  codigoBarra.getText().toString()};
                         busquedaPaquete = new Despachar.ecs_BuscarPaquetesCB().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -125,20 +122,16 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
                         e.printStackTrace();
                     }
                 }
-                estado.setText(busquedaPaquete.getDescEstado());
+
 
                 if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Recepcionado")) {
                     seccionUbicacion.setVisibility(View.INVISIBLE);
                     despachar.setVisibility(View.VISIBLE);
                     tituloSeccion.setVisibility(View.INVISIBLE);
 
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
+                    lote.setText(busquedaPaquete.getLote());
+                    paquete.setText(busquedaPaquete.getIdPaquete());
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
-
-
 
                 }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Almacenado")){
 
@@ -146,30 +139,30 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
                     tituloSeccion.setVisibility(View.VISIBLE);
                     despachar.setVisibility(View.VISIBLE);
 
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
 
+                    lote.setText(busquedaPaquete.getLote());
+                    paquete.setText(busquedaPaquete.getIdPaquete());
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
                     area.setText(busquedaPaquete.getArea());
                     celda.setText(busquedaPaquete.getCelda());
 
                 }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Despachado")) {
 
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
+                    lote.setText(busquedaPaquete.getLote());
+                    paquete.setText(busquedaPaquete.getIdPaquete());
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
 
                 }else{
+
+                    lote.setText("");
+                    paquete.setText("");
                     peso.setText("");
                     seccionUbicacion.setVisibility(View.INVISIBLE);
                     tituloSeccion.setVisibility(View.INVISIBLE);
                     despachar.setVisibility(View.INVISIBLE);
                 }
 
+                estado.setText(busquedaPaquete.getDescEstado());
             }
         });
 
@@ -181,8 +174,8 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
 
                     new AlertDialog.Builder(Despachar.this)
                             .setTitle("Confirmar despacho paquete")
-                            .setMessage("Paquete a despachar: \n" +
-                                    "Lote : " + lote.getText().toString() + "\n" +
+                            .setMessage("Paquete a despachar \n" +
+                                    "Lote : " + editTextLote.getText().toString() + "\n" +
                                     "Codigo Paquete : " + busquedaPaquete.getIdPaquete())
                             .setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener() {
                                 @Override
@@ -206,7 +199,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
                                     } catch (ExecutionException e) {
                                         e.printStackTrace();
                                     }
-                                    estadoCampos(true);
+                                    estadoCampos();
 
                                 }
                             })
@@ -235,7 +228,7 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                    estadoCampos(false);
+                    estadoCampos();
                 }
             }
         });
@@ -267,42 +260,25 @@ public class Despachar extends AppCompatActivity implements AdapterView.OnItemSe
 
     }
 
-    private void estadoCampos(boolean flag){
+    private void estadoCampos(){
 
         estado.setText("");
         peso.setText("");
         codigoBarra.setText("");
         paquete.setText("");
         lote.setText("");
+        editTextLote.setText("");
 
         despachar.setVisibility(View.INVISIBLE);
         seccionUbicacion.setVisibility(View.INVISIBLE);
         tituloSeccion.setVisibility(View.INVISIBLE);
 
 
-        if(flag){
-            lote.setFocusable(true);
-            lote.setCursorVisible(true);
-            lote.setFocusableInTouchMode(true);
-            paquete.setFocusable(true);
-            paquete.setCursorVisible(true);
-            paquete.setFocusableInTouchMode(true);
+        lote.setFocusable(false);
+        lote.setCursorVisible(false);
+        paquete.setFocusable(false);
+        paquete.setCursorVisible(false);
 
-            codigoBarra.setFocusable(false);
-            codigoBarra.setCursorVisible(false);
-            codigoBarra.setText("");
-        }else{
-            lote.setFocusable(false);
-            lote.setCursorVisible(false);
-            lote.setText("");
-            paquete.setFocusable(false);
-            paquete.setCursorVisible(false);
-            paquete.setText("");
-
-            codigoBarra.setFocusable(true);
-            codigoBarra.setCursorVisible(true);
-            codigoBarra.setFocusableInTouchMode(true);
-        }
 
     }
 

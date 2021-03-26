@@ -1,7 +1,10 @@
 package com.example.ecs_app;
 
 import com.example.ecs_app.Entidades.Area;
+import com.example.ecs_app.Entidades.Bodega;
 import com.example.ecs_app.Entidades.Celda;
+import com.example.ecs_app.Entidades.Consignatario;
+import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Grua;
 import com.example.ecs_app.Entidades.Gruero;
 import com.example.ecs_app.Entidades.Marca;
@@ -191,7 +194,7 @@ public interface WS_Torpedo {
      *                codBodegaNave,rutUsuario
      * @return String[] codigo,descripcion
      */
-    String[] ecs_RegistroParas(String... strings);
+    String ecs_RegistroParas(String... strings);
 
     /**
      * Metodo Obtener listado de paquetes segun relacion
@@ -200,5 +203,16 @@ public interface WS_Torpedo {
      * @return ArrayList<PaqueteCarro> listaPaquetes
      */
     ArrayList<PaqueteCarro> ecs_ObtenerRelacionPaquete(String... strings);
+
+    ArrayList<Bodega> ecs_ListarGruasNave(String... strings);
+
+    Contenedor cfs_BuscaContenedor(String... strings);
+
+    Consignatario cfs_BuscaConsignatario(String... strings);
+
+    Marca cfs_BuscaMarca(String... strings);
+
+    String cfs_RegistraConsolidado(String... strings);
+
 
 }

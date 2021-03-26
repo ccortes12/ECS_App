@@ -23,6 +23,7 @@ import com.example.ecs_app.Entidades.Area;
 import com.example.ecs_app.Entidades.Celda;
 import com.example.ecs_app.Entidades.Minera;
 import com.example.ecs_app.Entidades.Paquete;
+import com.example.ecs_app.Recepcion.Recepcion_manual;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -41,8 +42,8 @@ import java.util.concurrent.ExecutionException;
 public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner minerasSpinner, areasSpinner, celdasSpinner;
-    private EditText codigoBarra, lote, paquete;
-    private TextView peso, estado, tituloSeccionOrigen, tituloSeccionDestino, celda, area;
+    private EditText codigoBarra, lote, paquete, editTextLote;
+    private TextView peso, estado, tituloSeccionOrigen, tituloSeccionDestino, celda, area,textViewLote;
     private Button buscar, remanejo;
     private Switch modoManual;
     private LinearLayout seccionOrigen, seccionDestino;
@@ -83,24 +84,32 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         seccionOrigen = findViewById(R.id.linearLayout16);
         seccionDestino = findViewById(R.id.linearLayout18);
         tituloSeccionDestino = findViewById(R.id.textView75);
+        textViewLote = findViewById(R.id.textViewLote4);
+        editTextLote = findViewById(R.id.editTextLote4);
 
-        cargarSpinner();
-        cargarSpinnerAreas();
-        estadoCampos(false);
-
+        //listaMineras = ((AtiApp) Remanejo.this.getApplication()).getListaMineras();
         fecha = ((AtiApp) Remanejo.this.getApplication()).getFecha();
         turno = Integer.toString(((AtiApp) Remanejo.this.getApplication()).getTurno());
         rutUsuario = Integer.toString(((AtiApp) Remanejo.this.getApplication()).getRutUsuario());
+
+        cargarSpinner();
+        cargarSpinnerAreas();
+        estadoCampos();
 
         modoManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (modoManual.isChecked()) {
-                    estadoCampos(true);
+                    textViewLote.setVisibility(View.VISIBLE);
+                    editTextLote.setVisibility(View.VISIBLE);
+                    editTextLote.requestFocus();
                 } else {
-                    estadoCampos(false);
+                    textViewLote.setVisibility(View.GONE);
+                    editTextLote.setVisibility(View.GONE);
                 }
+
+                estadoCampos();
             }
         });
 
@@ -116,7 +125,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
 
                 if (modoManual.isChecked()) {
                     try {
-                        String[] params = {String.valueOf(rutCliente), lote.getText().toString(), paquete.getText().toString()};
+                        String[] params = {String.valueOf(rutCliente), editTextLote.getText().toString(), codigoBarra.getText().toString()};
                         busquedaPaquete = new Remanejo.ecs_BuscarPaquete().execute(params).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -134,7 +143,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                         e.printStackTrace();
                     }
                 }
-                estado.setText(busquedaPaquete.getDescEstado());
+
 
                 if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Recepcionado") ||
                         busquedaPaquete.getDescEstado().equalsIgnoreCase("Despachado")) {
@@ -144,10 +153,10 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                     tituloSeccionDestino.setVisibility(View.INVISIBLE);
                     tituloSeccionOrigen.setVisibility(View.INVISIBLE);
 
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
+
+                    lote.setText(busquedaPaquete.getLote());
+                    paquete.setText(busquedaPaquete.getIdPaquete());
+
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
 
                 }else if(busquedaPaquete.getDescEstado().equalsIgnoreCase("Almacenado")){
@@ -158,10 +167,9 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                     tituloSeccionDestino.setVisibility(View.VISIBLE);
                     tituloSeccionOrigen.setVisibility(View.VISIBLE);
 
-                    if(!modoManual.isChecked()){
-                        lote.setText(busquedaPaquete.getLote());
-                        paquete.setText(busquedaPaquete.getIdPaquete());
-                    }
+                    lote.setText(busquedaPaquete.getLote());
+                    paquete.setText(busquedaPaquete.getIdPaquete());
+
                     peso.setText(String.valueOf(busquedaPaquete.getPeso()));
 
                     areasSpinner.setSelection(0);
@@ -172,6 +180,8 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
 
                 }else{
                     peso.setText("");
+                    lote.setText("");
+                    paquete.setText("");
                     seccionOrigen.setVisibility(View.INVISIBLE);
                     seccionDestino.setVisibility(View.INVISIBLE);
                     remanejo.setVisibility(View.INVISIBLE);
@@ -179,18 +189,21 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                     tituloSeccionOrigen.setVisibility(View.INVISIBLE);
                 }
 
+                estado.setText(busquedaPaquete.getDescEstado());
+
             }
         });
 
         remanejo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(modoManual.isChecked()){
 
                     new AlertDialog.Builder(Remanejo.this)
                             .setTitle("Confirmar transferencia paquete")
                             .setMessage("Paquete a recepcionar: \n" +
-                                    "Lote : " + lote.getText().toString() + "\n" +
+                                    "Lote : " + editTextLote.getText().toString() + "\n" +
                                     "Codigo Paquete : " + busquedaPaquete.getIdPaquete() + "\n" +
                                     "Area origen: " + area.getText().toString() + "\n" +
                                     "Celda origen: " + celda.getText().toString()+ "\n" +
@@ -218,7 +231,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                                     } catch (ExecutionException e) {
                                         e.printStackTrace();
                                     }
-                                    estadoCampos(true);
+                                    estadoCampos();
                                 }
                             })
                             .setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener() {
@@ -249,7 +262,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
                         e.printStackTrace();
                     }
 
-                    estadoCampos(false);
+                    estadoCampos();
                 }
             }
         });
@@ -309,10 +322,11 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    private void estadoCampos(boolean flag){
+    private void estadoCampos(){
 
         estado.setText("");
         peso.setText("");
+        editTextLote.setText("");
         codigoBarra.setText("");
         paquete.setText("");
         lote.setText("");
@@ -323,30 +337,13 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         tituloSeccionDestino.setVisibility(View.INVISIBLE);
         tituloSeccionOrigen.setVisibility(View.INVISIBLE);
 
+        lote.setFocusable(false);
+        lote.setCursorVisible(false);
+        lote.setText("");
+        paquete.setFocusable(false);
+        paquete.setCursorVisible(false);
+        paquete.setText("");
 
-        if(flag){
-            lote.setFocusable(true);
-            lote.setCursorVisible(true);
-            lote.setFocusableInTouchMode(true);
-            paquete.setFocusable(true);
-            paquete.setCursorVisible(true);
-            paquete.setFocusableInTouchMode(true);
-
-            codigoBarra.setFocusable(false);
-            codigoBarra.setCursorVisible(false);
-            codigoBarra.setText("");
-        }else{
-            lote.setFocusable(false);
-            lote.setCursorVisible(false);
-            lote.setText("");
-            paquete.setFocusable(false);
-            paquete.setCursorVisible(false);
-            paquete.setText("");
-
-            codigoBarra.setFocusable(true);
-            codigoBarra.setCursorVisible(true);
-            codigoBarra.setFocusableInTouchMode(true);
-        }
 
     }
 
@@ -393,7 +390,7 @@ public class Remanejo extends AppCompatActivity implements AdapterView.OnItemSel
         @Override
         protected Paquete doInBackground(String... strings) {
 
-            return ws.ecs_BuscarPaquete();
+            return ws.ecs_BuscarPaquete(strings);
 
         }
     }

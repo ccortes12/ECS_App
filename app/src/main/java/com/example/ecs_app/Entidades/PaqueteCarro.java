@@ -1,5 +1,7 @@
 package com.example.ecs_app.Entidades;
 
+import androidx.annotation.Nullable;
+
 public class PaqueteCarro {
 
     private int intEstado;
@@ -13,11 +15,13 @@ public class PaqueteCarro {
     private Double decPesoNeto;
     private Double decPesoBruto;
     private Double intCantidadPiezas;
+    private String chrFlgChequeo;
+
 
     public PaqueteCarro() {
     }
 
-    public PaqueteCarro(int intEstado, String strDescEstado, int intIdRelacionCarro, int intIdRelacionPaquete, String chrNumeroCarro, String sdtFechaRecepcion, String chrCodigoPaquete, String chrCodigoLote, Double decPesoNeto, Double decPesoBruto, Double intCantidadPiezas) {
+    public PaqueteCarro(int intEstado, String strDescEstado, int intIdRelacionCarro, int intIdRelacionPaquete, String chrNumeroCarro, String sdtFechaRecepcion, String chrCodigoPaquete, String chrCodigoLote, Double decPesoNeto, Double decPesoBruto, Double intCantidadPiezas, String chrFlgChequeo) {
         this.intEstado = intEstado;
         this.strDescEstado = strDescEstado;
         this.intIdRelacionCarro = intIdRelacionCarro;
@@ -29,6 +33,7 @@ public class PaqueteCarro {
         this.decPesoNeto = decPesoNeto;
         this.decPesoBruto = decPesoBruto;
         this.intCantidadPiezas = intCantidadPiezas;
+        this.chrFlgChequeo = chrFlgChequeo;
     }
 
     public int getIntEstado() {
@@ -61,6 +66,22 @@ public class PaqueteCarro {
 
     public void setIntIdRelacionPaquete(int intIdRelacionPaquete) {
         this.intIdRelacionPaquete = intIdRelacionPaquete;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        boolean salida = false;
+
+        if(obj != null && obj instanceof PaqueteCarro){
+            salida = this.getIntIdRelacionPaquete() == ((PaqueteCarro) obj).getIntIdRelacionPaquete();
+        }
+
+        return salida;
     }
 
     public String getChrNumeroCarro() {
@@ -118,4 +139,13 @@ public class PaqueteCarro {
     public void setIntCantidadPiezas(Double intCantidadPiezas) {
         this.intCantidadPiezas = intCantidadPiezas;
     }
+
+    public String getChrFlgChequeo() {
+        return chrFlgChequeo;
+    }
+
+    public void setChrFlgChequeo(String chrFlgChequeo) {
+        this.chrFlgChequeo = chrFlgChequeo;
+    }
+
 }
