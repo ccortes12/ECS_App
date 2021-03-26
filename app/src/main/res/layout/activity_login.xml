@@ -74,11 +74,12 @@
             <Spinner
                 android:id="@+id/spinnerTurno"
                 android:layout_width="79dp"
-                android:layout_height="match_parent"
+                android:layout_height="36dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:spinnerMode="dialog"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="8sp" />
         </LinearLayout>
 
     </LinearLayout>

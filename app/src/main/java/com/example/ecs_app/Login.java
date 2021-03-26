@@ -51,7 +51,8 @@ public class Login extends AppCompatActivity {
         turno = findViewById(R.id.spinnerTurno);
 
         //Carga spinner turnos
-        ArrayAdapter<String> comboSpinner = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ((AtiApp) Login.this.getApplication()).getListaTurnos());
+        ArrayAdapter<String> comboSpinner = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, ((AtiApp) Login.this.getApplication()).getListaTurnos());
+        comboSpinner.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         turno.setAdapter(comboSpinner);
 
 
@@ -82,6 +83,7 @@ public class Login extends AppCompatActivity {
                             String respuesta = new validarCredencial().execute(params).get();
 
                             if (respuesta.equalsIgnoreCase("OK")) {
+
 
                                 next.putExtra("user", usernameEditText.getText().toString());
 
@@ -128,6 +130,7 @@ public class Login extends AppCompatActivity {
                         String respuesta = new validarCredencial().execute(params).get();
 
                         if (respuesta.equalsIgnoreCase("OK")) {
+
 
                             next.putExtra("user", usernameEditText.getText().toString());
 

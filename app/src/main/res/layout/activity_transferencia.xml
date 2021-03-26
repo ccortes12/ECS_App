@@ -55,6 +55,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="18dp"
                 android:spinnerMode="dialog"
                 android:textAlignment="center" />
         </LinearLayout>
@@ -123,7 +124,7 @@
         android:text="1. Información de minera"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
@@ -226,13 +227,13 @@
         android:text="2. Información grua y embarque"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout21"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/siguienteButton"
-        android:layout_width="@dimen/largo_button"
-        android:layout_height="51dp"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
         android:layout_marginTop="32dp"
         android:text="Siguiente"
         app:layout_constraintEnd_toEndOf="parent"
@@ -242,8 +243,8 @@
 
     <Button
         android:id="@+id/buttonParas"
-        android:layout_width="161dp"
-        android:layout_height="51dp"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorPrimaryDark"
         android:text="Reporte paras"

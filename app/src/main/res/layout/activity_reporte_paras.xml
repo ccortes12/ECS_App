@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="513dp"
-        android:layout_height="712dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -24,7 +24,7 @@
             style="@style/TextAppearance.AppCompat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horas de Para"
+            android:text="Registro Para"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -37,7 +37,7 @@
             android:id="@+id/textViewdesde"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha desde"
+            android:text="  Fecha desde"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -49,7 +49,7 @@
 
             <TextView
                 android:id="@+id/textVieFechaDesde"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -69,7 +69,7 @@
             android:id="@+id/textView100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hora desde"
+            android:text="  Hora desde"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
 
             <TextView
                 android:id="@+id/textView101"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/alarm_24px"/>
+                app:srcCompat="@drawable/alarm_24px" />
 
         </LinearLayout>
 
@@ -103,7 +103,7 @@
             android:id="@+id/textView102"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha hasta"
+            android:text="  Fecha hasta"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
 
             <TextView
                 android:id="@+id/textView103"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -135,7 +135,7 @@
             android:id="@+id/textView104"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hora hasta"
+            android:text="  Hora hasta"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -147,7 +147,7 @@
 
             <TextView
                 android:id="@+id/textView105"
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -158,30 +158,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/alarm_24px"/>
+                app:srcCompat="@drawable/alarm_24px" />
 
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="25dp" />
-
-        <TextView
-            android:id="@+id/textView106"
-            style="@style/TextAppearance.AppCompat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Observación"
-            android:textSize="18dp" />
-
-        <EditText
-            android:id="@+id/editTextTextMultiLine2"
-            android:layout_width="match_parent"
-            android:layout_height="144dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
 
         <TextView
             android:id="@+id/textView107"
@@ -205,7 +188,7 @@
             android:layout_height="27dp" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/buttonIngresarPara"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guardar" />

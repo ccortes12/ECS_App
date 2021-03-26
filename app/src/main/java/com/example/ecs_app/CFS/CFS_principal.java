@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ecs_app.AtiApp;
+import com.example.ecs_app.Despachar;
 import com.example.ecs_app.Entidades.Consignatario;
 import com.example.ecs_app.Entidades.Contenedor;
 import com.example.ecs_app.Entidades.Marca;
@@ -43,7 +45,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.ExecutionException;
 
-public class CFS_00 extends AppCompatActivity {
+public class CFS_principal extends AppCompatActivity {
 
 
     private Contenedor c = new Contenedor();
@@ -78,7 +80,6 @@ public class CFS_00 extends AppCompatActivity {
         button_limpiar = (Button) findViewById(R.id.button_clean);
         button_buscar = (Button) findViewById(R.id.button_buscar);
         button_grabar = (Button) findViewById(R.id.button_grabar);
-
         anno = (EditText) findViewById(R.id.editText_anno);
         cor = (EditText) findViewById(R.id.editText_cor);
         cont = (EditText) findViewById(R.id.editText_cont);
@@ -90,16 +91,13 @@ public class CFS_00 extends AppCompatActivity {
         mar = (EditText) findViewById(R.id.editText_mar);
         gross = (EditText) findViewById(R.id.editText_gross);
         zun = (EditText) findViewById(R.id.editText_zun);
-
         descShipper = (TextView) findViewById(R.id.descShipper);
         descPuerto = (TextView) findViewById(R.id.descPuerto);
         descCsg = (TextView) findViewById(R.id.textView20);
         descMar = (TextView) findViewById(R.id.textView19);
 
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        user = getIntent().getStringExtra("user");
-
+        user = Integer.toString(((AtiApp) CFS_principal.this.getApplication()).getRutUsuario());
         estadoIngresosConsolidado(false);
 
 
@@ -134,7 +132,7 @@ public class CFS_00 extends AppCompatActivity {
                                 descCsg.setText("");
                             }
                         }else{
-                            Toast.makeText(CFS_00.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CFS_principal.this, cs.getDescEstado(), Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -168,7 +166,7 @@ public class CFS_00 extends AppCompatActivity {
                                     descMar.setText("");
                                 }
                             }else{
-                                Toast.makeText(CFS_00.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_principal.this, ma.getDescEstado(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (InterruptedException e) {
@@ -250,15 +248,15 @@ public class CFS_00 extends AppCompatActivity {
                             //CONFIRMAR CON EL USUARIO LA CONSOLIDACION
                             confimarIngresoContainer();
                         }else{
-                            Toast.makeText(CFS_00.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CFS_principal.this,"ERROR, Max gross menor que tara",Toast.LENGTH_SHORT).show();
                             vibrar();
                         }
                     }else{
-                        Toast.makeText(CFS_00.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_principal.this, "Error, CSG o MAR invalidos", Toast.LENGTH_SHORT).show();
                         vibrar();
                     }
                 }else{
-                    Toast.makeText(CFS_00.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CFS_principal.this, "Error, Complete todos los campos", Toast.LENGTH_SHORT).show();
                     vibrar();
                 }
             }
@@ -268,7 +266,7 @@ public class CFS_00 extends AppCompatActivity {
 
     private void confimarIngresoContainer(){
 
-        new AlertDialog.Builder(CFS_00.this)
+        new AlertDialog.Builder(CFS_principal.this)
                 .setTitle("Confirmación consolidación container")
                 .setMessage("AÑO : " + anno.getText().toString() + "  OPE: " + cor.getText().toString() + "\n" +
                         "CONT : " + cont.getText().toString().toUpperCase() + " " + codigo.getText().toString() + " - " + digit.getText().toString() + "\n" +
@@ -295,7 +293,7 @@ public class CFS_00 extends AppCompatActivity {
                                 buscarContenedor();
 
                             }else{
-                                Toast.makeText(CFS_00.this,"Error, ingreso Container",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CFS_principal.this,"Error, ingreso Container",Toast.LENGTH_SHORT).show();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -363,7 +361,7 @@ public class CFS_00 extends AppCompatActivity {
 
                         return "Por consolidar";
                     }else{
-                        Toast.makeText(CFS_00.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CFS_principal.this, c.getDescEstado(), Toast.LENGTH_SHORT).show();
                         estadoIngresosConsolidado(false);
                         limpiarInfoCont();
                         limpiarInfo2();
@@ -374,12 +372,12 @@ public class CFS_00 extends AppCompatActivity {
                     }
                 }
             }catch(Exception e){
-                Toast.makeText(CFS_00.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CFS_principal.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                 vibrar();
                 return "N";
             }
         }else{
-            Toast.makeText(CFS_00.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CFS_principal.this, "Error, complete los campos", Toast.LENGTH_SHORT).show();
             vibrar();
             return "N";
         }

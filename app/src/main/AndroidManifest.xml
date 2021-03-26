@@ -57,17 +57,17 @@
         <activity
             android:name=".CFS.CFS_01_lotes_codigoBarra"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00" />
+            android:parentActivityName=".CFS.CFS_principal" />
         <activity
             android:name=".CFS.CFS_01_lotes_manual"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00" />
+            android:parentActivityName=".CFS.CFS_principal" />
         <activity
             android:name=".CFS.CFS_02_sellos"
             android:configChanges="orientation"
-            android:parentActivityName=".CFS.CFS_00" />
+            android:parentActivityName=".CFS.CFS_principal" />
         <activity
-            android:name=".CFS.CFS_00"
+            android:name=".CFS.CFS_principal"
             android:configChanges="orientation"
             android:parentActivityName=".MenuPrincipal" />
         <activity

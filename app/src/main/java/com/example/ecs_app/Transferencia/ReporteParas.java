@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
-public class ReporteParas extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class  ReporteParas extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText observacion;
     private TextView fechaDesde, horaDesde, fechaHasta, horaHasta;
@@ -49,6 +49,7 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
     private Spinner motivoSpinner;
     private ArrayAdapter<String> comboAdapter;
     private TimePickerDialog timePickerDialog;
+    private String rutCliente,correlativo,codMarca,chrCodBodegaNave,rutUsuario;
     private int dia, mes, anno, hora, minutos;
 
     WS_Torpedo ws = new WS_TorpedoImp();
@@ -71,8 +72,8 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         buttonHoraDesde = findViewById(R.id.imageButton);
         buttonHoraHasta = findViewById(R.id.imageButton4);
         motivoSpinner = findViewById(R.id.spinner4);
-        buttonIngresar = findViewById(R.id.button10);
-        observacion = findViewById(R.id.editTextTextMultiLine2);
+        buttonIngresar = findViewById(R.id.buttonIngresarPara);
+
 
         Calendar c = Calendar.getInstance();
 
@@ -89,6 +90,14 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        rutCliente = getIntent().getExtras().getString("rutCliente");
+        correlativo = ((AtiApp) ReporteParas.this.getApplication()).getLastCorrelativo();
+        codMarca = getIntent().getExtras().getString("codMarca");
+        chrCodBodegaNave = getIntent().getExtras().getString("chrCodBodegaNave");
+        rutUsuario = String.valueOf(((AtiApp) ReporteParas.this.getApplication()).getRutUsuario());
+
+
 
         buttonFechaDesde.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -162,8 +171,8 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
 
-                if(!fechaDesde.getText().toString().equalsIgnoreCase("") && !horaDesde.getText().toString().equalsIgnoreCase("")
-                    && !fechaHasta.getText().toString().equalsIgnoreCase("") && !horaHasta.getText().toString().equalsIgnoreCase("")
+                if(!fechaDesde.getText().toString().equalsIgnoreCase("Ingrese fecha") && !horaDesde.getText().toString().equalsIgnoreCase("Ingrese hora")
+                    && !fechaHasta.getText().toString().equalsIgnoreCase("Ingrese fecha") && !horaHasta.getText().toString().equalsIgnoreCase("Ingrese hora")
                     && !motivoSpinner.getSelectedItem().toString().equalsIgnoreCase("")){
 
                     String[] arrFecha = fechaDesde.getText().toString().replaceAll(" ","").split("/");
@@ -181,16 +190,40 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
                                 .setMessage("Información para: " + "\n" +
                                             "Fecha inicio: " + arrFecha[0] + "/" + arrFecha[1] + "/" + arrFecha[2] +  " -  Hora: " + arrHora[0] + ":" + arrHora[1] + " horas." + "\n" +
                                             "Fecha termino: " + arrFecha2[0] + "/" + arrFecha2[1] + "/" + arrFecha2[2] +  " -  Hora: " + arrHora2[0] + ":" + arrHora2[1] + " horas." + "\n" +
-                                            "Motivo: " + motivoSpinner.getSelectedItem().toString() + "\n" +
-                                            "Comentario: " + observacion.getText().toString())
+                                            "Motivo: " + motivoSpinner.getSelectedItem().toString())
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        //TODO: Implementar el metodo
+                                        String[] codMotivo = motivoSpinner.getSelectedItem().toString().split(" ");
 
-                                        String correlativo = ((AtiApp) ReporteParas.this.getApplication()).getLastCorrelativo();
+                                        String[] params = {
+                                                correlativo,
+                                                codMotivo[0],
+                                                fechaDesde.getText().toString().replace(" ","") + " " + horaDesde.getText().toString().replace(" ",""),
+                                                fechaHasta.getText().toString().replace(" ","") + " " + horaHasta.getText().toString().replace(" ",""),
+                                                rutCliente,
+                                                codMarca,
+                                                chrCodBodegaNave,
+                                                rutUsuario
+                                        };
 
+                                        String resp = "";
+
+                                        try {
+                                            resp = new ecs_registroParas().execute(params).get();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        if(resp.equalsIgnoreCase("1")){
+                                            limpiarCampos();
+                                            Toast.makeText(ReporteParas.this, "Para registrada con exito" , Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(ReporteParas.this, "ERROR, no se registro para" , Toast.LENGTH_SHORT).show();
+                                        }
 
 
                                     }
@@ -221,7 +254,8 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         lista.add(0,"");
 
         motivoSpinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) ReporteParas.this);
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista);
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, lista);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         motivoSpinner.setAdapter(comboAdapter);
 
     }
@@ -235,6 +269,16 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         }else{
             return String.valueOf(valor);
         }
+
+    }
+
+    private void limpiarCampos(){
+
+        fechaDesde.setText("");
+        horaDesde.setText("");
+        fechaHasta.setText("");
+        horaHasta.setText("");
+        motivoSpinner.setSelection(0);
 
     }
 
@@ -258,10 +302,10 @@ public class ReporteParas extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private class ecs_registroParas extends AsyncTask<String, Void, String[]> {
+    private class ecs_registroParas extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String[] doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             return ws.ecs_RegistroParas(strings);
         }
     }

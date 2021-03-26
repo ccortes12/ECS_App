@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.example.ecs_app.CFS.CFS_00;
+import com.example.ecs_app.CFS.CFS_principal;
 import com.example.ecs_app.Recepcion.Pre_recepcion;
 import com.example.ecs_app.Transferencia.PreTransferencia;
 
@@ -39,7 +39,7 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intentCFS = new Intent(v.getContext(), CFS_00.class);
+                Intent intentCFS = new Intent(v.getContext(), CFS_principal.class);
                 startActivity(intentCFS);
             }
         });

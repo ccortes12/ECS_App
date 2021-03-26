@@ -10,9 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ecs_app.AtiApp;
+import com.example.ecs_app.Entidades.Bodega;
 import com.example.ecs_app.Entidades.Grua;
 import com.example.ecs_app.Entidades.Gruero;
 import com.example.ecs_app.Entidades.Marca;
@@ -38,17 +40,17 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
 
     private Spinner  mineraSpinner, puertosSpinnner, marcasSpinner, gruasSpinner, grueroSpinner,bodegaSpinner;
     private Button siguienteButton;
-    private ArrayList<String> auxSpinnerMinera, auxSpinnerPuertos, auxSpinnerMarcas, auxSpinnerGrua, auxSpinnerOperadores;
+    private ArrayList<String> auxSpinnerMinera, auxSpinnerPuertos, auxSpinnerMarcas, auxSpinnerGrua, auxSpinnerOperadores, auxSpinnerBodega;
     private ArrayList<Minera> listaMineras, listaminerasSpinner;
     private ArrayList<Puerto> listaPuertos;
     private ArrayList<Grua> listaGruas;
     private ArrayList<Marca> listaMarcas;
+    private ArrayList<Bodega> listaBodegas;
     private ArrayList<Gruero> listaOperadores;
     private ArrayAdapter<String> comboAdapter;
     private String correlativo;
 
     WS_Torpedo ws = new WS_TorpedoImp();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,28 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         marcasSpinner = findViewById(R.id.listaMarcas);
         siguienteButton = findViewById(R.id.siguienteButton);
 
-        listaMineras = ((AtiApp) Transferencia.this.getApplication()).getListaMineras();
         correlativo = ((AtiApp) Transferencia.this.getApplication()).getLastCorrelativo();
 
         //Carga de spinners
-        ArrayAdapter<String> comboSpinner2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ((AtiApp) Transferencia.this.getApplication()).getBodegasEmbarque());
-        bodegaSpinner.setAdapter(comboSpinner2);
+        String [] params = {correlativo};
 
-        String[] params = {correlativo};
+        try {
+            listaBodegas = new ecs_listarBodegas().execute(params).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        cargarSpinnerBodegas();
+
+        try {
+            listaMineras = new ecs_listarMinerasRecalada().execute(params).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         try {
             listaminerasSpinner = new ecs_listarMinerasRecalada().execute(params).get();
@@ -108,6 +124,9 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+
 
         siguienteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +163,32 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
                     String[] auxPuerto = puertosSpinnner.getSelectedItem().toString().split("-");
                     next.putExtra("codPuertoDestino",auxPuerto[1].trim());
 
+
+                    String vchBodega = bodegaSpinner.getSelectedItem().toString().trim();
+
+                    for(Bodega b :listaBodegas){
+                        if(bodegaSpinner.getSelectedItem().toString().equalsIgnoreCase(b.getVchDesBodegaNave())){
+                            String codigoBodega = String.valueOf(b.getChrCodBodegaNave());
+                            next.putExtra("chrCodBodegaNave",codigoBodega);
+                            break;
+                        }
+                    }
+
+                    for(Grua g : listaGruas){
+                        if(gruasSpinner.getSelectedItem().toString().equalsIgnoreCase(g.getDescGrua())){
+                            next.putExtra("vchCodGrua",String.valueOf(g.getCodGrua()));
+                            next.putExtra("vchDesGrua",g.getDescGrua());
+                            break;
+                        }
+                    }
+
+                    for(Gruero gr : listaOperadores){
+                        if(grueroSpinner.getSelectedItem().toString().equalsIgnoreCase(gr.getDesOperador())){
+                            next.putExtra("intRutOperador",String.valueOf(gr.getCodOperador()));
+                            next.putExtra("vchOperador",gr.getDesOperador());
+                        }
+                    }
+
                     startActivity(next);
                     //finish();
 
@@ -158,6 +203,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         mineraSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ((TextView) parent.getChildAt(0)).setTextSize(18);
 
                 if(!parent.getItemAtPosition(position).equals("")){
 
@@ -212,7 +259,42 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
                         marcasSpinner.getSelectedItem().toString().equals("") || gruasSpinner.getSelectedItem().toString().equals("")
                         || grueroSpinner.getSelectedItem().toString().equals("") || bodegaSpinner.getSelectedItem().toString().equals(""))){
 
+                    //Entrega parametros a Embarque activity
                     Intent next = new Intent(v.getContext(), ReporteParas.class);
+
+                    for(Minera m : listaMineras){
+                        if(mineraSpinner.getSelectedItem().toString().equalsIgnoreCase(m.getVchNombreFantasia())){
+                            String rutSeleccionado = String.valueOf(m.getIntRutCliente());
+                            next.putExtra("rutCliente",rutSeleccionado);
+                            break;
+                        }
+                    }
+
+                    String[] auxMarca = marcasSpinner.getSelectedItem().toString().split("-");
+                    String valorMarca = auxMarca[0].trim();
+
+                    for(Marca marca: listaMarcas){
+
+                        if(valorMarca.equalsIgnoreCase(marca.getCodMarca().trim())){
+                            String codMarca = marca.getCodMarca();
+                            next.putExtra("codMarca",codMarca.trim());
+                            break;
+                        }
+                    }
+
+                    String[] auxPuerto = puertosSpinnner.getSelectedItem().toString().split("-");
+                    next.putExtra("codPuertoDestino",auxPuerto[1].trim());
+
+                    String vchBodega = bodegaSpinner.getSelectedItem().toString().trim();
+
+                    for(Bodega b :listaBodegas){
+                        if(bodegaSpinner.getSelectedItem().toString().equalsIgnoreCase(b.getVchDesBodegaNave())){
+                            String codigoBodega = String.valueOf(b.getChrCodBodegaNave());
+                            next.putExtra("chrCodBodegaNave",codigoBodega);
+                            break;
+                        }
+                    }
+
                     startActivity(next);
                     //finish();
 
@@ -235,6 +317,25 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    private void cargarSpinnerBodegas(){
+
+        Iterator<Bodega> i = listaBodegas.iterator();
+        auxSpinnerBodega = new ArrayList<String>();
+        auxSpinnerBodega.add("");
+
+        while(i.hasNext()) {
+            Bodega item = i.next();
+            auxSpinnerBodega.add(item.getVchDesBodegaNave());
+        }
+
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, auxSpinnerBodega);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
+        comboAdapter.notifyDataSetChanged();
+        bodegaSpinner.setAdapter(comboAdapter);
+        bodegaSpinner.setOnItemSelectedListener(this);
+
+    }
+
     private void cargarSpinnerMineras(){
 
         Iterator<Minera> i = listaminerasSpinner.iterator();
@@ -248,7 +349,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         }
 
 
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, auxSpinnerMinera);
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, auxSpinnerMinera);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         comboAdapter.notifyDataSetChanged();
         mineraSpinner.setAdapter(comboAdapter);
         mineraSpinner.setOnItemSelectedListener(this);
@@ -266,7 +368,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         }
 
         puertosSpinnner.setOnItemSelectedListener(this);
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, auxSpinnerPuertos);
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, auxSpinnerPuertos);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         puertosSpinnner.setAdapter(comboAdapter);
     }
 
@@ -283,7 +386,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         }
 
         gruasSpinner.setOnItemSelectedListener(this);
-        comboAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,auxSpinnerGrua);
+        comboAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item_simple_row,auxSpinnerGrua);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         gruasSpinner.setAdapter(comboAdapter);
 
     }
@@ -300,7 +404,8 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
             auxSpinnerOperadores.add(item.getDesOperador());
         }
 
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, auxSpinnerOperadores);
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, auxSpinnerOperadores);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         comboAdapter.notifyDataSetChanged();
         grueroSpinner.setAdapter(comboAdapter);
         grueroSpinner.setOnItemSelectedListener(this);
@@ -314,11 +419,12 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
         auxSpinnerMarcas.add("");
         while(i.hasNext()){
             Marca item = i.next();
-            auxSpinnerMarcas.add(item.getCodMarca() + " - " + item.getDescMarca());
+            auxSpinnerMarcas.add(item.getCodMarca().trim() + " - " + item.getDescMarca().trim());
         }
 
         marcasSpinner.setOnItemSelectedListener(this);
-        comboAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, auxSpinnerMarcas);
+        comboAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_simple_row, auxSpinnerMarcas);
+        comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_simple_row);
         marcasSpinner.setAdapter(comboAdapter);
     }
 
@@ -369,6 +475,14 @@ public class Transferencia extends AppCompatActivity implements AdapterView.OnIt
 
             return ws.ecs_ListarOperadores(strings);
 
+        }
+    }
+
+    private class ecs_listarBodegas extends AsyncTask<String,Void,ArrayList<Bodega>>{
+
+        @Override
+        protected ArrayList<Bodega> doInBackground(String... strings) {
+            return ws.ecs_ListarGruasNave(strings);
         }
     }
 }

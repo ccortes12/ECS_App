@@ -1,5 +1,7 @@
 package com.example.ecs_app.Entidades;
 
+import androidx.annotation.Nullable;
+
 public class PaqueteCarro {
 
     private int intEstado;
@@ -64,6 +66,22 @@ public class PaqueteCarro {
 
     public void setIntIdRelacionPaquete(int intIdRelacionPaquete) {
         this.intIdRelacionPaquete = intIdRelacionPaquete;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        boolean salida = false;
+
+        if(obj != null && obj instanceof PaqueteCarro){
+            salida = this.getIntIdRelacionPaquete() == ((PaqueteCarro) obj).getIntIdRelacionPaquete();
+        }
+
+        return salida;
     }
 
     public String getChrNumeroCarro() {
